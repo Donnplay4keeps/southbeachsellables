@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>South Beach — Drug & Item Price Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',Arial,Helvetica,sans-serif;background:#0a0a0f;color:#e8e8f0;padding:40px 20px}
+.container{max-width:900px;margin:0 auto}
+.header{text-align:center;margin-bottom:50px;padding:40px 30px;background:linear-gradient(135deg,#12121a,#1a0a0a);border:1px solid #1e1e32;border-radius:16px}
+.header h1{font-size:32px;font-weight:900;background:linear-gradient(135deg,#ff4d4d,#ff8c42);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.header p{color:#666680;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:600}
+.note-box{background:rgba(255,204,77,0.08);border:1px solid rgba(255,204,77,0.2);border-radius:10px;padding:14px 18px;margin-bottom:30px;font-size:13px;color:#ccc;line-height:1.6}
+.note-box strong{color:#ffcc4d}
+.note-box code{background:#161622;padding:2px 6px;border-radius:4px;font-size:12px;color:#88aaff}
+.section-title{font-size:20px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.section-title .icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0}
+.section-sub{font-size:12px;color:#555570;margin-bottom:20px;font-weight:500;letter-spacing:0.5px}
+.drug-section .icon{background:linear-gradient(135deg,#ff4d4d,#ff8c42)}
+.clean-section .icon{background:linear-gradient(135deg,#4dff88,#42c6ff)}
+.level-section .icon{background:linear-gradient(135deg,#a855f7,#6366f1)}
+.hotzone-section .icon{background:linear-gradient(135deg,#ffcc4d,#ff8c42)}
+table{width:100%;border-collapse:collapse;margin-bottom:40px;font-size:13px}
+thead th{text-align:left;padding:12px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#555570;border-bottom:1px solid #1e1e32}
+tbody tr{border-bottom:1px solid #141420;transition:background 0.15s}
+tbody tr:hover{background:rgba(255,255,255,0.02)}
+tbody td{padding:11px 14px;vertical-align:middle}
+.item-name{font-weight:700;color:#f0f0f5}
+.spawn-code{font-family:'JetBrains Mono',Consolas,'Courier New',monospace;font-size:11px;background:#161622;border:1px solid #1e1e32;padding:4px 8px;border-radius:5px;color:#88aaff;white-space:nowrap;display:inline-block}
+.price{font-family:'JetBrains Mono',Consolas,'Courier New',monospace;font-weight:600;color:#4dff88}
+.price-high{color:#ff4d4d}
+.price-mid{color:#ffcc4d}
+.price-low{color:#4dff88}
+.qty{font-family:'JetBrains Mono',Consolas,'Courier New',monospace;font-size:12px;color:#8888aa}
+.tier-badge{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:0.5px}
+.tier-8{background:rgba(255,77,77,0.15);color:#ff4d4d}
+.tier-7{background:rgba(255,140,66,0.15);color:#ff8c42}
+.tier-6{background:rgba(255,204,77,0.15);color:#ffcc4d}
+.tier-4{background:rgba(168,85,247,0.15);color:#a855f7}
+.tier-3{background:rgba(99,102,241,0.15);color:#818cf8}
+.tier-1{background:rgba(77,255,136,0.1);color:#4dff88}
+.tier-custom{background:rgba(66,198,255,0.1);color:#42c6ff}
+.tier-clean{background:rgba(77,255,136,0.15);color:#4dff88}
+.tier-dirty{background:rgba(255,77,77,0.15);color:#ff4d4d}
+.footer{text-align:center;padding:30px;font-size:11px;color:#333350;border-top:1px solid #12121a;margin-top:20px}
+@media(max-width:700px){
+body{padding:15px 10px}
+.header{padding:25px 15px}
+.header h1{font-size:22px}
+table{font-size:11px}
+thead th{padding:8px 6px;font-size:9px}
+tbody td{padding:8px 6px}
+.spawn-code{font-size:9px;padding:2px 5px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>South Beach — Price Guide</h1>
+<p>Staff Reference — Drug & Clean Item Sell Prices</p>
+</div>
+
+<div class="note-box">
+<strong>How to read this:</strong> Prices shown are per-unit sell price to NPCs. Qty is how many units sell per transaction. Spawn code is the item name for <code>/giveitem</code> or admin commands. Prices can vary based on trap rank level bonuses (+10% to +45%), police multiplier (+10% to +25% with 3-10 cops online), and hotzone multipliers.
+</div>
+
+<!-- DRUGS -->
+<div class="drug-section">
+<div class="section-title"><div class="icon">💊</div> Drug Items (Black Money)</div>
+<div class="section-sub">Sold to street NPCs — pays dirty money</div>
+</div>
+<table>
+<thead><tr><th>Item Name</th><th>Spawn Code</th><th>Sell Price</th><th>Qty</th><th>Tier</th></tr></thead>
+<tbody>
+<tr><td class="item-name">Cupid</td><td><span class="spawn-code">drug_cupid</span></td><td class="price price-high">$3,250 — $3,550</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">ELITE</span></td></tr>
+<tr><td class="item-name">Yellow Tris</td><td><span class="spawn-code">drug_tris</span></td><td class="price price-high">$1,850 — $2,350</td><td class="qty">1-5</td><td><span class="tier-badge tier-custom">ELITE</span></td></tr>
+<tr><td class="item-name">Za Morant</td><td><span class="spawn-code">drug_zamorant</span></td><td class="price price-high">$1,600 — $1,800</td><td class="qty">1-5</td><td><span class="tier-badge tier-custom">ELITE</span></td></tr>
+<tr><td class="item-name">Miffy Tabs</td><td><span class="spawn-code">drug_miffy_tabs</span></td><td class="price price-high">$1,600 — $1,800</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">ELITE</span></td></tr>
+<tr><td class="item-name">Benny Pack</td><td><span class="spawn-code">drug_benny_pack</span></td><td class="price price-high">$1,400 — $1,500</td><td class="qty">1-3</td><td><span class="tier-badge tier-8">LVL 8</span></td></tr>
+<tr><td class="item-name">White Widow</td><td><span class="spawn-code">drug_whitewidow</span></td><td class="price price-high">$1,400 — $1,500</td><td class="qty">1-3</td><td><span class="tier-badge tier-8">LVL 8</span></td></tr>
+<tr><td class="item-name">Draco Pills</td><td><span class="spawn-code">drug_dracopill</span></td><td class="price price-high">$1,400 — $1,500</td><td class="qty">1-3</td><td><span class="tier-badge tier-8">LVL 8</span></td></tr>
+<tr><td class="item-name">187 Packs</td><td><span class="spawn-code">drug_187packs</span></td><td class="price price-high">$1,400 — $1,500</td><td class="qty">1-6</td><td><span class="tier-badge tier-8">LVL 8</span></td></tr>
+<tr><td class="item-name">Yank</td><td><span class="spawn-code">drug_yank</span></td><td class="price price-mid">$1,300 — $1,400</td><td class="qty">1-3</td><td><span class="tier-badge tier-7">LVL 7</span></td></tr>
+<tr><td class="item-name">Black Tare</td><td><span class="spawn-code">drug_blacktare1</span></td><td class="price price-mid">$1,300 — $1,400</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Pink Venom</td><td><span class="spawn-code">drug_pinkvemon</span></td><td class="price price-mid">$1,300 — $1,400</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Tesla Pills</td><td><span class="spawn-code">drug_teslapills</span></td><td class="price price-mid">$1,300 — $1,400</td><td class="qty">1-5</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">UwU Pills</td><td><span class="spawn-code">drug_uwu_pills</span></td><td class="price price-mid">$1,300 — $1,400</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Yiddas</td><td><span class="spawn-code">drug_yiddas</span></td><td class="price price-mid">$1,300 — $1,400</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Ecstasy</td><td><span class="spawn-code">drug_ecstasy</span></td><td class="price price-mid">$1,100 — $1,200</td><td class="qty">1-3</td><td><span class="tier-badge tier-6">LVL 6</span></td></tr>
+<tr><td class="item-name">Orange Crush</td><td><span class="spawn-code">ls_orange_crush_bag</span></td><td class="price price-mid">$950 — $1,000</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Purple Haze (bag)</td><td><span class="spawn-code">ls_purple_haze_bag</span></td><td class="price price-mid">$850 — $900</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Murda 8</td><td><span class="spawn-code">drug_murdaeight</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td><td><span class="tier-badge tier-4">LVL 4</span></td></tr>
+<tr><td class="item-name">Fairy Dust</td><td><span class="spawn-code">drug_fairydust</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td><td><span class="tier-badge tier-4">LVL 4</span></td></tr>
+<tr><td class="item-name">Banana Kush</td><td><span class="spawn-code">ls_banana_kush_bag</span></td><td class="price">$750 — $800</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Pussy Juicebox</td><td><span class="spawn-code">pussy_juicebox</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Flakka</td><td><span class="spawn-code">drug_flakka</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">B30s</td><td><span class="spawn-code">drug_b30s</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">TRM Oxys</td><td><span class="spawn-code">drug_trmoxys</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Fetty</td><td><span class="spawn-code">drug_fetty</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Khetamine</td><td><span class="spawn-code">drug_khetamine</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Star Struck</td><td><span class="spawn-code">drug_starstruck</span></td><td class="price">$700 — $900</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Blue Dream</td><td><span class="spawn-code">ls_blue_dream_bag</span></td><td class="price">$650 — $700</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Jordan Jiggas</td><td><span class="spawn-code">drug_jordanjiggas</span></td><td class="price">$550 — $650</td><td class="qty">1-3</td><td><span class="tier-badge tier-3">LVL 3</span></td></tr>
+<tr><td class="item-name">Cosmic Kush</td><td><span class="spawn-code">ls_cosmic_kush_bag</span></td><td class="price">$550 — $650</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Smack</td><td><span class="spawn-code">drug_smack</span></td><td class="price">$550 — $650</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Percs</td><td><span class="spawn-code">perc5</span></td><td class="price">$450 — $550</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Crack</td><td><span class="spawn-code">ls_crack_bag</span></td><td class="price">$455 — $550</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Plain Jane</td><td><span class="spawn-code">ls_plain_jane_bag</span></td><td class="price">$450 — $600</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Coke</td><td><span class="spawn-code">ls_cocaine_bag</span></td><td class="price">$405 — $500</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Pink Cocaine</td><td><span class="spawn-code">drug_pink_cocaine</span></td><td class="price">$400 — $700</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Blue Dolphin</td><td><span class="spawn-code">drug_blue_dolphin</span></td><td class="price">$350 — $450</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Duce</td><td><span class="spawn-code">drug_duce</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Coco</td><td><span class="spawn-code">drug_coco</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Purp</td><td><span class="spawn-code">drug_purp</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Phantom Reds</td><td><span class="spawn-code">drug_phantom_reds</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">V Tap</td><td><span class="spawn-code">drug_vtap</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Dirty 30</td><td><span class="spawn-code">drug_dirty30</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Green Bars</td><td><span class="spawn-code">drug_greenbars</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Golden Keys</td><td><span class="spawn-code">drug_golden_keys</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Clouds</td><td><span class="spawn-code">drug_clouds</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Lean</td><td><span class="spawn-code">drug_lean</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Rhino Pills</td><td><span class="spawn-code">drug_rhinopills</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Juggernog</td><td><span class="spawn-code">drug_juggernog</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Purple Haze</td><td><span class="spawn-code">drug_purplehaze</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Est Pills</td><td><span class="spawn-code">drug_est_pills</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Laced Perc</td><td><span class="spawn-code">drug_lacedperc</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Merc</td><td><span class="spawn-code">drug_merc</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Icey Bluez</td><td><span class="spawn-code">drug_iceybluez</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Koko Juice</td><td><span class="spawn-code">drug_kokojuice</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Game Seven</td><td><span class="spawn-code">drug_gameseven</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-1">LVL 1</span></td></tr>
+<tr><td class="item-name">Galaxy Gas</td><td><span class="spawn-code">drug_galaxy_gas</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Adderall XR 60MG</td><td><span class="spawn-code">drug_adderall_xr_60mg</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">M523</td><td><span class="spawn-code">drug_m523</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Zambieland</td><td><span class="spawn-code">drug_zambieland</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Montana</td><td><span class="spawn-code">drug_montana</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Diablo</td><td><span class="spawn-code">drug_diablo</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Zamaha Gelato</td><td><span class="spawn-code">drug_zamaha_gelato</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Gold Rush</td><td><span class="spawn-code">drug_goldrush</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+<tr><td class="item-name">Drip9</td><td><span class="spawn-code">drug_drip9</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td><td><span class="tier-badge tier-custom">CUSTOM</span></td></tr>
+</tbody>
+</table>
+
+<!-- CLEAN ITEMS -->
+<div class="clean-section">
+<div class="section-title"><div class="icon">🛍️</div> Clean Items (Legal Money)</div>
+<div class="section-sub">Sold to street NPCs — pays clean money</div>
+</div>
+<table>
+<thead><tr><th>Item Name</th><th>Spawn Code</th><th>Sell Price</th><th>Qty</th></tr></thead>
+<tbody>
+<tr><td class="item-name">Durags</td><td><span class="spawn-code">durags</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Bonnets</td><td><span class="spawn-code">bonnets</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Brownie Bites</td><td><span class="spawn-code">brownie_bites</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Chocolate</td><td><span class="spawn-code">chocolate</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Cookies</td><td><span class="spawn-code">cookies</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Gummies</td><td><span class="spawn-code">gummies</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Krispy Bar</td><td><span class="spawn-code">krispy_bar</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Mints</td><td><span class="spawn-code">mints</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Cummy Gummies</td><td><span class="spawn-code">cummy_gummies</span></td><td class="price">$900 — $1,000</td><td class="qty">1-4</td></tr>
+<tr><td class="item-name">Fuzzy Cuffs</td><td><span class="spawn-code">fuzzy_cuffs</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Glow Butta</td><td><span class="spawn-code">glow_butta</span></td><td class="price">$900 — $1,000</td><td class="qty">1-4</td></tr>
+<tr><td class="item-name">Lingerie</td><td><span class="spawn-code">lingerie</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Wrap Star Condom</td><td><span class="spawn-code">wrap_star_condom</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Hair Spray</td><td><span class="spawn-code">hair_spray</span></td><td class="price">$900 — $1,000</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">XXXstasy</td><td><span class="spawn-code">xxxstasy</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Cup</td><td><span class="spawn-code">item_cup</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Coupon</td><td><span class="spawn-code">item_coupon</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Body Candy</td><td><span class="spawn-code">body_candy</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Hoodrich Shirt</td><td><span class="spawn-code">hrshirt</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Hoodrich Bikini</td><td><span class="spawn-code">hrbikini</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
+</tbody>
+</table>
+
+<!-- TRAP RANKS -->
+<div class="level-section">
+<div class="section-title"><div class="icon">⭐</div> Trap Rank Levels</div>
+<div class="section-sub">Higher rank = more money per sale</div>
+</div>
+<table>
+<thead><tr><th>Level</th><th>Title</th><th>Points Needed</th><th>Price Bonus</th></tr></thead>
+<tbody>
+<tr><td class="item-name">1</td><td>Corner Boy</td><td class="qty">10,000</td><td class="price">+10%</td></tr>
+<tr><td class="item-name">2</td><td>Dope Boy</td><td class="qty">40,000</td><td class="price">+14%</td></tr>
+<tr><td class="item-name">3</td><td>Trapstar</td><td class="qty">60,000</td><td class="price">+20%</td></tr>
+<tr><td class="item-name">4</td><td>OG</td><td class="qty">100,000</td><td class="price">+35%</td></tr>
+<tr><td class="item-name">5</td><td>Kingpin</td><td class="qty">200,000</td><td class="price price-high">+45%</td></tr>
+</tbody>
+</table>
+
+<!-- HOTZONES -->
+<div class="hotzone-section">
+<div class="section-title"><div class="icon">📍</div> Hotzones & Multipliers</div>
+<div class="section-sub">Selling in these areas gives bonus money</div>
+</div>
+<table>
+<thead><tr><th>Zone</th><th>Type</th><th>Multiplier</th><th>Radius</th></tr></thead>
+<tbody>
+<tr><td class="item-name">Postal 3014</td><td><span class="tier-badge tier-dirty">DIRTY</span></td><td class="price price-high">2.0x (double)</td><td class="qty">100m</td></tr>
+<tr><td class="item-name">Car Wash</td><td><span class="tier-badge tier-clean">CLEAN</span></td><td class="price">1.5x</td><td class="qty">100m</td></tr>
+<tr><td class="item-name">Mirror</td><td><span class="tier-badge tier-clean">CLEAN</span></td><td class="price">1.5x</td><td class="qty">100m</td></tr>
+</tbody>
+</table>
+
+<div class="note-box">
+<strong>Police Multiplier:</strong> 3+ cops = +10% | 5+ cops = +15% | 7+ cops = +20% | 10+ cops = +25% — applies to drug sales only.
+</div>
+
+<div class="footer">South Beach RP — Staff Reference — Do Not Share Publicly</div>
+</div>
+</body>
+</html>
