@@ -156,6 +156,21 @@ tbody td{padding:12px 16px}
 .badge-sold{background:rgba(77,255,136,0.12);color:var(--green)}
 .badge-forsale{background:rgba(255,225,77,0.12);color:var(--yellow)}
 
+/* BUSINESSES */
+.biz-stats{display:flex;gap:16px;justify-content:center;margin-bottom:40px;flex-wrap:wrap}
+.biz-stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 32px;text-align:center}
+.biz-stat .num{font-family:'Orbitron',sans-serif;font-size:32px;font-weight:900}
+.biz-stat .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.biz-section-title{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.biz-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:40px}
+.biz-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;transition:all 0.25s}
+.biz-card:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-2px)}
+.biz-card h4{font-size:15px;font-weight:700;margin-bottom:8px}
+.biz-card .biz-type{font-size:11px;color:var(--muted);margin-bottom:10px}
+.biz-badge{display:inline-block;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.badge-sold{background:rgba(255,45,123,0.12);color:var(--pink)}
+.badge-forsale{background:rgba(77,255,136,0.12);color:var(--green)}
+
 /* FOOTER */
 footer{position:relative;z-index:1;text-align:center;padding:40px 30px;border-top:1px solid var(--border)}
 footer img{height:40px;margin-bottom:12px;border-radius:8px}
@@ -206,7 +221,6 @@ tbody td{padding:8px}
 <li><a onclick="showPage('links')" data-page="links">City Links</a></li>
 <li><a onclick="showPage('businesses')" data-page="businesses">Businesses</a></li>
 <li><a onclick="showPage('staff')" data-page="staff">Staff</a></li>
-<li><a onclick="showPage('businesses')" data-page="businesses">Businesses</a></li>
 <li><a onclick="showPage('changelog')" data-page="changelog">Updates</a></li>
 <li><a href="https://store.southbeach.gg/" target="_blank" class="nav-cta">Store</a></li>
 </ul>
@@ -625,70 +639,6 @@ tbody td{padding:8px}
 </div>
 </div>
 
-<!-- BUSINESSES PAGE -->
-<div id="page-businesses" class="page">
-<div class="inner-page">
-<div class="page-header"><h2>City <span class="accent">Businesses</span></h2><p>26 active businesses — 10 still available</p><div class="line"></div></div>
-
-<div class="info-box" style="margin-bottom:30px"><strong>26 businesses are currently owned and active.</strong> 10 properties are still available for purchase. Join the Business District Discord to apply.</div>
-
-<div class="price-tabs">
-<button class="price-tab active" onclick="showBizTab('sold',this)">🏢 Sold / Active (26)</button>
-<button class="price-tab" onclick="showBizTab('forsale',this)">🔥 For Sale (10)</button>
-</div>
-
-<div id="biztab-sold" class="biz-content" style="display:block">
-<table><thead><tr><th>#</th><th>Business Name</th><th>Type</th><th>Status</th></tr></thead><tbody>
-<tr><td class="qty">1</td><td class="item-name">Club 77 Nightclub</td><td>Nightclub</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">2</td><td class="item-name">Energy Auto Mechanic Shop</td><td>Mechanic</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">3</td><td class="item-name">Horny's Restaurant</td><td>Restaurant</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">4</td><td class="item-name">Crumbly Cookie</td><td>Food</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">5</td><td class="item-name">Smokey's Hookah Lounge</td><td>Lounge</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">6</td><td class="item-name">Paradise Gentlemen's Club</td><td>Nightclub</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">7</td><td class="item-name">West View Auto Mechanic</td><td>Mechanic</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">8</td><td class="item-name">Pizza This</td><td>Restaurant</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">9</td><td class="item-name">Ammunation Main Gun Store</td><td>Gun Store</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">10</td><td class="item-name">Ammu-Nation Gun Store 1</td><td>Gun Store</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">11</td><td class="item-name">Ammu-Nation Gun Store 2</td><td>Gun Store</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">12</td><td class="item-name">Ammu-Nation Gun Store 3</td><td>Gun Store</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">13</td><td class="item-name">Gun Club Gun Store 4</td><td>Gun Store</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">14</td><td class="item-name">Ammu-nation Gun Store 5</td><td>Gun Store</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">15</td><td class="item-name">Vangelico Jewelry Store (Icebox)</td><td>Jewelry</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">16</td><td class="item-name">Auto Exotic Mechanic Shop</td><td>Mechanic</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">17</td><td class="item-name">Doobie Dab</td><td>Dispensary</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">18</td><td class="item-name">Riverside Serenity</td><td>Lounge</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">19</td><td class="item-name">Uwu Cafe</td><td>Cafe</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">20</td><td class="item-name">Trey Baker</td><td>Bakery</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">21</td><td class="item-name">Vanilla Sex Shop</td><td>Shop</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">22</td><td class="item-name">High Notes Dispensary</td><td>Dispensary</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">23</td><td class="item-name">Jerk and Jam</td><td>Restaurant</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">24</td><td class="item-name">Burgershot</td><td>Restaurant</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">25</td><td class="item-name">Bubble Cafe</td><td>Cafe</td><td><span class="tier-dirty">SOLD</span></td></tr>
-<tr><td class="qty">26</td><td class="item-name">The Towns Bar & Grill</td><td>Bar / Restaurant</td><td><span class="tier-dirty">SOLD</span></td></tr>
-</tbody></table>
-</div>
-
-<div id="biztab-forsale" class="biz-content" style="display:none">
-<table><thead><tr><th>#</th><th>Business Name</th><th>Type</th><th>Status</th></tr></thead><tbody>
-<tr><td class="qty">1</td><td class="item-name">Huggy Bears</td><td>Shop</td><td><span class="tier-clean">FOR SALE</span></td></tr>
-<tr><td class="qty">2</td><td class="item-name">Brickbearz</td><td>Shop</td><td><span class="tier-clean">FOR SALE</span></td></tr>
-<tr><td class="qty">3</td><td class="item-name">The Pocket Plug</td><td>Shop</td><td><span class="tier-clean">FOR SALE</span></td></tr>
-<tr><td class="qty">4</td><td class="item-name">Noodle</td><td>Restaurant</td><td><span class="tier-clean">FOR SALE</span></td></tr>
-<tr><td class="qty">5</td><td class="item-name">South Beach Mall Center Restaurants</td><td>Food Court</td><td><span class="tier-clean">FOR SALE</span></td></tr>
-<tr><td class="qty">6</td><td class="item-name">Drift Playground Mechanic Shop</td><td>Mechanic</td><td><span class="tier-clean">FOR SALE</span></td></tr>
-<tr><td class="qty">7</td><td class="item-name">Ammu-Nation Gun Store 6</td><td>Gun Store</td><td><span class="tier-clean">FOR SALE</span></td></tr>
-<tr><td class="qty">8</td><td class="item-name">Bennys Motorworks Mechanic Shop</td><td>Mechanic</td><td><span class="tier-clean">FOR SALE</span></td></tr>
-<tr><td class="qty">9</td><td class="item-name">Tuning Bar Mechanic</td><td>Mechanic</td><td><span class="tier-clean">FOR SALE</span></td></tr>
-<tr><td class="qty">10</td><td class="item-name">Speed Syndrome Mechanic Shop</td><td>Mechanic</td><td><span class="tier-clean">FOR SALE</span></td></tr>
-</tbody></table>
-</div>
-
-<div style="text-align:center;margin-top:30px">
-<a href="https://discord.gg/ktUuYEBj2j" target="_blank" class="btn btn-teal">🏢 Join Business District Discord</a>
-</div>
-</div>
-</div>
-
 <!-- STAFF PAGE -->
 <div id="page-staff" class="page">
 <div class="inner-page">
@@ -772,12 +722,6 @@ function showBizTab(tab, btn) {
     document.querySelectorAll('.biz-content').forEach(t => t.classList.remove('active'));
     document.getElementById('biz-' + tab).classList.add('active');
     btn.closest('.price-tabs').querySelectorAll('.price-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-}
-function showBizTab(tab, btn) {
-    document.querySelectorAll('.biz-content').forEach(t => t.style.display = 'none');
-    document.getElementById('biztab-' + tab).style.display = 'block';
-    btn.parentElement.querySelectorAll('.price-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 }
 </script>
