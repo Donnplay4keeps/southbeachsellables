@@ -3,213 +3,475 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>South Beach — Drug & Item Price Guide</title>
+<title>South Beach Miami RP</title>
+<meta name="description" content="South Beach Miami — #1 Serious Roleplay Server">
+<meta name="theme-color" content="#ff2d7b">
+<link rel="icon" type="image/png" href="images/watermark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+:root{--pink:#ff2d7b;--teal:#00f0ff;--yellow:#ffe14d;--green:#4dff88;--purple:#b44dff;--dark:#080810;--dark2:#0c0c1a;--dark3:#111125;--card:rgba(15,15,35,0.85);--border:rgba(255,255,255,0.06);--text:#e0e0f0;--muted:#666688}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',Arial,Helvetica,sans-serif;background:#0a0a0f;color:#e8e8f0;padding:40px 20px}
-.container{max-width:900px;margin:0 auto}
-.header{text-align:center;margin-bottom:50px;padding:40px 30px;background:linear-gradient(135deg,#12121a,#1a0a0a);border:1px solid #1e1e32;border-radius:16px}
-.header h1{font-size:32px;font-weight:900;background:linear-gradient(135deg,#ff4d4d,#ff8c42);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
-.header p{color:#666680;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:600}
-.note-box{background:rgba(255,204,77,0.08);border:1px solid rgba(255,204,77,0.2);border-radius:10px;padding:14px 18px;margin-bottom:30px;font-size:13px;color:#ccc;line-height:1.6}
-.note-box strong{color:#ffcc4d}
-.note-box code{background:#161622;padding:2px 6px;border-radius:4px;font-size:12px;color:#88aaff}
-.section-title{font-size:20px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:10px}
-.section-title .icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0}
-.section-sub{font-size:12px;color:#555570;margin-bottom:20px;font-weight:500;letter-spacing:0.5px}
-.drug-section .icon{background:linear-gradient(135deg,#ff4d4d,#ff8c42)}
-.clean-section .icon{background:linear-gradient(135deg,#4dff88,#42c6ff)}
-.level-section .icon{background:linear-gradient(135deg,#a855f7,#6366f1)}
-.hotzone-section .icon{background:linear-gradient(135deg,#ffcc4d,#ff8c42)}
-table{width:100%;border-collapse:collapse;margin-bottom:40px;font-size:13px}
-thead th{text-align:left;padding:12px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#555570;border-bottom:1px solid #1e1e32}
-tbody tr{border-bottom:1px solid #141420;transition:background 0.15s}
+html{scroll-behavior:smooth}
+body{font-family:'Rajdhani',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(rgba(255,45,123,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,240,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,16,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 30px;height:70px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer}
+.nav-logo img{height:42px;width:42px;border-radius:8px}
+.nav-logo span{font-family:'Orbitron',sans-serif;font-weight:800;font-size:16px;background:linear-gradient(135deg,var(--pink),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:6px;list-style:none;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:13px;padding:8px 14px;border-radius:8px;transition:all 0.2s;letter-spacing:0.5px;text-transform:uppercase;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{color:var(--teal);background:rgba(0,240,255,0.06)}
+.nav-cta{background:linear-gradient(135deg,var(--pink),#ff6b3d)!important;color:#fff!important;font-weight:700!important;padding:10px 20px!important;border-radius:8px!important}
+.nav-cta:hover{opacity:0.9}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:5px}
+.hamburger span{width:28px;height:2px;background:var(--teal);border-radius:2px;transition:0.3s}
+
+/* PAGE SYSTEM */
+.page{display:none;position:relative;z-index:1}
+.page.active{display:block}
+
+/* HERO */
+.hero{position:relative;width:100%;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 30px 60px}
+.hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;background:url('images/welcomebanner2.png') center/cover no-repeat;filter:brightness(0.35);z-index:-1}
+.hero-bg::after{content:'';position:absolute;bottom:0;left:0;right:0;height:350px;background:linear-gradient(transparent,var(--dark))}
+.hero-logo{width:260px;margin-bottom:30px;animation:floatLogo 4s ease-in-out infinite;filter:drop-shadow(0 0 40px rgba(255,45,123,0.4))}
+@keyframes floatLogo{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.hero h1{font-family:'Orbitron',sans-serif;font-size:48px;font-weight:900;line-height:1.1;margin-bottom:16px;text-transform:uppercase}
+.grad-pink{background:linear-gradient(135deg,var(--pink),#ff6b3d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.grad-teal{background:linear-gradient(135deg,var(--teal),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:19px;color:#aaaacc;max-width:550px;margin:0 auto 40px;font-weight:500}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:10px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;text-decoration:none;text-transform:uppercase;letter-spacing:1px;transition:all 0.25s;border:none;cursor:pointer}
+.btn-pink{background:linear-gradient(135deg,var(--pink),#ff6b3d);color:#fff;box-shadow:0 0 30px rgba(255,45,123,0.3)}
+.btn-pink:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(255,45,123,0.5)}
+.btn-teal{background:transparent;color:var(--teal);border:2px solid var(--teal)}
+.btn-teal:hover{background:rgba(0,240,255,0.08);transform:translateY(-2px)}
+.btn-discord{background:#5865F2;color:#fff}
+.btn-discord:hover{background:#4752c4;transform:translateY(-2px)}
+.btn-green{background:linear-gradient(135deg,var(--green),var(--teal));color:#080810}
+.btn-green:hover{transform:translateY(-2px)}
+
+/* FEATURES STRIP */
+.features-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1100px;margin:-50px auto 0;padding:0 30px;position:relative;z-index:2}
+.feature-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 22px;text-align:center;backdrop-filter:blur(10px);transition:all 0.3s}
+.feature-card:hover{border-color:rgba(0,240,255,0.2);transform:translateY(-4px);box-shadow:0 0 30px rgba(0,240,255,0.15)}
+.feature-icon{font-size:32px;margin-bottom:12px}
+.feature-card h3{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--teal);margin-bottom:6px;text-transform:uppercase}
+.feature-card p{font-size:14px;color:var(--muted);line-height:1.4}
+
+/* INNER PAGES */
+.inner-page{max-width:1100px;margin:0 auto;padding:100px 30px 60px}
+.page-header{text-align:center;margin-bottom:50px}
+.page-header h2{font-family:'Orbitron',sans-serif;font-size:36px;font-weight:900;text-transform:uppercase;margin-bottom:10px}
+.page-header .accent{color:var(--pink)}
+.page-header p{color:var(--muted);font-size:16px}
+.page-header .line{width:60px;height:3px;background:linear-gradient(90deg,var(--pink),var(--teal));margin:16px auto 0;border-radius:3px}
+
+/* RULES */
+.key-rules{background:var(--card);border:1px solid rgba(255,45,123,0.15);border-radius:14px;padding:30px;margin-bottom:30px}
+.key-rules h3{font-family:'Orbitron',sans-serif;font-size:15px;color:var(--pink);margin-bottom:16px;text-transform:uppercase}
+.key-rule-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.key-rule-item:last-child{border-bottom:none}
+.key-rule-item .dot{width:8px;height:8px;border-radius:50%;background:var(--pink);margin-top:7px;flex-shrink:0}
+.key-rule-item strong{color:var(--teal)}
+.rules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.rule-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;transition:all 0.3s;cursor:pointer;text-decoration:none;color:inherit;display:block}
+.rule-card:hover{border-color:rgba(255,45,123,0.3);transform:translateY(-3px);box-shadow:0 0 30px rgba(255,45,123,0.15)}
+.rule-card .rule-icon{font-size:28px;margin-bottom:14px}
+.rule-card h3{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--pink);margin-bottom:8px;text-transform:uppercase}
+.rule-card p{font-size:14px;color:var(--muted);line-height:1.5;margin-bottom:14px}
+.rule-card .rule-link{color:var(--teal);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+
+/* PRICE GUIDE */
+.price-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.price-tab{padding:10px 24px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;background:var(--card);border:1px solid var(--border);color:var(--muted);transition:all 0.2s;font-family:'Rajdhani',sans-serif}
+.price-tab:hover{border-color:rgba(0,240,255,0.2);color:var(--teal)}
+.price-tab.active{background:rgba(255,45,123,0.1);border-color:var(--pink);color:var(--pink)}
+.price-content{display:none}
+.price-content.active{display:block}
+.info-box{background:var(--card);border:1px solid rgba(255,225,77,0.15);border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:13px;color:#ccc;line-height:1.6}
+.info-box strong{color:var(--yellow)}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+thead th{text-align:left;padding:14px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);border-bottom:1px solid var(--border);background:rgba(0,0,0,0.3)}
+tbody tr{border-bottom:1px solid rgba(255,255,255,0.02);transition:background 0.15s}
 tbody tr:hover{background:rgba(255,255,255,0.02)}
-tbody td{padding:11px 14px;vertical-align:middle}
+tbody td{padding:12px 16px}
 .item-name{font-weight:700;color:#f0f0f5}
-.spawn-code{font-family:'JetBrains Mono',Consolas,'Courier New',monospace;font-size:11px;background:#161622;border:1px solid #1e1e32;padding:4px 8px;border-radius:5px;color:#88aaff;white-space:nowrap;display:inline-block}
-.price{font-family:'JetBrains Mono',Consolas,'Courier New',monospace;font-weight:600;color:#4dff88}
-.price-high{color:#ff4d4d}
-.price-mid{color:#ffcc4d}
-.price-low{color:#4dff88}
-.qty{font-family:'JetBrains Mono',Consolas,'Courier New',monospace;font-size:12px;color:#8888aa}
-.tier-badge{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:0.5px}
-.tier-8{background:rgba(255,77,77,0.15);color:#ff4d4d}
-.tier-7{background:rgba(255,140,66,0.15);color:#ff8c42}
-.tier-6{background:rgba(255,204,77,0.15);color:#ffcc4d}
-.tier-4{background:rgba(168,85,247,0.15);color:#a855f7}
-.tier-3{background:rgba(99,102,241,0.15);color:#818cf8}
-.tier-1{background:rgba(77,255,136,0.1);color:#4dff88}
-.tier-custom{background:rgba(66,198,255,0.1);color:#42c6ff}
-.tier-clean{background:rgba(77,255,136,0.15);color:#4dff88}
-.tier-dirty{background:rgba(255,77,77,0.15);color:#ff4d4d}
-.footer{text-align:center;padding:30px;font-size:11px;color:#333350;border-top:1px solid #12121a;margin-top:20px}
-@media(max-width:700px){
-body{padding:15px 10px}
-.header{padding:25px 15px}
-.header h1{font-size:22px}
+.spawn-code{font-family:'JetBrains Mono',monospace;font-size:11px;background:rgba(0,0,0,0.4);border:1px solid var(--border);padding:4px 8px;border-radius:5px;color:var(--teal);white-space:nowrap}
+.price{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--green)}
+.price-high{color:var(--pink)}
+.price-mid{color:var(--yellow)}
+.price-low{color:var(--green)}
+.qty{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
+.tier-dirty{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:700;background:rgba(255,45,123,0.15);color:var(--pink)}
+.tier-clean{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:700;background:rgba(77,255,136,0.15);color:var(--green)}
+
+/* CITY LINKS */
+.links-main{display:flex;flex-direction:column;gap:16px;margin-bottom:40px}
+.link-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px 28px;display:flex;align-items:center;gap:18px;text-decoration:none;color:inherit;transition:all 0.25s}
+.link-card:hover{border-color:rgba(88,101,242,0.4);transform:translateY(-3px);box-shadow:0 0 30px rgba(88,101,242,0.15)}
+.link-icon{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.link-card h4{font-family:'Orbitron',sans-serif;font-size:13px;color:#f0f0f5;text-transform:uppercase;margin-bottom:4px}
+.link-card p{font-size:13px;color:var(--muted)}
+
+/* STAFF */
+.staff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.staff-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;text-align:center;transition:all 0.3s}
+.staff-card:hover{border-color:rgba(255,45,123,0.2);transform:translateY(-3px)}
+.staff-avatar{width:70px;height:70px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;font-family:'Orbitron',sans-serif;color:#fff}
+.staff-card h4{font-family:'Orbitron',sans-serif;font-size:14px;margin-bottom:8px}
+.staff-role{font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:700;padding:4px 12px;border-radius:20px;display:inline-block}
+.role-owner{color:var(--pink);background:rgba(255,45,123,0.12)}
+.role-admin{color:var(--teal);background:rgba(0,240,255,0.1)}
+.role-mod{color:var(--yellow);background:rgba(255,225,77,0.1)}
+.role-dev{color:var(--purple);background:rgba(180,77,255,0.1)}
+
+/* CHANGELOG */
+.changelog-list{display:flex;flex-direction:column;gap:16px}
+.changelog-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;border-left:3px solid var(--pink)}
+.changelog-item .date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--pink);margin-bottom:8px;text-transform:uppercase}
+.changelog-item h4{font-family:'Orbitron',sans-serif;font-size:14px;margin-bottom:8px}
+.changelog-item p{font-size:14px;color:var(--muted);line-height:1.6}
+.tag{display:inline-block;padding:2px 10px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase;margin-right:6px}
+.tag-new{background:rgba(77,255,136,0.12);color:var(--green)}
+.tag-fix{background:rgba(255,45,123,0.12);color:var(--pink)}
+.tag-update{background:rgba(0,240,255,0.1);color:var(--teal)}
+
+/* FOOTER */
+footer{position:relative;z-index:1;text-align:center;padding:40px 30px;border-top:1px solid var(--border)}
+footer img{height:40px;margin-bottom:12px;border-radius:8px}
+footer p{font-size:12px;color:var(--muted)}
+footer .footer-links{display:flex;gap:20px;justify-content:center;margin-top:12px}
+footer .footer-links a{color:var(--muted);text-decoration:none;font-size:12px;transition:color 0.2s}
+footer .footer-links a:hover{color:var(--teal)}
+
+/* MOBILE */
+@media(max-width:768px){
+.hamburger{display:flex}
+.nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:rgba(8,8,16,0.98);flex-direction:column;padding:20px;border-bottom:1px solid var(--border)}
+.nav-links.open{display:flex}
+.hero h1{font-size:28px}
+.hero p{font-size:16px}
+.hero-logo{width:160px}
+.features-strip{grid-template-columns:repeat(2,1fr);margin-top:-30px;padding:0 15px}
+.inner-page{padding:90px 15px 40px}
+.page-header h2{font-size:24px}
+.hero-btns{flex-direction:column;align-items:center}
+.btn{width:100%;max-width:280px;justify-content:center}
 table{font-size:11px}
-thead th{padding:8px 6px;font-size:9px}
-tbody td{padding:8px 6px}
+thead th{padding:10px 8px;font-size:9px}
+tbody td{padding:8px}
 .spawn-code{font-size:9px;padding:2px 5px}
+.rules-grid{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+.features-strip{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
-<div class="container">
-<div class="header">
-<h1>South Beach — Price Guide</h1>
-<p>Staff Reference — Drug & Clean Item Sell Prices</p>
+
+<!-- NAV -->
+<nav>
+<a class="nav-logo" onclick="showPage('home')">
+<img src="images/watermark.png" alt="SBM">
+<span>SOUTH BEACH</span>
+</a>
+<div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+<span></span><span></span><span></span>
+</div>
+<ul class="nav-links" id="navLinks">
+<li><a onclick="showPage('home')" class="active" data-page="home">Home</a></li>
+<li><a onclick="showPage('rules')" data-page="rules">Rules</a></li>
+<li><a onclick="showPage('prices')" data-page="prices">Prices</a></li>
+<li><a onclick="showPage('links')" data-page="links">City Links</a></li>
+<li><a onclick="showPage('staff')" data-page="staff">Staff</a></li>
+<li><a onclick="showPage('changelog')" data-page="changelog">Updates</a></li>
+<li><a href="https://store.southbeach.gg/" target="_blank" class="nav-cta">Store</a></li>
+</ul>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+<div class="hero">
+<div class="hero-bg"></div>
+<img src="images/watermark.png" alt="South Beach Miami" class="hero-logo">
+<h1><span class="grad-pink">South Beach</span><br><span class="grad-teal">Miami RP</span></h1>
+<p>#1 Serious Roleplay — Custom drugs, factions, economy, and a city that never sleeps.</p>
+<div class="hero-btns">
+<a href="https://discord.gg/sbmrp" target="_blank" class="btn btn-discord">🎮 Join Discord</a>
+<a href="cfx.re/join/3eddyb" target="_blank" class="btn btn-green">▶ Connect to Server</a>
+<a href="https://store.southbeach.gg/" target="_blank" class="btn btn-pink">🛒 Visit Store</a>
+<a onclick="showPage('rules')" class="btn btn-teal">📋 Read Rules</a>
+</div>
+</div>
+<div class="features-strip">
+<div class="feature-card"><div class="feature-icon">💊</div><h3>Custom Drugs</h3><p>60+ unique drugs with tiered pricing and trap rank system</p></div>
+<div class="feature-card"><div class="feature-icon">⚔️</div><h3>Faction Wars</h3><p>Staff-triggered plug wars, CK system, and faction tiers</p></div>
+<div class="feature-card"><div class="feature-icon">🏎️</div><h3>Custom Cars</h3><p>Imported vehicles, VIP exclusives, and street racing</p></div>
+<div class="feature-card"><div class="feature-icon">🌴</div><h3>Miami Vibes</h3><p>Custom MLOs, businesses, housing, and a living economy</p></div>
+</div>
 </div>
 
-<div class="note-box">
-<strong>How to read this:</strong> Prices shown are per-unit sell price to NPCs. Qty is how many units sell per transaction. Spawn code is the item name for <code>/giveitem</code> or admin commands. Prices can vary based on trap rank level bonuses (+10% to +45%), police multiplier (+10% to +25% with 3-10 cops online), and hotzone multipliers.
+<!-- RULES PAGE -->
+<div id="page-rules" class="page">
+<div class="inner-page">
+<div class="page-header"><h2>Server <span class="accent">Rules</span></h2><p>Know the rules before you step into the city</p><div class="line"></div></div>
+<div class="key-rules">
+<h3>📌 Key Rules at a Glance</h3>
+<div class="key-rule-item"><div class="dot"></div><div><strong>2v1 / 3v1</strong> — No fear = death = CK (Character Kill)</div></div>
+<div class="key-rule-item"><div class="dot"></div><div><strong>PD Rule</strong> — Shoot first and get head tapped = valid CK</div></div>
+<div class="key-rule-item"><div class="dot"></div><div><strong>CK Rule</strong> — Requires 6+ meaningful interactions before a CK</div></div>
+<div class="key-rule-item"><div class="dot"></div><div><strong>Brandishing</strong> — Pulling a weapon = initiation, but 2 mins RP required before shots</div></div>
+<div class="key-rule-item"><div class="dot"></div><div><strong>Plug Wars</strong> — Staff triggered only. T2+ factions only</div></div>
+</div>
+<div class="rules-grid">
+<a href="https://docs.google.com/document/d/1nAFaHC5lT0Oi4JwIPikrvBccLz66-ZguJv8xyVS6Apo/edit?usp=sharing" target="_blank" class="rule-card"><div class="rule-icon">📜</div><h3>Server Rules</h3><p>General rules — RDM, VDM, metagaming, powergaming, and all standard RP guidelines.</p><span class="rule-link">Read Full Rules →</span></a>
+<a href="https://docs.google.com/document/d/1VQfp1uZPopJC4tkxw8JvUGfNPPh4NgoNLC6rpA7WxgY/edit?usp=sharing" target="_blank" class="rule-card"><div class="rule-icon">⚔️</div><h3>Faction Rules</h3><p>Gangs, organizations, faction tiers, territory, and war mechanics.</p><span class="rule-link">Read Faction Rules →</span></a>
+<a href="https://docs.google.com/document/d/1jfB4KIV0qta8_EfWl68-drXFK4Nl_s7xWZUtWIakE6Q/edit?usp=sharing" target="_blank" class="rule-card"><div class="rule-icon">💀</div><h3>CK Rules</h3><p>Character Kill guidelines — when CKs are valid, interaction requirements, appeal process.</p><span class="rule-link">Read CK Rules →</span></a>
+<a href="https://docs.google.com/document/d/1d4NFCIzDfvA9bPV_w-MiClwBz8NZQxVNgyV0MBaXvMQ/edit?usp=sharing" target="_blank" class="rule-card"><div class="rule-icon">🚔</div><h3>PD Code of Conduct</h3><p>Police department rules, use of force, pursuit guidelines, chain of command.</p><span class="rule-link">Read PD Rules →</span></a>
+<a href="https://docs.google.com/document/d/13UvSF9oWcldKcvLsbcEdoi2TDOjzoP4Veynd1eQxxRQ/edit?usp=sharing" target="_blank" class="rule-card"><div class="rule-icon">⚖️</div><h3>DOJ Rules</h3><p>Court proceedings, lawyers, judges, and legal RP guidelines.</p><span class="rule-link">Read DOJ Rules →</span></a>
+</div>
+</div>
 </div>
 
-<!-- DRUGS -->
-<div class="drug-section">
-<div class="section-title"><div class="icon">💊</div> Drug Items (Black Money)</div>
-<div class="section-sub">Sold to street NPCs — pays dirty money</div>
+<!-- PRICES PAGE -->
+<div id="page-prices" class="page">
+<div class="inner-page">
+<div class="page-header"><h2>Sell <span class="accent">Price Guide</span></h2><p>All drug and clean item sell prices</p><div class="line"></div></div>
+<div class="info-box"><strong>How to read:</strong> Prices are per-unit to NPCs. Qty is units per transaction. Prices vary with trap rank (+10% to +45%), police multiplier (+10% to +25%), and hotzones.</div>
+<div class="price-tabs">
+<button class="price-tab active" onclick="showTab('drugs',this)">💊 Drugs</button>
+<button class="price-tab" onclick="showTab('clean',this)">🛍️ Clean</button>
+<button class="price-tab" onclick="showTab('ranks',this)">⭐ Ranks</button>
+<button class="price-tab" onclick="showTab('zones',this)">📍 Hotzones</button>
 </div>
-<table>
-<thead><tr><th>Item Name</th><th>Spawn Code</th><th>Sell Price</th><th>Qty</th></tr></thead>
-<tbody>
-<tr><td class="item-name">Cupid</td><td><span class="spawn-code">drug_cupid</span></td><td class="price price-high">$3,250 — $3,550</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Yellow Tris</td><td><span class="spawn-code">drug_tris</span></td><td class="price price-high">$1,850 — $2,350</td><td class="qty">1-5</td></tr>
-<tr><td class="item-name">Za Morant</td><td><span class="spawn-code">drug_zamorant</span></td><td class="price price-high">$1,600 — $1,800</td><td class="qty">1-5</td></tr>
-<tr><td class="item-name">Miffy Tabs</td><td><span class="spawn-code">drug_miffy_tabs</span></td><td class="price price-high">$1,600 — $1,800</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Benny Pack</td><td><span class="spawn-code">drug_benny_pack</span></td><td class="price price-high">$1,400 — $1,500</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">White Widow</td><td><span class="spawn-code">drug_whitewidow</span></td><td class="price price-high">$1,400 — $1,500</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Draco Pills</td><td><span class="spawn-code">drug_dracopill</span></td><td class="price price-high">$1,400 — $1,500</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">187 Packs</td><td><span class="spawn-code">drug_187packs</span></td><td class="price price-high">$1,400 — $1,500</td><td class="qty">1-6</td></tr>
-<tr><td class="item-name">Yank</td><td><span class="spawn-code">drug_yank</span></td><td class="price price-mid">$1,300 — $1,400</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Black Tare</td><td><span class="spawn-code">drug_blacktare1</span></td><td class="price price-mid">$1,300 — $1,400</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Pink Venom</td><td><span class="spawn-code">drug_pinkvemon</span></td><td class="price price-mid">$1,300 — $1,400</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Tesla Pills</td><td><span class="spawn-code">drug_teslapills</span></td><td class="price price-mid">$1,300 — $1,400</td><td class="qty">1-5</td></tr>
-<tr><td class="item-name">UwU Pills</td><td><span class="spawn-code">drug_uwu_pills</span></td><td class="price price-mid">$1,300 — $1,400</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Yiddas</td><td><span class="spawn-code">drug_yiddas</span></td><td class="price price-mid">$1,300 — $1,400</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Ecstasy</td><td><span class="spawn-code">drug_ecstasy</span></td><td class="price price-mid">$1,100 — $1,200</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Orange Crush</td><td><span class="spawn-code">ls_orange_crush_bag</span></td><td class="price price-mid">$950 — $1,000</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Purple Haze (bag)</td><td><span class="spawn-code">ls_purple_haze_bag</span></td><td class="price price-mid">$850 — $900</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Murda 8</td><td><span class="spawn-code">drug_murdaeight</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Fairy Dust</td><td><span class="spawn-code">drug_fairydust</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Banana Kush</td><td><span class="spawn-code">ls_banana_kush_bag</span></td><td class="price">$750 — $800</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Pussy Juicebox</td><td><span class="spawn-code">pussy_juicebox</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Flakka</td><td><span class="spawn-code">drug_flakka</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">B30s</td><td><span class="spawn-code">drug_b30s</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">TRM Oxys</td><td><span class="spawn-code">drug_trmoxys</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Fetty</td><td><span class="spawn-code">drug_fetty</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Khetamine</td><td><span class="spawn-code">drug_khetamine</span></td><td class="price">$750 — $850</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Star Struck</td><td><span class="spawn-code">drug_starstruck</span></td><td class="price">$700 — $900</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Blue Dream</td><td><span class="spawn-code">ls_blue_dream_bag</span></td><td class="price">$650 — $700</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Jordan Jiggas</td><td><span class="spawn-code">drug_jordanjiggas</span></td><td class="price">$550 — $650</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Cosmic Kush</td><td><span class="spawn-code">ls_cosmic_kush_bag</span></td><td class="price">$550 — $650</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Smack</td><td><span class="spawn-code">drug_smack</span></td><td class="price">$550 — $650</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Percs</td><td><span class="spawn-code">perc5</span></td><td class="price">$450 — $550</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Crack</td><td><span class="spawn-code">ls_crack_bag</span></td><td class="price">$455 — $550</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Plain Jane</td><td><span class="spawn-code">ls_plain_jane_bag</span></td><td class="price">$450 — $600</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Coke</td><td><span class="spawn-code">ls_cocaine_bag</span></td><td class="price">$405 — $500</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Pink Cocaine</td><td><span class="spawn-code">drug_pink_cocaine</span></td><td class="price">$400 — $700</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Blue Dolphin</td><td><span class="spawn-code">drug_blue_dolphin</span></td><td class="price">$350 — $450</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Duce</td><td><span class="spawn-code">drug_duce</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Coco</td><td><span class="spawn-code">drug_coco</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Purp</td><td><span class="spawn-code">drug_purp</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Phantom Reds</td><td><span class="spawn-code">drug_phantom_reds</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">V Tap</td><td><span class="spawn-code">drug_vtap</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Dirty 30</td><td><span class="spawn-code">drug_dirty30</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Green Bars</td><td><span class="spawn-code">drug_greenbars</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Golden Keys</td><td><span class="spawn-code">drug_golden_keys</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Clouds</td><td><span class="spawn-code">drug_clouds</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Lean</td><td><span class="spawn-code">drug_lean</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Rhino Pills</td><td><span class="spawn-code">drug_rhinopills</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Juggernog</td><td><span class="spawn-code">drug_juggernog</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Purple Haze</td><td><span class="spawn-code">drug_purplehaze</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Est Pills</td><td><span class="spawn-code">drug_est_pills</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Laced Perc</td><td><span class="spawn-code">drug_lacedperc</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Merc</td><td><span class="spawn-code">drug_merc</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Icey Bluez</td><td><span class="spawn-code">drug_iceybluez</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Koko Juice</td><td><span class="spawn-code">drug_kokojuice</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Game Seven</td><td><span class="spawn-code">drug_gameseven</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Galaxy Gas</td><td><span class="spawn-code">drug_galaxy_gas</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Adderall XR 60MG</td><td><span class="spawn-code">drug_adderall_xr_60mg</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">M523</td><td><span class="spawn-code">drug_m523</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Zambieland</td><td><span class="spawn-code">drug_zambieland</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Montana</td><td><span class="spawn-code">drug_montana</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Diablo</td><td><span class="spawn-code">drug_diablo</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Zamaha Gelato</td><td><span class="spawn-code">drug_zamaha_gelato</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Gold Rush</td><td><span class="spawn-code">drug_goldrush</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Drip9</td><td><span class="spawn-code">drug_drip9</span></td><td class="price price-low">$200 — $300</td><td class="qty">1-3</td></tr>
-</tbody>
-</table>
 
-<!-- CLEAN ITEMS -->
-<div class="clean-section">
-<div class="section-title"><div class="icon">🛍️</div> Clean Items (Legal Money)</div>
-<div class="section-sub">Sold to street NPCs — pays clean money</div>
+<!-- DRUGS TAB -->
+<div id="tab-drugs" class="price-content active">
+<table><thead><tr><th>Item</th><th>Spawn Code</th><th>Price</th><th>Qty</th></tr></thead><tbody>
+<tr><td class="item-name">Cupid</td><td><span class="spawn-code">drug_cupid</span></td><td class="price price-high">$3,250—$3,550</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Yellow Tris</td><td><span class="spawn-code">drug_tris</span></td><td class="price price-high">$1,850—$2,350</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Za Morant</td><td><span class="spawn-code">drug_zamorant</span></td><td class="price price-high">$1,600—$1,800</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Miffy Tabs</td><td><span class="spawn-code">drug_miffy_tabs</span></td><td class="price price-high">$1,600—$1,800</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Benny Pack</td><td><span class="spawn-code">drug_benny_pack</span></td><td class="price price-high">$1,400—$1,500</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">White Widow</td><td><span class="spawn-code">drug_whitewidow</span></td><td class="price price-high">$1,400—$1,500</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Draco Pills</td><td><span class="spawn-code">drug_dracopill</span></td><td class="price price-high">$1,400—$1,500</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">187 Packs</td><td><span class="spawn-code">drug_187packs</span></td><td class="price price-high">$1,400—$1,500</td><td class="qty">1-6</td></tr>
+<tr><td class="item-name">Yank</td><td><span class="spawn-code">drug_yank</span></td><td class="price price-mid">$1,300—$1,400</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Black Tare</td><td><span class="spawn-code">drug_blacktare1</span></td><td class="price price-mid">$1,300—$1,400</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Pink Venom</td><td><span class="spawn-code">drug_pinkvemon</span></td><td class="price price-mid">$1,300—$1,400</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Tesla Pills</td><td><span class="spawn-code">drug_teslapills</span></td><td class="price price-mid">$1,300—$1,400</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">UwU Pills</td><td><span class="spawn-code">drug_uwu_pills</span></td><td class="price price-mid">$1,300—$1,400</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Yiddas</td><td><span class="spawn-code">drug_yiddas</span></td><td class="price price-mid">$1,300—$1,400</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Ecstasy</td><td><span class="spawn-code">drug_ecstasy</span></td><td class="price price-mid">$1,100—$1,200</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Orange Crush</td><td><span class="spawn-code">ls_orange_crush_bag</span></td><td class="price price-mid">$950—$1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Purple Haze (bag)</td><td><span class="spawn-code">ls_purple_haze_bag</span></td><td class="price price-mid">$850—$900</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Murda 8</td><td><span class="spawn-code">drug_murdaeight</span></td><td class="price">$750—$850</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Fairy Dust</td><td><span class="spawn-code">drug_fairydust</span></td><td class="price">$750—$850</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Banana Kush</td><td><span class="spawn-code">ls_banana_kush_bag</span></td><td class="price">$750—$800</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Pussy Juicebox</td><td><span class="spawn-code">pussy_juicebox</span></td><td class="price">$750—$850</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Flakka</td><td><span class="spawn-code">drug_flakka</span></td><td class="price">$750—$850</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">B30s</td><td><span class="spawn-code">drug_b30s</span></td><td class="price">$750—$850</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">TRM Oxys</td><td><span class="spawn-code">drug_trmoxys</span></td><td class="price">$750—$850</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Fetty</td><td><span class="spawn-code">drug_fetty</span></td><td class="price">$750—$850</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Khetamine</td><td><span class="spawn-code">drug_khetamine</span></td><td class="price">$750—$850</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Star Struck</td><td><span class="spawn-code">drug_starstruck</span></td><td class="price">$700—$900</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Blue Dream</td><td><span class="spawn-code">ls_blue_dream_bag</span></td><td class="price">$650—$700</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Jordan Jiggas</td><td><span class="spawn-code">drug_jordanjiggas</span></td><td class="price">$550—$650</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Cosmic Kush</td><td><span class="spawn-code">ls_cosmic_kush_bag</span></td><td class="price">$550—$650</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Smack</td><td><span class="spawn-code">drug_smack</span></td><td class="price">$550—$650</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Percs</td><td><span class="spawn-code">perc5</span></td><td class="price">$450—$550</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Crack</td><td><span class="spawn-code">ls_crack_bag</span></td><td class="price">$455—$550</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Plain Jane</td><td><span class="spawn-code">ls_plain_jane_bag</span></td><td class="price">$450—$600</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Coke</td><td><span class="spawn-code">ls_cocaine_bag</span></td><td class="price">$405—$500</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Pink Cocaine</td><td><span class="spawn-code">drug_pink_cocaine</span></td><td class="price">$400—$700</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Blue Dolphin</td><td><span class="spawn-code">drug_blue_dolphin</span></td><td class="price">$350—$450</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Duce</td><td><span class="spawn-code">drug_duce</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Coco</td><td><span class="spawn-code">drug_coco</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Purp</td><td><span class="spawn-code">drug_purp</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Phantom Reds</td><td><span class="spawn-code">drug_phantom_reds</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">V Tap</td><td><span class="spawn-code">drug_vtap</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Dirty 30</td><td><span class="spawn-code">drug_dirty30</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Green Bars</td><td><span class="spawn-code">drug_greenbars</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Golden Keys</td><td><span class="spawn-code">drug_golden_keys</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Clouds</td><td><span class="spawn-code">drug_clouds</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Lean</td><td><span class="spawn-code">drug_lean</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Rhino Pills</td><td><span class="spawn-code">drug_rhinopills</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Juggernog</td><td><span class="spawn-code">drug_juggernog</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Purple Haze</td><td><span class="spawn-code">drug_purplehaze</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Est Pills</td><td><span class="spawn-code">drug_est_pills</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Laced Perc</td><td><span class="spawn-code">drug_lacedperc</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Merc</td><td><span class="spawn-code">drug_merc</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Icey Bluez</td><td><span class="spawn-code">drug_iceybluez</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Koko Juice</td><td><span class="spawn-code">drug_kokojuice</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Game Seven</td><td><span class="spawn-code">drug_gameseven</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Galaxy Gas</td><td><span class="spawn-code">drug_galaxy_gas</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Adderall XR 60MG</td><td><span class="spawn-code">drug_adderall_xr_60mg</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">M523</td><td><span class="spawn-code">drug_m523</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Zambieland</td><td><span class="spawn-code">drug_zambieland</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Montana</td><td><span class="spawn-code">drug_montana</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Diablo</td><td><span class="spawn-code">drug_diablo</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Zamaha Gelato</td><td><span class="spawn-code">drug_zamaha_gelato</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Gold Rush</td><td><span class="spawn-code">drug_goldrush</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Drip9</td><td><span class="spawn-code">drug_drip9</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
+</tbody></table>
 </div>
-<table>
-<thead><tr><th>Item Name</th><th>Spawn Code</th><th>Sell Price</th><th>Qty</th></tr></thead>
-<tbody>
-<tr><td class="item-name">Durags</td><td><span class="spawn-code">durags</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
-<tr><td class="item-name">Bonnets</td><td><span class="spawn-code">bonnets</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
-<tr><td class="item-name">Brownie Bites</td><td><span class="spawn-code">brownie_bites</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
-<tr><td class="item-name">Chocolate</td><td><span class="spawn-code">chocolate</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
-<tr><td class="item-name">Cookies</td><td><span class="spawn-code">cookies</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
-<tr><td class="item-name">Gummies</td><td><span class="spawn-code">gummies</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
-<tr><td class="item-name">Krispy Bar</td><td><span class="spawn-code">krispy_bar</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
-<tr><td class="item-name">Mints</td><td><span class="spawn-code">mints</span></td><td class="price price-mid">$1,200 — $1,300</td><td class="qty">1-5</td></tr>
-<tr><td class="item-name">Cummy Gummies</td><td><span class="spawn-code">cummy_gummies</span></td><td class="price">$900 — $1,000</td><td class="qty">1-4</td></tr>
-<tr><td class="item-name">Fuzzy Cuffs</td><td><span class="spawn-code">fuzzy_cuffs</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Glow Butta</td><td><span class="spawn-code">glow_butta</span></td><td class="price">$900 — $1,000</td><td class="qty">1-4</td></tr>
-<tr><td class="item-name">Lingerie</td><td><span class="spawn-code">lingerie</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Wrap Star Condom</td><td><span class="spawn-code">wrap_star_condom</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Hair Spray</td><td><span class="spawn-code">hair_spray</span></td><td class="price">$900 — $1,000</td><td class="qty">1-5</td></tr>
-<tr><td class="item-name">XXXstasy</td><td><span class="spawn-code">xxxstasy</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Cup</td><td><span class="spawn-code">item_cup</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Coupon</td><td><span class="spawn-code">item_coupon</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Body Candy</td><td><span class="spawn-code">body_candy</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Hoodrich Shirt</td><td><span class="spawn-code">hrshirt</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
-<tr><td class="item-name">Hoodrich Bikini</td><td><span class="spawn-code">hrbikini</span></td><td class="price">$900 — $1,000</td><td class="qty">1-3</td></tr>
-</tbody>
-</table>
 
-<!-- TRAP RANKS -->
-<div class="level-section">
-<div class="section-title"><div class="icon">⭐</div> Trap Rank Levels</div>
-<div class="section-sub">Higher rank = more money per sale</div>
+<!-- CLEAN TAB -->
+<div id="tab-clean" class="price-content">
+<table><thead><tr><th>Item</th><th>Spawn Code</th><th>Price</th><th>Qty</th></tr></thead><tbody>
+<tr><td class="item-name">Durags</td><td><span class="spawn-code">durags</span></td><td class="price price-mid">$1,200—$1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Bonnets</td><td><span class="spawn-code">bonnets</span></td><td class="price price-mid">$1,200—$1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Brownie Bites</td><td><span class="spawn-code">brownie_bites</span></td><td class="price price-mid">$1,200—$1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Chocolate</td><td><span class="spawn-code">chocolate</span></td><td class="price price-mid">$1,200—$1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Cookies</td><td><span class="spawn-code">cookies</span></td><td class="price price-mid">$1,200—$1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Gummies</td><td><span class="spawn-code">gummies</span></td><td class="price price-mid">$1,200—$1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Krispy Bar</td><td><span class="spawn-code">krispy_bar</span></td><td class="price price-mid">$1,200—$1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Mints</td><td><span class="spawn-code">mints</span></td><td class="price price-mid">$1,200—$1,300</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">Cummy Gummies</td><td><span class="spawn-code">cummy_gummies</span></td><td class="price">$900—$1,000</td><td class="qty">1-4</td></tr>
+<tr><td class="item-name">Fuzzy Cuffs</td><td><span class="spawn-code">fuzzy_cuffs</span></td><td class="price">$900—$1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Glow Butta</td><td><span class="spawn-code">glow_butta</span></td><td class="price">$900—$1,000</td><td class="qty">1-4</td></tr>
+<tr><td class="item-name">Lingerie</td><td><span class="spawn-code">lingerie</span></td><td class="price">$900—$1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Wrap Star Condom</td><td><span class="spawn-code">wrap_star_condom</span></td><td class="price">$900—$1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Hair Spray</td><td><span class="spawn-code">hair_spray</span></td><td class="price">$900—$1,000</td><td class="qty">1-5</td></tr>
+<tr><td class="item-name">XXXstasy</td><td><span class="spawn-code">xxxstasy</span></td><td class="price">$900—$1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Cup</td><td><span class="spawn-code">item_cup</span></td><td class="price">$900—$1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Coupon</td><td><span class="spawn-code">item_coupon</span></td><td class="price">$900—$1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Body Candy</td><td><span class="spawn-code">body_candy</span></td><td class="price">$900—$1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Hoodrich Shirt</td><td><span class="spawn-code">hrshirt</span></td><td class="price">$900—$1,000</td><td class="qty">1-3</td></tr>
+<tr><td class="item-name">Hoodrich Bikini</td><td><span class="spawn-code">hrbikini</span></td><td class="price">$900—$1,000</td><td class="qty">1-3</td></tr>
+</tbody></table>
 </div>
-<table>
-<thead><tr><th>Level</th><th>Title</th><th>Points Needed</th><th>Price Bonus</th></tr></thead>
-<tbody>
+
+<!-- RANKS TAB -->
+<div id="tab-ranks" class="price-content">
+<table><thead><tr><th>Level</th><th>Title</th><th>Points Needed</th><th>Price Bonus</th></tr></thead><tbody>
 <tr><td class="item-name">1</td><td>Corner Boy</td><td class="qty">10,000</td><td class="price">+10%</td></tr>
 <tr><td class="item-name">2</td><td>Dope Boy</td><td class="qty">40,000</td><td class="price">+14%</td></tr>
 <tr><td class="item-name">3</td><td>Trapstar</td><td class="qty">60,000</td><td class="price">+20%</td></tr>
 <tr><td class="item-name">4</td><td>OG</td><td class="qty">100,000</td><td class="price">+35%</td></tr>
 <tr><td class="item-name">5</td><td>Kingpin</td><td class="qty">200,000</td><td class="price price-high">+45%</td></tr>
-</tbody>
-</table>
-
-<!-- HOTZONES -->
-<div class="hotzone-section">
-<div class="section-title"><div class="icon">📍</div> Hotzones & Multipliers</div>
-<div class="section-sub">Selling in these areas gives bonus money</div>
-</div>
-<table>
-<thead><tr><th>Zone</th><th>Type</th><th>Multiplier</th><th>Radius</th></tr></thead>
-<tbody>
-<tr><td class="item-name">Postal 3014</td><td><span class="tier-badge tier-dirty">DIRTY</span></td><td class="price price-high">2.0x (double)</td><td class="qty">100m</td></tr>
-<tr><td class="item-name">Car Wash</td><td><span class="tier-badge tier-clean">CLEAN</span></td><td class="price">1.5x</td><td class="qty">100m</td></tr>
-<tr><td class="item-name">Mirror</td><td><span class="tier-badge tier-clean">CLEAN</span></td><td class="price">1.5x</td><td class="qty">100m</td></tr>
-</tbody>
-</table>
-
-<div class="note-box">
-<strong>Police Multiplier:</strong> 3+ cops = +10% | 5+ cops = +15% | 7+ cops = +20% | 10+ cops = +25% — applies to drug sales only.
+</tbody></table>
+<div class="info-box" style="margin-top:20px"><strong>Police Multiplier:</strong> 3+ cops = +10% | 5+ cops = +15% | 7+ cops = +20% | 10+ cops = +25% — applies to drug sales only.</div>
 </div>
 
-<div class="footer">South Beach RP — Staff Reference — Do Not Share Publicly</div>
+<!-- ZONES TAB -->
+<div id="tab-zones" class="price-content">
+<table><thead><tr><th>Zone</th><th>Type</th><th>Multiplier</th><th>Radius</th></tr></thead><tbody>
+<tr><td class="item-name">Postal 3014</td><td><span class="tier-dirty">DIRTY</span></td><td class="price price-high">2.0x (double)</td><td class="qty">100m</td></tr>
+<tr><td class="item-name">Car Wash</td><td><span class="tier-clean">CLEAN</span></td><td class="price">1.5x</td><td class="qty">100m</td></tr>
+<tr><td class="item-name">Mirror</td><td><span class="tier-clean">CLEAN</span></td><td class="price">1.5x</td><td class="qty">100m</td></tr>
+</tbody></table>
 </div>
+</div>
+</div>
+
+<!-- CITY LINKS PAGE -->
+<div id="page-links" class="page">
+<div class="inner-page">
+<div class="page-header"><h2>City <span class="accent">Links</span></h2><p>All South Beach Miami departments and resources</p><div class="line"></div></div>
+
+<div style="text-align:center;margin-bottom:40px">
+<a href="https://discord.gg/sbmrp" target="_blank" class="btn btn-discord" style="font-size:18px;padding:18px 40px">🎮 Join Main Discord</a>
+</div>
+
+<div class="links-main">
+<a href="https://discord.gg/rumNh4jVvw" target="_blank" class="link-card"><div class="link-icon" style="background:linear-gradient(135deg,#3b82f6,#1e40af)">🚔</div><div><h4>Police Department (MPD)</h4><p>Miami Police Department — Apply and serve the city</p></div></a>
+<a href="https://discord.gg/wwYtWZHhT7" target="_blank" class="link-card"><div class="link-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626)">🏥</div><div><h4>Emergency Medical Center (EMS)</h4><p>South Beach EMS — Save lives in the city</p></div></a>
+<a href="https://discord.gg/WjZZDC8nZq" target="_blank" class="link-card"><div class="link-icon" style="background:linear-gradient(135deg,var(--pink),#ff6b3d)">⚔️</div><div><h4>Factions</h4><p>Gang and faction applications and information</p></div></a>
+<a href="https://discord.gg/77VWnNmMPy" target="_blank" class="link-card"><div class="link-icon" style="background:linear-gradient(135deg,var(--yellow),#f59e0b)">🏆</div><div><h4>Legacies</h4><p>South Beach Legacies — Established players and legacy factions</p></div></a>
+<a href="https://discord.gg/ktUuYEBj2j" target="_blank" class="link-card"><div class="link-icon" style="background:linear-gradient(135deg,var(--green),var(--teal))">🏢</div><div><h4>Business District</h4><p>Start and manage your own business in the city</p></div></a>
+<a href="https://discord.gg/KyxJQY9fxu" target="_blank" class="link-card"><div class="link-icon" style="background:linear-gradient(135deg,var(--purple),#7c3aed)">🏠</div><div><h4>Real Estate Department</h4><p>Buy, sell, and manage housing in South Beach</p></div></a>
+<a href="https://discord.gg/5CBkV9NdvW" target="_blank" class="link-card"><div class="link-icon" style="background:linear-gradient(135deg,var(--teal),#0ea5e9)">🎓</div><div><h4>University</h4><p>South Beach University — Learn and level up</p></div></a>
+<a href="https://discord.gg/mbUwRHZHQV" target="_blank" class="link-card"><div class="link-icon" style="background:linear-gradient(135deg,#f97316,var(--yellow))">🎪</div><div><h4>Event Team</h4><p>Server events, competitions, and community activities</p></div></a>
+<a href="https://discord.gg/MkeZZY45Gm" target="_blank" class="link-card"><div class="link-icon" style="background:linear-gradient(135deg,#6366f1,#4f46e5)">⚖️</div><div><h4>Department of Justice (DOJ)</h4><p>Courts, lawyers, judges, and legal proceedings</p></div></a>
+</div>
+
+<div style="text-align:center;margin-top:30px">
+<a href="https://store.southbeach.gg/" target="_blank" class="btn btn-pink" style="font-size:18px;padding:18px 40px">🛒 Visit the Store</a>
+<p style="color:var(--muted);font-size:13px;margin-top:12px">Support the server and get exclusive perks</p>
+</div>
+</div>
+</div>
+
+<!-- STAFF PAGE -->
+<div id="page-staff" class="page">
+<div class="inner-page">
+<div class="page-header"><h2>Our <span class="accent">Staff</span></h2><p>The team behind South Beach Miami</p><div class="line"></div></div>
+<div class="staff-grid">
+<div class="staff-card"><div class="staff-avatar" style="background:linear-gradient(135deg,var(--pink),#ff6b3d)">D</div><h4>Donn</h4><span class="staff-role role-owner">Owner / Dev</span></div>
+<div class="staff-card"><div class="staff-avatar" style="background:linear-gradient(135deg,var(--teal),var(--green))">?</div><h4>Staff Name</h4><span class="staff-role role-admin">Admin</span></div>
+<div class="staff-card"><div class="staff-avatar" style="background:linear-gradient(135deg,var(--yellow),#f59e0b)">?</div><h4>Staff Name</h4><span class="staff-role role-mod">Moderator</span></div>
+<div class="staff-card"><div class="staff-avatar" style="background:linear-gradient(135deg,var(--purple),#7c3aed)">?</div><h4>Staff Name</h4><span class="staff-role role-dev">Developer</span></div>
+</div>
+<p style="text-align:center;color:var(--muted);margin-top:30px;font-size:14px">Edit this page to add your full staff roster</p>
+</div>
+</div>
+
+<!-- CHANGELOG PAGE -->
+<div id="page-changelog" class="page">
+<div class="inner-page">
+<div class="page-header"><h2>Server <span class="accent">Updates</span></h2><p>Latest changes and additions to South Beach Miami</p><div class="line"></div></div>
+<div class="changelog-list">
+<div class="changelog-item">
+<div class="date">March 2, 2026</div>
+<h4><span class="tag tag-new">New</span> Website Launch</h4>
+<p>Official South Beach Miami website is now live with rules, price guides, city links, and staff roster.</p>
+</div>
+<div class="changelog-item">
+<div class="date">March 2, 2026</div>
+<h4><span class="tag tag-new">New</span> Cut Up In Traffic — Highway Racing</h4>
+<p>New racing script with party system, inline invites, VIP Discord vehicles, nametags, and admin panel.</p>
+</div>
+<div class="changelog-item">
+<div class="date">March 2, 2026</div>
+<h4><span class="tag tag-update">Update</span> Palm Beach Rulebook</h4>
+<p>Full rulebook drop — CK rules, faction rules, PD code of conduct, DOJ rules all updated and enforced.</p>
+</div>
+<div class="changelog-item">
+<div class="date">Recent</div>
+<h4><span class="tag tag-fix">Fix</span> Relog Weapon Fix</h4>
+<p>Fixed weapons and aiming being broken after using /relog. Combat state now properly resets on character load.</p>
+</div>
+</div>
+<p style="text-align:center;color:var(--muted);margin-top:30px;font-size:14px">Add new updates here as you push changes to the server</p>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+<img src="images/watermark.png" alt="SBM">
+<p>South Beach Miami RP — #1 Serious Roleplay</p>
+<div class="footer-links">
+<a href="https://discord.gg/sbmrp" target="_blank">Discord</a>
+<a href="https://store.southbeach.gg/" target="_blank">Store</a>
+<a href="cfx.re/join/3eddyb" target="_blank">Connect</a>
+<a onclick="showPage('rules')" style="cursor:pointer">Rules</a>
+</div>
+<p style="margin-top:16px">&copy; 2026 South Beach Miami RP. All rights reserved.</p>
+</footer>
+
+<script>
+function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
+        a.classList.toggle('active', a.dataset.page === page);
+    });
+    document.getElementById('navLinks').classList.remove('open');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showTab(tab, btn) {
+    document.querySelectorAll('.price-content').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.querySelectorAll('.price-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+</script>
 </body>
 </html>
