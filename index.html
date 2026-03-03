@@ -186,7 +186,7 @@ tbody td{padding:8px}
 <ul class="nav-links" id="navLinks">
 <li><a onclick="showPage('home')" class="active" data-page="home">Home</a></li>
 <li><a onclick="showPage('rules')" data-page="rules">Rules</a></li>
-<li><a onclick="showPage('prices')" data-page="prices">Prices</a></li>
+<li><a onclick="showPage('prices')" data-page="prices">Guide</a></li>
 <li><a onclick="showPage('links')" data-page="links">City Links</a></li>
 <li><a onclick="showPage('staff')" data-page="staff">Staff</a></li>
 <li><a onclick="showPage('changelog')" data-page="changelog">Updates</a></li>
@@ -202,12 +202,24 @@ tbody td{padding:8px}
 <h1><span class="grad-pink">South Beach</span><br><span class="grad-teal">Miami RP</span></h1>
 <p>#1 Serious Roleplay — Custom drugs, factions, economy, and a city that never sleeps.</p>
 <div class="hero-btns">
-<a href="https://discord.gg/sbmrp" target="_blank" class="btn btn-discord">🎮 Join Discord</a>
-<a href="cfx.re/join/3eddyb" target="_blank" class="btn btn-green">▶ Connect to Server</a>
+<a href="https://discord.gg/southbeach" target="_blank" class="btn btn-discord">🎮 Join Discord</a>
+<a href="https://cfx.re/join/3eddyb" target="_blank" class="btn btn-green">▶ Connect to Server</a>
 <a href="https://store.southbeach.gg/" target="_blank" class="btn btn-pink">🛒 Visit Store</a>
 <a onclick="showPage('rules')" class="btn btn-teal">📋 Read Rules</a>
 </div>
 </div>
+<div class="features-strip" style="margin-top:40px;grid-template-columns:1fr">
+<div class="feature-card" style="padding:0;overflow:hidden;border-color:rgba(255,45,123,0.3)">
+<div style="padding:20px 24px 14px;display:flex;align-items:center;gap:10px">
+<span style="background:var(--pink);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:800;text-transform:uppercase;font-family:'Orbitron',sans-serif;animation:pulse 2s infinite">🔥 HOT NEWS</span>
+<span style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--teal)">OFFICIAL TRAILER JUST DROPPED</span>
+</div>
+<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden">
+<iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:none" src="https://www.youtube.com/embed/2OeWYan3ij8" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
+</div>
+</div>
+</div>
+<style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.7}}</style>
 <div class="features-strip">
 <div class="feature-card"><div class="feature-icon">💊</div><h3>Custom Drugs</h3><p>60+ unique drugs with tiered pricing and trap rank system</p></div>
 <div class="feature-card"><div class="feature-icon">⚔️</div><h3>Faction Wars</h3><p>Staff-triggered plug wars, CK system, and faction tiers</p></div>
@@ -241,7 +253,7 @@ tbody td{padding:8px}
 <!-- PRICES PAGE -->
 <div id="page-prices" class="page">
 <div class="inner-page">
-<div class="page-header"><h2>Sell <span class="accent">Price Guide</span></h2><p>All drug and clean item sell prices</p><div class="line"></div></div>
+<div class="page-header"><h2>Server <span class="accent">Guide</span></h2><p>Sellable list — all drug and clean item sell prices</p><div class="line"></div></div>
 <div class="info-box"><strong>How to read:</strong> Prices are per-unit to NPCs. Qty is units per transaction. Prices vary with trap rank (+10% to +45%), police multiplier (+10% to +25%), and hotzones.</div>
 <div class="price-tabs">
 <button class="price-tab active" onclick="showTab('drugs',this)">💊 Drugs</button>
@@ -252,7 +264,7 @@ tbody td{padding:8px}
 
 <!-- DRUGS TAB -->
 <div id="tab-drugs" class="price-content active">
-<table><thead><tr><th>Item</th><th>Spawn Code</th><th>Price</th><th>Qty</th></tr></thead><tbody>
+<table><thead><tr><th>Sellable List</th><th>Spawn Code</th><th>Price</th><th>Qty</th></tr></thead><tbody>
 <tr><td class="item-name">Cupid</td><td><span class="spawn-code">drug_cupid</span></td><td class="price price-high">$3,250—$3,550</td><td class="qty">1-3</td></tr>
 <tr><td class="item-name">Yellow Tris</td><td><span class="spawn-code">drug_tris</span></td><td class="price price-high">$1,850—$2,350</td><td class="qty">1-5</td></tr>
 <tr><td class="item-name">Za Morant</td><td><span class="spawn-code">drug_zamorant</span></td><td class="price price-high">$1,600—$1,800</td><td class="qty">1-5</td></tr>
@@ -323,7 +335,7 @@ tbody td{padding:8px}
 
 <!-- CLEAN TAB -->
 <div id="tab-clean" class="price-content">
-<table><thead><tr><th>Item</th><th>Spawn Code</th><th>Price</th><th>Qty</th></tr></thead><tbody>
+<table><thead><tr><th>Sellable List</th><th>Spawn Code</th><th>Price</th><th>Qty</th></tr></thead><tbody>
 <tr><td class="item-name">Durags</td><td><span class="spawn-code">durags</span></td><td class="price price-mid">$1,200—$1,300</td><td class="qty">1-5</td></tr>
 <tr><td class="item-name">Bonnets</td><td><span class="spawn-code">bonnets</span></td><td class="price price-mid">$1,200—$1,300</td><td class="qty">1-5</td></tr>
 <tr><td class="item-name">Brownie Bites</td><td><span class="spawn-code">brownie_bites</span></td><td class="price price-mid">$1,200—$1,300</td><td class="qty">1-5</td></tr>
@@ -376,7 +388,7 @@ tbody td{padding:8px}
 <div class="page-header"><h2>City <span class="accent">Links</span></h2><p>All South Beach Miami departments and resources</p><div class="line"></div></div>
 
 <div style="text-align:center;margin-bottom:40px">
-<a href="https://discord.gg/sbmrp" target="_blank" class="btn btn-discord" style="font-size:18px;padding:18px 40px">🎮 Join Main Discord</a>
+<a href="https://discord.gg/southbeach" target="_blank" class="btn btn-discord" style="font-size:18px;padding:18px 40px">🎮 Join Main Discord</a>
 </div>
 
 <div class="links-main">
@@ -403,10 +415,10 @@ tbody td{padding:8px}
 <div class="inner-page">
 <div class="page-header"><h2>Our <span class="accent">Staff</span></h2><p>The team behind South Beach Miami</p><div class="line"></div></div>
 <div class="staff-grid">
-<div class="staff-card"><div class="staff-avatar" style="background:linear-gradient(135deg,var(--pink),#ff6b3d)">D</div><h4>Donn</h4><span class="staff-role role-owner">Owner / Dev</span></div>
-<div class="staff-card"><div class="staff-avatar" style="background:linear-gradient(135deg,var(--teal),var(--green))">?</div><h4>Staff Name</h4><span class="staff-role role-admin">Admin</span></div>
-<div class="staff-card"><div class="staff-avatar" style="background:linear-gradient(135deg,var(--yellow),#f59e0b)">?</div><h4>Staff Name</h4><span class="staff-role role-mod">Moderator</span></div>
-<div class="staff-card"><div class="staff-avatar" style="background:linear-gradient(135deg,var(--purple),#7c3aed)">?</div><h4>Staff Name</h4><span class="staff-role role-dev">Developer</span></div>
+<div class="staff-card"><div class="staff-avatar" style="background:linear-gradient(135deg,var(--yellow),#f59e0b)">T</div><h4>Top Rackxzz</h4><span class="staff-role role-owner">Founder</span></div>
+<div class="staff-card"><div class="staff-avatar" style="background:linear-gradient(135deg,var(--pink),#ff6b3d)">D</div><h4>Donn</h4><span class="staff-role role-owner">Co-Owner</span><br><span class="staff-role role-dev" style="margin-top:6px">Main Developer</span></div>
+<div class="staff-card"><div class="staff-avatar" style="background:linear-gradient(135deg,var(--teal),var(--green))">Y</div><h4>YBN</h4><span class="staff-role role-owner">Co-Owner</span></div>
+<div class="staff-card"><div class="staff-avatar" style="background:linear-gradient(135deg,var(--purple),#7c3aed)">Y</div><h4>Yammy</h4><span class="staff-role role-owner">Co-Owner</span></div>
 </div>
 <p style="text-align:center;color:var(--muted);margin-top:30px;font-size:14px">Edit this page to add your full staff roster</p>
 </div>
@@ -447,9 +459,9 @@ tbody td{padding:8px}
 <img src="images/watermark.png" alt="SBM">
 <p>South Beach Miami RP — #1 Serious Roleplay</p>
 <div class="footer-links">
-<a href="https://discord.gg/sbmrp" target="_blank">Discord</a>
+<a href="https://discord.gg/southbeach" target="_blank">Discord</a>
 <a href="https://store.southbeach.gg/" target="_blank">Store</a>
-<a href="cfx.re/join/3eddyb" target="_blank">Connect</a>
+<a href="https://cfx.re/join/3eddyb" target="_blank">Connect</a>
 <a onclick="showPage('rules')" style="cursor:pointer">Rules</a>
 </div>
 <p style="margin-top:16px">&copy; 2026 South Beach Miami RP. All rights reserved.</p>
