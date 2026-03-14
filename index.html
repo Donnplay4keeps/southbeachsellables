@@ -15,8 +15,6 @@
 html{scroll-behavior:smooth}
 body{font-family:'Rajdhani',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden}
 body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(rgba(255,45,123,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,240,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
-
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,16,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 30px;height:70px;display:flex;align-items:center;justify-content:space-between}
 .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer}
 .nav-logo img{height:42px;width:42px;border-radius:8px}
@@ -28,12 +26,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,16,0.92
 .nav-cta:hover{opacity:0.9}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:5px}
 .hamburger span{width:28px;height:2px;background:var(--teal);border-radius:2px;transition:0.3s}
-
-/* PAGE SYSTEM */
 .page{display:none;position:relative;z-index:1}
 .page.active{display:block}
-
-/* HERO */
 .hero{position:relative;width:100%;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 30px 60px}
 .hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;background:url('images/welcomebanner2.png') center/cover no-repeat;filter:brightness(0.35);z-index:-1}
 .hero-bg::after{content:'';position:absolute;bottom:0;left:0;right:0;height:350px;background:linear-gradient(transparent,var(--dark))}
@@ -53,24 +47,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,16,0.92
 .btn-discord:hover{background:#4752c4;transform:translateY(-2px)}
 .btn-green{background:linear-gradient(135deg,var(--green),var(--teal));color:#080810}
 .btn-green:hover{transform:translateY(-2px)}
-
-/* FEATURES STRIP */
 .features-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1100px;margin:-50px auto 0;padding:0 30px;position:relative;z-index:2}
 .feature-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 22px;text-align:center;backdrop-filter:blur(10px);transition:all 0.3s}
 .feature-card:hover{border-color:rgba(0,240,255,0.2);transform:translateY(-4px);box-shadow:0 0 30px rgba(0,240,255,0.15)}
 .feature-icon{font-size:32px;margin-bottom:12px}
 .feature-card h3{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--teal);margin-bottom:6px;text-transform:uppercase}
 .feature-card p{font-size:14px;color:var(--muted);line-height:1.4}
-
-/* INNER PAGES */
 .inner-page{max-width:1100px;margin:0 auto;padding:100px 30px 60px}
 .page-header{text-align:center;margin-bottom:50px}
 .page-header h2{font-family:'Orbitron',sans-serif;font-size:36px;font-weight:900;text-transform:uppercase;margin-bottom:10px}
 .page-header .accent{color:var(--pink)}
 .page-header p{color:var(--muted);font-size:16px}
 .page-header .line{width:60px;height:3px;background:linear-gradient(90deg,var(--pink),var(--teal));margin:16px auto 0;border-radius:3px}
-
-/* RULES */
 .key-rules{background:var(--card);border:1px solid rgba(255,45,123,0.15);border-radius:14px;padding:30px;margin-bottom:30px}
 .key-rules h3{font-family:'Orbitron',sans-serif;font-size:15px;color:var(--pink);margin-bottom:16px;text-transform:uppercase}
 .key-rule-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
@@ -84,8 +72,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,16,0.92
 .rule-card h3{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--pink);margin-bottom:8px;text-transform:uppercase}
 .rule-card p{font-size:14px;color:var(--muted);line-height:1.5;margin-bottom:14px}
 .rule-card .rule-link{color:var(--teal);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
-
-/* PRICE GUIDE */
 .price-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
 .price-tab{padding:10px 24px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;background:var(--card);border:1px solid var(--border);color:var(--muted);transition:all 0.2s;font-family:'Rajdhani',sans-serif}
 .price-tab:hover{border-color:rgba(0,240,255,0.2);color:var(--teal)}
@@ -108,16 +94,12 @@ tbody td{padding:12px 16px}
 .qty{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
 .tier-dirty{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:700;background:rgba(255,45,123,0.15);color:var(--pink)}
 .tier-clean{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:700;background:rgba(77,255,136,0.15);color:var(--green)}
-
-/* CITY LINKS */
 .links-main{display:flex;flex-direction:column;gap:16px;margin-bottom:40px}
 .link-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px 28px;display:flex;align-items:center;gap:18px;text-decoration:none;color:inherit;transition:all 0.25s}
 .link-card:hover{border-color:rgba(88,101,242,0.4);transform:translateY(-3px);box-shadow:0 0 30px rgba(88,101,242,0.15)}
 .link-icon{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
 .link-card h4{font-family:'Orbitron',sans-serif;font-size:13px;color:#f0f0f5;text-transform:uppercase;margin-bottom:4px}
 .link-card p{font-size:13px;color:var(--muted)}
-
-/* STAFF */
 .staff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
 .staff-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;text-align:center;transition:all 0.3s}
 .staff-card:hover{border-color:rgba(255,45,123,0.2);transform:translateY(-3px)}
@@ -128,8 +110,6 @@ tbody td{padding:12px 16px}
 .role-admin{color:var(--teal);background:rgba(0,240,255,0.1)}
 .role-mod{color:var(--yellow);background:rgba(255,225,77,0.1)}
 .role-dev{color:var(--purple);background:rgba(180,77,255,0.1)}
-
-/* CHANGELOG */
 .changelog-list{display:flex;flex-direction:column;gap:16px}
 .changelog-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;border-left:3px solid var(--pink)}
 .changelog-item .date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--pink);margin-bottom:8px;text-transform:uppercase}
@@ -139,47 +119,55 @@ tbody td{padding:12px 16px}
 .tag-new{background:rgba(77,255,136,0.12);color:var(--green)}
 .tag-fix{background:rgba(255,45,123,0.12);color:var(--pink)}
 .tag-update{background:rgba(0,240,255,0.1);color:var(--teal)}
-
-.biz-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:30px}
-.biz-stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center}
-.biz-stat-num{font-family:'Orbitron',sans-serif;font-size:36px;font-weight:900}
-.biz-stat-label{font-size:13px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
-.biz-content{display:none}
-.biz-content.active{display:block}
-.biz-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
-.biz-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;transition:all 0.2s}
-.biz-card:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-2px)}
-.biz-card.sold{border-left:3px solid var(--green)}
-.biz-card.forsale{border-left:3px solid var(--yellow)}
-.biz-name{font-weight:700;font-size:14px}
-.biz-badge{font-size:10px;font-weight:700;padding:4px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;margin-left:12px}
-.badge-sold{background:rgba(77,255,136,0.12);color:var(--green)}
-.badge-forsale{background:rgba(255,225,77,0.12);color:var(--yellow)}
-
-/* BUSINESSES */
 .biz-stats{display:flex;gap:16px;justify-content:center;margin-bottom:40px;flex-wrap:wrap}
 .biz-stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 32px;text-align:center}
 .biz-stat .num{font-family:'Orbitron',sans-serif;font-size:32px;font-weight:900}
 .biz-stat .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.biz-stat-num{font-family:'Orbitron',sans-serif;font-size:36px;font-weight:900}
+.biz-stat-label{font-size:13px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+.biz-content{display:none}
+.biz-content.active{display:block}
 .biz-section-title{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px}
 .biz-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:40px}
 .biz-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;transition:all 0.25s}
 .biz-card:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-2px)}
 .biz-card h4{font-size:15px;font-weight:700;margin-bottom:8px}
 .biz-card .biz-type{font-size:11px;color:var(--muted);margin-bottom:10px}
-.biz-badge{display:inline-block;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.biz-card.sold{border-left:3px solid var(--green)}
+.biz-card.forsale{border-left:3px solid var(--yellow)}
+.biz-name{font-weight:700;font-size:14px}
+.biz-badge{display:inline-block;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;margin-left:12px}
 .badge-sold{background:rgba(255,45,123,0.12);color:var(--pink)}
 .badge-forsale{background:rgba(77,255,136,0.12);color:var(--green)}
-
-/* FOOTER */
 footer{position:relative;z-index:1;text-align:center;padding:40px 30px;border-top:1px solid var(--border)}
 footer img{height:40px;margin-bottom:12px;border-radius:8px}
 footer p{font-size:12px;color:var(--muted)}
 footer .footer-links{display:flex;gap:20px;justify-content:center;margin-top:12px}
 footer .footer-links a{color:var(--muted);text-decoration:none;font-size:12px;transition:color 0.2s}
 footer .footer-links a:hover{color:var(--teal)}
-
-/* MOBILE */
+.accordion{display:flex;flex-direction:column;gap:12px}
+.acc-item{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.acc-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;transition:all 0.2s;user-select:none}
+.acc-header:hover{background:rgba(255,255,255,0.02)}
+.acc-header-left{display:flex;align-items:center;gap:14px}
+.acc-header-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.acc-header h3{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase}
+.acc-header p{font-size:13px;color:var(--muted);margin-top:2px}
+.acc-arrow{font-size:18px;color:var(--muted);transition:transform 0.3s}
+.acc-item.open .acc-arrow{transform:rotate(180deg);color:var(--teal)}
+.acc-item.open .acc-header{border-bottom:1px solid var(--border)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.acc-item.open .acc-body{max-height:5000px}
+.acc-body-inner{padding:20px 24px}
+.acc-subtitle{font-family:'Orbitron',sans-serif;font-size:12px;color:var(--pink);text-transform:uppercase;margin:20px 0 10px;letter-spacing:1px}
+.acc-subtitle:first-child{margin-top:0}
+.acc-text{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:12px}
+.acc-text strong{color:var(--teal)}
+.acc-list{list-style:none;padding:0}
+.acc-list li{padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;color:#ccc;display:flex;align-items:flex-start;gap:10px}
+.acc-list li:last-child{border-bottom:none}
+.acc-list li .li-dot{width:6px;height:6px;border-radius:50%;background:var(--pink);margin-top:7px;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.7}}
 @media(max-width:768px){
 .hamburger{display:flex}
 .nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:rgba(8,8,16,0.98);flex-direction:column;padding:20px;border-bottom:1px solid var(--border)}
@@ -198,14 +186,10 @@ tbody td{padding:8px}
 .spawn-code{font-size:9px;padding:2px 5px}
 .rules-grid{grid-template-columns:1fr}
 }
-@media(max-width:480px){
-.features-strip{grid-template-columns:1fr}
-}
+@media(max-width:480px){.features-strip{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
-<!-- NAV -->
 <nav>
 <a class="nav-logo" onclick="showPage('home')">
 <img src="images/watermark.png" alt="SBM">
@@ -226,7 +210,6 @@ tbody td{padding:8px}
 </ul>
 </nav>
 
-<!-- HOME PAGE -->
 <div id="page-home" class="page active">
 <div class="hero">
 <div class="hero-bg"></div>
@@ -251,7 +234,6 @@ tbody td{padding:8px}
 </div>
 </div>
 </div>
-<style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.7}}</style>
 <div class="features-strip">
 <div class="feature-card"><div class="feature-icon">💊</div><h3>Custom Drugs</h3><p>60+ unique drugs with tiered pricing and trap rank system</p></div>
 <div class="feature-card"><div class="feature-icon">⚔️</div><h3>Faction Wars</h3><p>Staff-triggered plug wars, CK system, and faction tiers</p></div>
@@ -259,8 +241,6 @@ tbody td{padding:8px}
 <div class="feature-card"><div class="feature-icon">🌴</div><h3>Miami Vibes</h3><p>Custom MLOs, businesses, housing, and a living economy</p></div>
 </div>
 </div>
-
-<!-- RULES PAGE -->
 <div id="page-rules" class="page">
 <div class="inner-page">
 <div class="page-header"><h2>Server <span class="accent">Rules</span></h2><p>Know the rules before you step into the city</p><div class="line"></div></div>
@@ -281,41 +261,11 @@ tbody td{padding:8px}
 </div>
 </div>
 </div>
-
-<!-- GUIDE PAGE -->
 <div id="page-prices" class="page">
 <div class="inner-page">
 <div class="page-header"><h2>Server <span class="accent">Guide</span></h2><p>Everything you need to know about South Beach Miami</p><div class="line"></div></div>
-
-<!-- ACCORDION STYLES -->
-<style>
-.accordion{display:flex;flex-direction:column;gap:12px}
-.acc-item{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden}
-.acc-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;transition:all 0.2s;user-select:none}
-.acc-header:hover{background:rgba(255,255,255,0.02)}
-.acc-header-left{display:flex;align-items:center;gap:14px}
-.acc-header-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.acc-header h3{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase}
-.acc-header p{font-size:13px;color:var(--muted);margin-top:2px}
-.acc-arrow{font-size:18px;color:var(--muted);transition:transform 0.3s}
-.acc-item.open .acc-arrow{transform:rotate(180deg);color:var(--teal)}
-.acc-item.open .acc-header{border-bottom:1px solid var(--border)}
-.acc-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
-.acc-item.open .acc-body{max-height:5000px}
-.acc-body-inner{padding:20px 24px}
-.acc-subtitle{font-family:'Orbitron',sans-serif;font-size:12px;color:var(--pink);text-transform:uppercase;margin:20px 0 10px;letter-spacing:1px}
-.acc-subtitle:first-child{margin-top:0}
-.acc-text{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:12px}
-.acc-text strong{color:var(--teal)}
-.acc-list{list-style:none;padding:0}
-.acc-list li{padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;color:#ccc;display:flex;align-items:flex-start;gap:10px}
-.acc-list li:last-child{border-bottom:none}
-.acc-list li .li-dot{width:6px;height:6px;border-radius:50%;background:var(--pink);margin-top:7px;flex-shrink:0}
-</style>
-
 <div class="accordion">
 
-<!-- SELLABLE LIST -->
 <div class="acc-item">
 <div class="acc-header" onclick="toggleAcc(this)">
 <div class="acc-header-left">
@@ -325,9 +275,7 @@ tbody td{padding:8px}
 <span class="acc-arrow">▼</span>
 </div>
 <div class="acc-body"><div class="acc-body-inner">
-
 <div class="info-box"><strong>How to read:</strong> Prices are per-unit to NPCs. Qty is units per transaction. Prices vary with trap rank (+10% to +45%), police multiplier (+10% to +25%), and hotzones.</div>
-
 <div class="acc-subtitle">Drug Items (Black Money)</div>
 <table><thead><tr><th>Sellable List</th><th>Spawn Code</th><th>Price</th><th>Qty</th></tr></thead><tbody>
 <tr><td class="item-name">Cupid</td><td><span class="spawn-code">drug_cupid</span></td><td class="price price-high">$3,250—$3,550</td><td class="qty">1-3</td></tr>
@@ -396,7 +344,6 @@ tbody td{padding:8px}
 <tr><td class="item-name">Gold Rush</td><td><span class="spawn-code">drug_goldrush</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
 <tr><td class="item-name">Drip9</td><td><span class="spawn-code">drug_drip9</span></td><td class="price price-low">$200—$300</td><td class="qty">1-3</td></tr>
 </tbody></table>
-
 <div class="acc-subtitle">Clean Items (Legal Money)</div>
 <table><thead><tr><th>Sellable List</th><th>Spawn Code</th><th>Price</th><th>Qty</th></tr></thead><tbody>
 <tr><td class="item-name">Durags</td><td><span class="spawn-code">durags</span></td><td class="price price-mid">$1,200—$1,300</td><td class="qty">1-5</td></tr>
@@ -420,7 +367,6 @@ tbody td{padding:8px}
 <tr><td class="item-name">Hoodrich Shirt</td><td><span class="spawn-code">hrshirt</span></td><td class="price">$900—$1,000</td><td class="qty">1-3</td></tr>
 <tr><td class="item-name">Hoodrich Bikini</td><td><span class="spawn-code">hrbikini</span></td><td class="price">$900—$1,000</td><td class="qty">1-3</td></tr>
 </tbody></table>
-
 <div class="acc-subtitle">Trap Rank Levels</div>
 <table><thead><tr><th>Level</th><th>Title</th><th>Points</th><th>Bonus</th></tr></thead><tbody>
 <tr><td class="item-name">1</td><td>Corner Boy</td><td class="qty">10,000</td><td class="price">+10%</td></tr>
@@ -429,20 +375,16 @@ tbody td{padding:8px}
 <tr><td class="item-name">4</td><td>OG</td><td class="qty">100,000</td><td class="price">+35%</td></tr>
 <tr><td class="item-name">5</td><td>Kingpin</td><td class="qty">200,000</td><td class="price price-high">+45%</td></tr>
 </tbody></table>
-
 <div class="acc-subtitle">Hotzones</div>
 <table><thead><tr><th>Zone</th><th>Type</th><th>Multiplier</th><th>Radius</th></tr></thead><tbody>
 <tr><td class="item-name">Postal 3014</td><td><span class="tier-dirty">DIRTY</span></td><td class="price price-high">2.0x</td><td class="qty">100m</td></tr>
 <tr><td class="item-name">Car Wash</td><td><span class="tier-clean">CLEAN</span></td><td class="price">1.5x</td><td class="qty">100m</td></tr>
 <tr><td class="item-name">Mirror</td><td><span class="tier-clean">CLEAN</span></td><td class="price">1.5x</td><td class="qty">100m</td></tr>
 </tbody></table>
-
 <div class="info-box" style="margin-top:16px"><strong>Police Multiplier:</strong> 3+ cops = +10% | 5+ cops = +15% | 7+ cops = +20% | 10+ cops = +25%</div>
-
 </div></div>
 </div>
 
-<!-- ACTIVITIES -->
 <div class="acc-item">
 <div class="acc-header" onclick="toggleAcc(this)">
 <div class="acc-header-left">
@@ -464,7 +406,6 @@ tbody td{padding:8px}
 </div></div>
 </div>
 
-<!-- BUSINESSES -->
 <div class="acc-item">
 <div class="acc-header" onclick="toggleAcc(this)">
 <div class="acc-header-left">
@@ -485,8 +426,70 @@ tbody td{padding:8px}
 <p class="acc-text" style="margin-top:14px">Join the <a href="https://discord.gg/ktUuYEBj2j" target="_blank" style="color:var(--teal);text-decoration:none;font-weight:700">Business District Discord</a> to apply for a business license.</p>
 </div></div>
 </div>
+<!-- BUSINESS TIERS -->
+<div class="acc-item">
+<div class="acc-header" onclick="toggleAcc(this)">
+<div class="acc-header-left">
+<div class="acc-header-icon" style="background:linear-gradient(135deg,var(--pink),var(--purple))">🏆</div>
+<div><h3>Business Tier System</h3><p>Earn points through ads & events to unlock rewards for your business</p></div>
+</div>
+<span class="acc-arrow">▼</span>
+</div>
+<div class="acc-body"><div class="acc-body-inner">
 
-<!-- GETTING STARTED -->
+<div class="info-box"><strong>How Points Work:</strong> Business owners earn <strong style="color:var(--teal)">2 points per ad</strong> posted. Night Clubs earn <strong style="color:var(--teal)">6 points per event</strong> hosted. Hit tier thresholds to unlock rewards. Once you unlock the Stock Tier (T4), you can spend <strong style="color:var(--green)">250 points per additional 1,000 stock</strong> — repeatable forever.</div>
+
+<div class="acc-subtitle">🔫 Gun Stores — 2 pts/ad (14 ads/week = 28 pts/week)</div>
+<table><thead><tr><th>Tier</th><th>Points Required</th><th>Reward</th></tr></thead><tbody>
+<tr><td class="item-name">T1</td><td class="price">112 pts</td><td>Avoid Activity Strike</td></tr>
+<tr><td class="item-name">T2</td><td class="price">224 pts</td><td>3× Weekly Payout</td></tr>
+<tr><td class="item-name">T3</td><td class="price">336 pts</td><td>100 Armor To Sell</td></tr>
+<tr><td class="item-name">T4 — Stock Tier</td><td class="price price-high">500 pts</td><td>+1,000 Stock to Sellables <span class="tier-dirty">250 pts per 1k after</span></td></tr>
+</tbody></table>
+<div class="info-box" style="margin-top:10px"><strong>Monthly Bonus:</strong> 450 pts → 5,000 Gold Gems · 550 pts → Weapon Repair Bench</div>
+
+<div class="acc-subtitle">🔧 Mechanic Shops — 2 pts/ad (14 ads/week = 28 pts/week)</div>
+<table><thead><tr><th>Tier</th><th>Points Required</th><th>Reward</th></tr></thead><tbody>
+<tr><td class="item-name">T1</td><td class="price">112 pts</td><td>Avoid Activity Strike</td></tr>
+<tr><td class="item-name">T2</td><td class="price">224 pts</td><td>3× Hourly Payout</td></tr>
+<tr><td class="item-name">T3</td><td class="price">336 pts</td><td>10% off car parts <em>(Once unlocked, spend 300 pts for an additional 10% off — repeatable)</em></td></tr>
+</tbody></table>
+<div class="info-box" style="margin-top:10px"><strong>Monthly Bonus (650 pts):</strong> Free car added to your dealership <em>(must already own a dealership)</em></div>
+
+<div class="acc-subtitle">🎵 Night Clubs — 6 pts/event (3 events/week = 18 pts/week)</div>
+<table><thead><tr><th>Tier</th><th>Points Required</th><th>Reward</th></tr></thead><tbody>
+<tr><td class="item-name">T1</td><td class="price">72 pts</td><td>Open 3×/Week + Avoid Activity Strike</td></tr>
+<tr><td class="item-name">T2</td><td class="price">144 pts</td><td>Open 6×/Week + 3× Weekly Payout</td></tr>
+<tr><td class="item-name">T3</td><td class="price">216 pts</td><td>Open 9×/Week + Add 1 Food/Drink <strong>or</strong> 2× Multiplier on 1 item</td></tr>
+<tr><td class="item-name">T4 — Stock Tier</td><td class="price price-high">324 pts</td><td>+1,000 Stock to Sellables <span class="tier-dirty">250 pts per 1k after</span></td></tr>
+</tbody></table>
+<div class="info-box" style="margin-top:10px"><strong>Monthly Bonus:</strong> 30 pts → Clothing Tier/Uniform · 35 pts → Turn any Menu Item into a sellable · 40 pts → Choose an effect for 1 item</div>
+
+<div class="acc-subtitle">🍽️ Restaurants — 2 pts/ad (14 ads/week = 28 pts/week)</div>
+<table><thead><tr><th>Tier</th><th>Points Required</th><th>Reward</th></tr></thead><tbody>
+<tr><td class="item-name">T1</td><td class="price">112 pts</td><td>Avoid Activity Strike</td></tr>
+<tr><td class="item-name">T2</td><td class="price">224 pts</td><td>3× Hourly Payout</td></tr>
+<tr><td class="item-name">T3</td><td class="price">336 pts</td><td>Add 1 Food/Drink <strong>or</strong> 2× Multiplier on 1 item</td></tr>
+<tr><td class="item-name">T4 — Stock Tier</td><td class="price price-high">500 pts</td><td>+1,000 Stock to Sellables <span class="tier-dirty">250 pts per 1k after</span></td></tr>
+</tbody></table>
+<div class="info-box" style="margin-top:10px"><strong>Monthly Bonus:</strong> 450 pts → Clothing Tier/Uniform · 550 pts → Turn any Menu Item into a sellable · 650 pts → Choose an effect for 1 item</div>
+
+<div class="acc-subtitle">⏱️ Timeline — How Long To Tier Up</div>
+<table><thead><tr><th>Pace</th><th>Pts/Week</th><th>T1</th><th>T2</th><th>T3</th><th>T4</th></tr></thead><tbody>
+<tr><td class="item-name">Normal (14 ads)</td><td class="qty">28 pts</td><td>4 weeks</td><td>8 weeks</td><td>12 weeks</td><td>18 weeks</td></tr>
+<tr><td class="item-name">Double (28 ads)</td><td class="qty">56 pts</td><td>2 weeks</td><td>4 weeks</td><td>6 weeks</td><td>9 weeks</td></tr>
+<tr><td class="item-name">Triple (42 ads)</td><td class="qty">84 pts</td><td>~1.5 weeks</td><td>~2.5 weeks</td><td>4 weeks</td><td>6 weeks</td></tr>
+</tbody></table>
+
+<table style="margin-top:12px"><thead><tr><th>Night Club Pace</th><th>Pts/Week</th><th>T1</th><th>T2</th><th>T3</th><th>T4</th></tr></thead><tbody>
+<tr><td class="item-name">Normal (3 events)</td><td class="qty">18 pts</td><td>4 weeks</td><td>8 weeks</td><td>12 weeks</td><td>18 weeks</td></tr>
+<tr><td class="item-name">Double (6 events)</td><td class="qty">36 pts</td><td>2 weeks</td><td>4 weeks</td><td>6 weeks</td><td>9 weeks</td></tr>
+<tr><td class="item-name">Triple (9 events)</td><td class="qty">54 pts</td><td>~1.5 weeks</td><td>~2.5 weeks</td><td>4 weeks</td><td>6 weeks</td></tr>
+</tbody></table>
+
+</div></div>
+</div>
+
 <div class="acc-item">
 <div class="acc-header" onclick="toggleAcc(this)">
 <div class="acc-header-left">
@@ -506,7 +509,6 @@ tbody td{padding:8px}
 </div></div>
 </div>
 
-<!-- HOUSING -->
 <div class="acc-item">
 <div class="acc-header" onclick="toggleAcc(this)">
 <div class="acc-header-left">
@@ -521,7 +523,6 @@ tbody td{padding:8px}
 </div></div>
 </div>
 
-<!-- LEGAL JOBS -->
 <div class="acc-item">
 <div class="acc-header" onclick="toggleAcc(this)">
 <div class="acc-header-left">
@@ -541,19 +542,15 @@ tbody td{padding:8px}
 </div></div>
 </div>
 
-</div><!-- end accordion -->
 </div>
 </div>
-
-<!-- CITY LINKS PAGE -->
+</div>
 <div id="page-links" class="page">
 <div class="inner-page">
 <div class="page-header"><h2>City <span class="accent">Links</span></h2><p>All South Beach Miami departments and resources</p><div class="line"></div></div>
-
 <div style="text-align:center;margin-bottom:40px">
 <a href="https://discord.gg/southbeach" target="_blank" class="btn btn-discord" style="font-size:18px;padding:18px 40px">🎮 Join Main Discord</a>
 </div>
-
 <div class="links-main">
 <a href="https://discord.gg/rumNh4jVvw" target="_blank" class="link-card"><div class="link-icon" style="background:linear-gradient(135deg,#3b82f6,#1e40af)">🚔</div><div><h4>Police Department (MPD)</h4><p>Miami Police Department — Apply and serve the city</p></div></a>
 <a href="https://discord.gg/wwYtWZHhT7" target="_blank" class="link-card"><div class="link-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626)">🏥</div><div><h4>Emergency Medical Center (EMS)</h4><p>South Beach EMS — Save lives in the city</p></div></a>
@@ -565,7 +562,6 @@ tbody td{padding:8px}
 <a href="https://discord.gg/mbUwRHZHQV" target="_blank" class="link-card"><div class="link-icon" style="background:linear-gradient(135deg,#f97316,var(--yellow))">🎪</div><div><h4>Event Team</h4><p>Server events, competitions, and community activities</p></div></a>
 <a href="https://discord.gg/MkeZZY45Gm" target="_blank" class="link-card"><div class="link-icon" style="background:linear-gradient(135deg,#6366f1,#4f46e5)">⚖️</div><div><h4>Department of Justice (DOJ)</h4><p>Courts, lawyers, judges, and legal proceedings</p></div></a>
 </div>
-
 <div style="text-align:center;margin-top:30px">
 <a href="https://store.southbeach.gg/" target="_blank" class="btn btn-pink" style="font-size:18px;padding:18px 40px">🛒 Visit the Store</a>
 <p style="color:var(--muted);font-size:13px;margin-top:12px">Support the server and get exclusive perks</p>
@@ -573,29 +569,24 @@ tbody td{padding:8px}
 </div>
 </div>
 
-<!-- BUSINESSES PAGE -->
 <div id="page-businesses" class="page">
 <div class="inner-page">
-<div class="page-header"><h2>City <span class="accent">Businesses</span></h2><p>26 active businesses — 10 still available</p><div class="line"></div></div>
-
+<div class="page-header"><h2>City <span class="accent">Businesses</span></h2><p>28 active businesses — 8 still available</p><div class="line"></div></div>
 <div class="biz-stats">
-<div class="biz-stat"><div class="biz-stat-num" style="color:var(--green)">26</div><div class="biz-stat-label">Sold / Active</div></div>
-<div class="biz-stat"><div class="biz-stat-num" style="color:var(--yellow)">10</div><div class="biz-stat-label">For Sale</div></div>
+<div class="biz-stat"><div class="biz-stat-num" style="color:var(--green)">28</div><div class="biz-stat-label">Sold / Active</div></div>
+<div class="biz-stat"><div class="biz-stat-num" style="color:var(--yellow)">8</div><div class="biz-stat-label">For Sale</div></div>
 <div class="biz-stat"><div class="biz-stat-num" style="color:var(--teal)">36</div><div class="biz-stat-label">Total Businesses</div></div>
 </div>
-
 <div class="price-tabs" style="margin-bottom:24px">
-<button class="price-tab active" onclick="showBizTab('sold',this)">🏪 Sold (26)</button>
-<button class="price-tab" onclick="showBizTab('forsale',this)">💰 For Sale (10)</button>
+<button class="price-tab active" onclick="showBizTab('sold',this)">🏪 Sold (28)</button>
+<button class="price-tab" onclick="showBizTab('forsale',this)">💰 For Sale (8)</button>
 </div>
-
 <div id="biz-sold" class="biz-content active">
 <div class="biz-grid">
 <div class="biz-card sold"><div class="biz-name">Club 77 Nightclub</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Energy Auto Mechanic Shop</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Horny's Restaurant</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Crumbly Cookie</div><span class="biz-badge badge-sold">SOLD</span></div>
-<div class="biz-card sold"><div class="biz-name">Smokey's Hookah Lounge</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Paradise Gentlemen's Club</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">West View Auto Mechanic</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Pizza This</div><span class="biz-badge badge-sold">SOLD</span></div>
@@ -613,33 +604,31 @@ tbody td{padding:8px}
 <div class="biz-card sold"><div class="biz-name">Trey Baker</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Vanilla Sex Shop</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">High Notes Dispensary</div><span class="biz-badge badge-sold">SOLD</span></div>
-<div class="biz-card sold"><div class="biz-name">Jerk and Jam</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Burgershot</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Bubble Cafe</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">The Towns Bar & Grill</div><span class="biz-badge badge-sold">SOLD</span></div>
+<div class="biz-card sold"><div class="biz-name">Huggy Bears</div><span class="biz-badge badge-sold">SOLD</span></div>
+<div class="biz-card sold"><div class="biz-name">The Pocket Plug</div><span class="biz-badge badge-sold">SOLD</span></div>
+<div class="biz-card sold"><div class="biz-name">Tuning Bar Mechanic</div><span class="biz-badge badge-sold">SOLD</span></div>
+<div class="biz-card sold"><div class="biz-name">Speed Syndrome Mechanic Shop</div><span class="biz-badge badge-sold">SOLD</span></div>
 </div>
 </div>
-
 <div id="biz-forsale" class="biz-content">
 <div class="biz-grid">
-<div class="biz-card forsale"><div class="biz-name">Huggy Bears</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
 <div class="biz-card forsale"><div class="biz-name">Brickbearz</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
-<div class="biz-card forsale"><div class="biz-name">The Pocket Plug</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
 <div class="biz-card forsale"><div class="biz-name">Noodle</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
 <div class="biz-card forsale"><div class="biz-name">South Beach Mall Center Restaurants</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
 <div class="biz-card forsale"><div class="biz-name">Drift Playground Mechanic Shop</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
 <div class="biz-card forsale"><div class="biz-name">Ammu-Nation Gun Store 6</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
 <div class="biz-card forsale"><div class="biz-name">Bennys Motorworks Mechanic Shop</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
-<div class="biz-card forsale"><div class="biz-name">Tuning Bar Mechanic</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
-<div class="biz-card forsale"><div class="biz-name">Speed Syndrome Mechanic Shop</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
+<div class="biz-card forsale"><div class="biz-name">Jerk and Jam</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
+<div class="biz-card forsale"><div class="biz-name">Smokey's Hookah Lounge</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
 </div>
 </div>
-
 <div class="info-box" style="margin-top:24px"><strong>Interested in a business?</strong> Join the <a href="https://discord.gg/ktUuYEBj2j" target="_blank" style="color:var(--teal)">Business District Discord</a> to apply and purchase.</div>
 </div>
 </div>
 
-<!-- STAFF PAGE -->
 <div id="page-staff" class="page">
 <div class="inner-page">
 <div class="page-header"><h2>Our <span class="accent">Staff</span></h2><p>The team behind South Beach Miami</p><div class="line"></div></div>
@@ -653,37 +642,18 @@ tbody td{padding:8px}
 </div>
 </div>
 
-<!-- CHANGELOG PAGE -->
 <div id="page-changelog" class="page">
 <div class="inner-page">
 <div class="page-header"><h2>Server <span class="accent">Updates</span></h2><p>Latest changes and additions to South Beach Miami</p><div class="line"></div></div>
 <div class="changelog-list">
-<div class="changelog-item">
-<div class="date">March 2, 2026</div>
-<h4><span class="tag tag-new">New</span> Website Launch</h4>
-<p>Official South Beach Miami website is now live with rules, price guides, city links, and staff roster.</p>
+<div class="changelog-item"><div class="date">March 2, 2026</div><h4><span class="tag tag-new">New</span> Website Launch</h4><p>Official South Beach Miami website is now live with rules, price guides, city links, and staff roster.</p></div>
+<div class="changelog-item"><div class="date">March 2, 2026</div><h4><span class="tag tag-new">New</span> Cut Up In Traffic — Highway Racing</h4><p>New racing script with party system, inline invites, VIP Discord vehicles, nametags, and admin panel.</p></div>
+<div class="changelog-item"><div class="date">March 2, 2026</div><h4><span class="tag tag-update">Update</span> Palm Beach Rulebook</h4><p>Full rulebook drop — CK rules, faction rules, PD code of conduct, DOJ rules all updated and enforced.</p></div>
+<div class="changelog-item"><div class="date">Recent</div><h4><span class="tag tag-fix">Fix</span> Relog Weapon Fix</h4><p>Fixed weapons and aiming being broken after using /relog. Combat state now properly resets on character load.</p></div>
 </div>
-<div class="changelog-item">
-<div class="date">March 2, 2026</div>
-<h4><span class="tag tag-new">New</span> Cut Up In Traffic — Highway Racing</h4>
-<p>New racing script with party system, inline invites, VIP Discord vehicles, nametags, and admin panel.</p>
-</div>
-<div class="changelog-item">
-<div class="date">March 2, 2026</div>
-<h4><span class="tag tag-update">Update</span> Palm Beach Rulebook</h4>
-<p>Full rulebook drop — CK rules, faction rules, PD code of conduct, DOJ rules all updated and enforced.</p>
-</div>
-<div class="changelog-item">
-<div class="date">Recent</div>
-<h4><span class="tag tag-fix">Fix</span> Relog Weapon Fix</h4>
-<p>Fixed weapons and aiming being broken after using /relog. Combat state now properly resets on character load.</p>
-</div>
-</div>
-<p style="text-align:center;color:var(--muted);margin-top:30px;font-size:14px">Add new updates here as you push changes to the server</p>
 </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
 <img src="images/watermark.png" alt="SBM">
 <p>South Beach Miami RP — #1 Semi-Serious Roleplay</p>
@@ -697,46 +667,12 @@ tbody td{padding:8px}
 </footer>
 
 <script>
-function toggleAcc(header) {
-    const item = header.parentElement;
-    item.classList.toggle('open');
-}
-
-function showPage(page) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    const target = document.getElementById('page-' + page);
-    if (target) target.classList.add('active');
-    document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
-        a.classList.toggle('active', a.dataset.page === page);
-    });
-    document.getElementById('navLinks').classList.remove('open');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    history.replaceState(null, '', page === 'home' ? '#' : '#' + page);
-}
-
-function showTab(tab, btn) {
-    document.querySelectorAll('.price-content').forEach(t => t.classList.remove('active'));
-    document.getElementById('tab-' + tab).classList.add('active');
-    document.querySelectorAll('.price-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-}
-
-function showBizTab(tab, btn) {
-    document.querySelectorAll('.biz-content').forEach(t => t.classList.remove('active'));
-    document.getElementById('biz-' + tab).classList.add('active');
-    btn.closest('.price-tabs').querySelectorAll('.price-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-}
-
-function handleRoute() {
-    const hash = window.location.hash.replace('#', '') || 'home';
-    const validPages = ['home','rules','prices','links','businesses','staff','changelog'];
-    const page = validPages.includes(hash) ? hash : 'home';
-    showPage(page);
-}
-
-window.addEventListener('hashchange', handleRoute);
-window.addEventListener('DOMContentLoaded', handleRoute);
+function toggleAcc(header){const item=header.parentElement;item.classList.toggle('open')}
+function showPage(page){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const target=document.getElementById('page-'+page);if(target)target.classList.add('active');document.querySelectorAll('.nav-links a[data-page]').forEach(a=>{a.classList.toggle('active',a.dataset.page===page)});document.getElementById('navLinks').classList.remove('open');window.scrollTo({top:0,behavior:'smooth'});history.replaceState(null,'',page==='home'?'#':'#'+page)}
+function showTab(tab,btn){document.querySelectorAll('.price-content').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+tab).classList.add('active');document.querySelectorAll('.price-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+function showBizTab(tab,btn){document.querySelectorAll('.biz-content').forEach(t=>t.classList.remove('active'));document.getElementById('biz-'+tab).classList.add('active');btn.closest('.price-tabs').querySelectorAll('.price-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+function handleRoute(){const hash=window.location.hash.replace('#','')||'home';const validPages=['home','rules','prices','links','businesses','staff','changelog'];const page=validPages.includes(hash)?hash:'home';showPage(page)}
+window.addEventListener('hashchange',handleRoute);window.addEventListener('DOMContentLoaded',handleRoute);
 </script>
 </body>
 </html>
