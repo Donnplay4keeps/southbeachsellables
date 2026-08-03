@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SBM Fraud</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+.sbm-reset *{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:transparent;font-family:var(--font)}
+
+#app{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+     background:transparent;opacity:0;transition:opacity .25s}
+#app.visible{display:flex}
+#app.shown{opacity:1}
+
+.win{
+  width:960px;max-width:94vw;height:640px;max-height:92vh;
+  display:flex;flex-direction:column;
+  background:var(--bg);border:1px solid var(--border-light);border-radius:16px;overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  animation:sbm-pop .24s ease;
+}
+@keyframes sbm-pop{from{transform:translateY(12px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+
+/* header */
+.top{height:66px;flex:none;display:flex;align-items:center;justify-content:space-between;
+     padding:0 22px;border-bottom:1px solid var(--border);background:rgba(14,17,22,.92)}
+.top .brand{display:flex;align-items:center;gap:12px}
+.top .brand img{height:42px;width:auto;display:block;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+.top .brand .t{font-size:15px;font-weight:700}
+.top .brand .t span{color:var(--text-3);font-weight:500;font-size:12.5px;margin-left:6px}
+.top .right{display:flex;align-items:center;gap:12px}
+.cash{font-size:13px;font-weight:700;color:var(--green);background:rgba(52,211,153,.08);
+      border:1px solid rgba(52,211,153,.22);border-radius:99px;padding:7px 14px}
+.xbtn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border-light);
+      background:var(--surface);color:var(--text-2);font-size:16px;cursor:pointer;transition:all .2s}
+.xbtn:hover{color:#fff;border-color:var(--text-3)}
+
+/* tabs */
+.tabs{height:52px;flex:none;display:flex;gap:6px;align-items:center;padding:0 18px;
+      border-bottom:1px solid var(--border);background:rgba(20,26,33,.5)}
+.tab{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text-2);
+     padding:8px 15px;border-radius:9px;cursor:pointer;border:1px solid transparent;transition:all .18s}
+.tab i{font-size:13px}
+.tab:hover{color:var(--text)}
+.tab.active{background:var(--surface-2);border-color:var(--border-light);color:var(--pink)}
+.tab.active i{color:var(--pink)}
+
+/* body */
+.body{flex:1;overflow-y:auto;padding:22px}
+.body::-webkit-scrollbar{width:8px}
+.body::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:4px}
+
+.pane{display:none}
+.pane.active{display:block}
+
+/* boost banner */
+.boost-banner{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:11px;margin-bottom:18px;
+  background:color-mix(in srgb,var(--violet) 9%,transparent);border:1px solid color-mix(in srgb,var(--violet) 26%,transparent)}
+.boost-banner .ic{width:38px;height:38px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;
+  background:color-mix(in srgb,var(--violet) 16%,transparent);border:1px solid color-mix(in srgb,var(--violet) 34%,transparent)}
+.boost-banner .ic i{color:var(--violet);font-size:16px}
+.boost-banner .txt{font-size:13px;color:var(--text-2);line-height:1.45}
+.boost-banner .txt b{color:var(--text)}
+.boost-banner .mult{margin-left:auto;font-size:20px;font-weight:800;color:var(--violet)}
+.boost-banner.none{background:var(--surface);border-color:var(--border)}
+.boost-banner.none .ic{background:var(--surface-2);border-color:var(--border-light)}
+.boost-banner.none .ic i,.boost-banner.none .mult{color:var(--text-3)}
+
+.section-label{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-3);margin:4px 0 14px}
+
+/* shop grid */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.prod{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
+.prod:hover{border-color:var(--pink);transform:translateY(-2px)}
+.prod .imgwrap{height:92px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;
+  background:var(--surface-2);border-radius:9px}
+.prod .imgwrap img{max-height:74px;max-width:80%;object-fit:contain;image-rendering:auto}
+.prod .nm{font-size:14px;font-weight:700}
+.prod .ct{font-size:12px;color:var(--text-3);margin-top:2px}
+.prod .buy{margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.prod .pr{font-size:14px;font-weight:800;color:var(--green)}
+.prod .buy button{padding:8px 16px;font-size:12.5px;font-weight:700;border-radius:8px;cursor:pointer;
+  background:var(--surface-2);border:1px solid var(--border-light);color:var(--text);transition:all .18s}
+.prod .buy button:hover{background:var(--pink);border-color:var(--pink);color:#0e1116}
+
+.shop-switch{display:flex;gap:8px;margin-bottom:18px}
+.shop-switch button{font-size:12.5px;font-weight:600;color:var(--text-2);padding:8px 14px;border-radius:8px;cursor:pointer;
+  background:var(--surface);border:1px solid var(--border);transition:all .18s}
+.shop-switch button.active{background:var(--surface-2);border-color:var(--pink);color:var(--pink)}
+
+/* sell / guide list */
+.sell-row{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.sell-row .imgwrap{width:58px;height:58px;flex:none;display:flex;align-items:center;justify-content:center;
+  background:var(--surface-2);border-radius:9px}
+.sell-row .imgwrap img{max-width:44px;max-height:44px;object-fit:contain}
+.sell-row .meta{flex:1;min-width:0}
+.sell-row .meta .nm{font-size:14.5px;font-weight:700}
+.sell-row .meta .wh{font-size:12.5px;color:var(--text-3);margin-top:3px}
+.sell-row .meta .wh i{margin-right:5px;color:var(--pink)}
+.sell-row .pay{text-align:right;flex:none}
+.sell-row .pay .rng{font-size:15px;font-weight:800;color:var(--green)}
+.sell-row .pay .base{font-size:11.5px;color:var(--text-3);text-decoration:line-through;margin-top:2px}
+.sell-row .pay .boosted-tag{font-size:10.5px;color:var(--violet);font-weight:700;margin-top:2px}
+.sell-row .pol{flex:none;font-size:11.5px;font-weight:600;color:var(--yellow);
+  background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:7px;padding:5px 9px;white-space:nowrap}
+
+/* guide steps */
+.steps{display:flex;flex-direction:column;gap:12px;margin-bottom:22px}
+.step{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.step .n{width:30px;height:30px;flex:none;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:14px;color:var(--pink);background:color-mix(in srgb,var(--pink) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--pink) 28%,transparent)}
+.step .c .h{font-size:14px;font-weight:700}
+.step .c .d{font-size:12.5px;color:var(--text-2);margin-top:3px;line-height:1.5}
+</style>
+</head>
+<body class="sbm-reset sbm">
+
+<div id="app">
+  <div class="win">
+
+    <div class="top">
+      <div class="brand">
+        <img src="logo.png" alt="" onerror="this.style.display='none'">
+        <div class="t">Fraud Terminal <span>South Beach Miami V2</span></div>
+      </div>
+      <div class="right">
+        <div class="cash" id="cash">$0</div>
+        <button class="xbtn" id="close">&times;</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-pane="guide"><i class="fa-solid fa-book-skull"></i> Guide</div>
+      <div class="tab" data-pane="shop"><i class="fa-solid fa-store"></i> Blackmarket</div>
+      <div class="tab" data-pane="sell"><i class="fa-solid fa-sack-dollar"></i> Payouts</div>
+    </div>
+
+    <div class="body">
+
+      <!-- GUIDE -->
+      <div class="pane active" id="pane-guide">
+        <div class="boost-banner" id="boost-banner">
+          <div class="ic"><i class="fa-solid fa-bolt"></i></div>
+          <div class="txt" id="boost-text">Loading your path…</div>
+          <div class="mult" id="boost-mult">x1.00</div>
+        </div>
+        <div class="section-label">How the hustle works</div>
+        <div class="steps">
+          <div class="step"><div class="n">1</div><div class="c"><div class="h">Gear up</div><div class="d">Buy a laptop, printer, MSR swiper, burner phone and raw materials from the Blackmarket tab.</div></div></div>
+          <div class="step"><div class="n">2</div><div class="c"><div class="h">Set up the laptop</div><div class="d">Use the laptop item, connect your printer / reader / phone / USB, and log into the apps.</div></div></div>
+          <div class="step"><div class="n">3</div><div class="c"><div class="h">Craft product</div><div class="d">Clone blank cards, print forged checks, swap SIMs and pull data onto USB drives.</div></div></div>
+          <div class="step"><div class="n">4</div><div class="c"><div class="h">Move it & get paid</div><div class="d">Sell each product at its buyer for dirty money — see the Payouts tab for locations and prices.</div></div></div>
+        </div>
+        <div class="section-label">Watch out</div>
+        <div class="step"><div class="n"><i class="fa-solid fa-triangle-exclamation"></i></div><div class="c"><div class="d" style="color:var(--yellow)">Some sales need police online, and every sale has a chance to ping dispatch. Bad fails burn your product for nothing. Dirty money must be washed before it's clean.</div></div></div>
+      </div>
+
+      <!-- SHOP -->
+      <div class="pane" id="pane-shop">
+        <div class="shop-switch" id="shop-switch"></div>
+        <div class="grid" id="shop-grid"></div>
+      </div>
+
+      <!-- SELL -->
+      <div class="pane" id="pane-sell">
+        <div class="section-label">Where to sell &amp; what it pays</div>
+        <div id="sell-list"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var isFiveM = (typeof GetParentResourceName === 'function');
+  var app = document.getElementById('app');
+  var STATE = null;
+  var activeShop = null;
+
+  function fmt(n){ return '$' + (n||0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+  function post(name, data, cb){
+    if(!isFiveM){ if(cb) cb({}); return; }
+    fetch('https://'+GetParentResourceName()+'/'+name, {
+      method:'POST', headers:{'Content-Type':'application/json; charset=UTF-8'},
+      body: JSON.stringify(data||{})
+    }).then(function(r){return r.json();}).then(function(d){ if(cb) cb(d); }).catch(function(){ if(cb) cb({}); });
+  }
+
+  function render(){
+    if(!STATE) return;
+    document.getElementById('cash').textContent = fmt(STATE.cash);
+
+    // boost banner
+    var b = STATE.boost || 1.0;
+    var banner = document.getElementById('boost-banner');
+    var txt = document.getElementById('boost-text');
+    document.getElementById('boost-mult').textContent = 'x' + b.toFixed(2);
+    if(b > 1.0){
+      banner.classList.remove('none');
+      var pct = Math.round((b - 1) * 100);
+      txt.innerHTML = 'Your path gives you a <b>+'+pct+'% scam payout boost</b>. It\'s already baked into the payouts below.';
+    } else {
+      banner.classList.add('none');
+      txt.innerHTML = 'No scam boost on this character. <b>Illegal Civilians</b> earn boosted scam payouts.';
+    }
+
+    // shop switch buttons
+    var sw = document.getElementById('shop-switch');
+    sw.innerHTML = '';
+    var ids = Object.keys(STATE.shops || {});
+    if(activeShop === null || !STATE.shops[activeShop]) activeShop = ids[0];
+    ids.forEach(function(id){
+      var btn = document.createElement('button');
+      btn.textContent = STATE.shops[id].label;
+      btn.className = (id === activeShop ? 'active' : '');
+      btn.onclick = function(){ activeShop = id; render(); };
+      sw.appendChild(btn);
+    });
+
+    // shop grid
+    var grid = document.getElementById('shop-grid');
+    grid.innerHTML = '';
+    if(activeShop && STATE.shops[activeShop]){
+      STATE.shops[activeShop].items.forEach(function(it){
+        var can = STATE.cash >= it.price;
+        var el = document.createElement('div');
+        el.className = 'prod';
+        el.innerHTML =
+          '<div class="imgwrap"><img src="images/'+it.image+'" onerror="this.style.display=\'none\'"></div>'+
+          '<div class="nm">'+it.label+'</div>'+
+          '<div class="ct">Pack of '+it.count+'</div>'+
+          '<div class="buy"><span class="pr">'+fmt(it.price)+'</span>'+
+          '<button '+(can?'':'style="opacity:.45"')+'>Buy</button></div>';
+        el.querySelector('button').onclick = function(){
+          post('buy', { shop: activeShop, item: it.item }, function(){
+            setTimeout(function(){ post('refresh', {}, function(d){ if(d && d.shops){ STATE = d; render(); } }); }, 150);
+          });
+        };
+        grid.appendChild(el);
+      });
+    }
+
+    // sell list
+    var list = document.getElementById('sell-list');
+    list.innerHTML = '';
+    (STATE.sell || []).forEach(function(s){
+      var boosted = (STATE.boost || 1) > 1.0;
+      var el = document.createElement('div');
+      el.className = 'sell-row';
+      el.innerHTML =
+        '<div class="imgwrap"><img src="images/'+s.image+'" onerror="this.style.display=\'none\'"></div>'+
+        '<div class="meta"><div class="nm">'+s.label+'</div>'+
+        '<div class="wh"><i class="fa-solid fa-location-dot"></i>'+s.where+'</div></div>'+
+        '<div class="pol">'+(s.police>0?s.police+' PD online':'No PD req')+'</div>'+
+        '<div class="pay"><div class="rng">'+fmt(s.boostedMin)+' – '+fmt(s.boostedMax)+'</div>'+
+        (boosted?'<div class="base">'+fmt(s.min)+' – '+fmt(s.max)+'</div><div class="boosted-tag">PATH BOOST APPLIED</div>':'')+
+        '</div>';
+      list.appendChild(el);
+    });
+  }
+
+  // tabs
+  document.querySelectorAll('.tab').forEach(function(t){
+    t.onclick = function(){
+      document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+      document.querySelectorAll('.pane').forEach(function(x){x.classList.remove('active');});
+      t.classList.add('active');
+      document.getElementById('pane-' + t.dataset.pane).classList.add('active');
+    };
+  });
+
+  function open(){ app.classList.add('visible'); requestAnimationFrame(function(){app.classList.add('shown');}); }
+  function close(){
+    app.classList.remove('shown');
+    setTimeout(function(){ app.classList.remove('visible'); }, 250);
+    post('close');
+  }
+  document.getElementById('close').onclick = close;
+  window.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+
+  window.addEventListener('message', function(e){
+    var d = e.data || {};
+    if(d.action === 'open'){
+      STATE = d.data;
+      activeShop = (d.focusShop && d.data.shops[d.focusShop]) ? d.focusShop : null;
+      render();
+      // if opened at a shop, jump to shop tab
+      var startTab = d.focusShop ? 'shop' : 'guide';
+      document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('active', x.dataset.pane===startTab);});
+      document.querySelectorAll('.pane').forEach(function(x){x.classList.toggle('active', x.id==='pane-'+startTab);});
+      open();
+    }
+    if(d.action === 'close') close();
+  });
+
+  // browser preview
+  if(!isFiveM){
+    STATE = {
+      archetype:'civilian', boost:1.15, cash:12500, buyAccount:'money',
+      shops:{
+        blackmarket:{label:'Blackmarket',items:[
+          {item:'msr',label:'MSR Swiper',image:'msr.png',price:5000,count:1},
+          {item:'blank',label:'Blank Cards',image:'blank.png',price:500,count:5},
+          {item:'checkpaper',label:'Check Paper',image:'checkpaper.png',price:500,count:5},
+          {item:'simcard',label:'SIM Card',image:'simcard.png',price:500,count:5},
+          {item:'fraud_usb',label:'USB Drive',image:'fraud_usb.png',price:900,count:5}
+        ]},
+        electronics:{label:'Electronics Shop',items:[
+          {item:'laptop',label:'Laptop',image:'laptop.png',price:1000,count:1},
+          {item:'printer',label:'Printer',image:'printer.png',price:500,count:1},
+          {item:'burnerphone',label:'Burner Phone',image:'burnerphone.png',price:1500,count:1}
+        ]}
+      },
+      sell:[
+        {key:'clone',label:'Cloned Cards',image:'ccard.png',where:'Any ATM',police:3,min:350,max:3500,boostedMin:402,boostedMax:4025},
+        {key:'check',label:'Forged Checks',image:'fcheck.png',where:'Pacific Bank teller',police:2,min:350,max:3500,boostedMin:402,boostedMax:4025},
+        {key:'sim',label:'Swapped SIMs',image:'sim.png',where:'Sandy Shores hacker',police:3,min:1350,max:6500,boostedMin:1552,boostedMax:7475},
+        {key:'usb',label:'Stolen Data',image:'usb_transfer.png',where:'Elysian Heights broker',police:2,min:1480,max:7225,boostedMin:1702,boostedMax:8308}
+      ]
+    };
+    render(); open();
+  }
+})();
+</script>
+
+
+
+<style id="sbm-embed-fix">
+  html,body{background:#0a0714 !important;}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-thumb{background:rgba(255,45,149,.35);border-radius:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+</style>
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Tablet · STD Testing</title>
+    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="hidden">
+    <div id="app" class="hidden">
+        <div class="tablet">
+            <!-- Bezel decorations -->
+            <div class="bezel-speaker"></div>
+            <div class="bezel-camera"></div>
+            <div class="bezel-home"></div>
+
+            <div class="screen">
+                <!-- Status bar -->
+                <div class="status-bar">
+                    <span class="status-time" id="status-time">--:--</span>
+                    <span class="status-brand">NEW DISTRICT · MEDICAL TESTING</span>
+                    <span class="status-battery">
+                        <i class="fa-solid fa-battery-three-quarters"></i>
+                        <span>98%</span>
+                    </span>
+                </div>
+
+                <div class="panel">
+
+                    <!-- HEADER -->
+                    <header class="panel-header">
+                        <div class="brand">
+                            <div class="brand-icon">
+                                <i class="fa-solid fa-stethoscope"></i>
+                            </div>
+                            <div class="brand-text">
+                                <div class="brand-title">Medical <span class="accent">Tablet</span><span id="mode-badge" class="mode-badge">DOCTOR</span></div>
+                                <div class="brand-sub">STD diagnostic terminal · <span id="brand-section">Dashboard</span></div>
+                            </div>
+                        </div>
+
+                        <div class="header-actions">
+                            <div class="search-box">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input id="quick-search" type="text" placeholder="Search patients..." />
+                            </div>
+                            <button class="icon-btn" id="btn-refresh" title="Refresh">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                            </button>
+                            <button class="icon-btn close" id="btn-close" title="Close">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </header>
+
+                    <!-- BODY -->
+                    <div class="panel-body">
+
+                        <!-- LEFT NAV -->
+                        <nav class="sidebar" id="doctor-nav">
+                            <div class="nav-label">NAVIGATION</div>
+                            <button class="nav-item active" data-section="dashboard">
+                                <span class="nav-icon"><i class="fa-solid fa-gauge-high"></i></span>
+                                Dashboard
+                            </button>
+                            <button class="nav-item" data-section="request">
+                                <span class="nav-icon"><i class="fa-solid fa-user-plus"></i></span>
+                                Test Request
+                                <span class="nav-pill" id="pill-nearby">0</span>
+                            </button>
+                            <button class="nav-item" data-section="appointment" id="nav-appointment" style="display:none;">
+                                <span class="nav-icon"><i class="fa-solid fa-notes-medical"></i></span>
+                                Current Appointment
+                                <span class="nav-pill nav-pill-live" id="pill-appointment">●</span>
+                            </button>
+                            <button class="nav-item" data-section="labqueue">
+                                <span class="nav-icon"><i class="fa-solid fa-microscope"></i></span>
+                                Lab Queue
+                                <span class="nav-pill" id="pill-labqueue">0</span>
+                            </button>
+                            <button class="nav-item" data-section="tosend">
+                                <span class="nav-icon"><i class="fa-solid fa-paper-plane"></i></span>
+                                To Send
+                                <span class="nav-pill" id="pill-tosend">0</span>
+                            </button>
+                            <button class="nav-item" data-section="mytests">
+                                <span class="nav-icon"><i class="fa-solid fa-clipboard-check"></i></span>
+                                My History
+                                <span class="nav-pill" id="pill-mytests">0</span>
+                            </button>
+                            <button class="nav-item" data-section="lookup">
+                                <span class="nav-icon"><i class="fa-solid fa-user-doctor"></i></span>
+                                Patient Lookup
+                            </button>
+                        </nav>
+
+                        <!-- MAIN -->
+                        <main class="content">
+
+                            <!-- =================== DASHBOARD =================== -->
+                            <section id="section-dashboard" class="section active">
+                                <div class="section-head">
+                                    <h2>Welcome back, Doctor</h2>
+                                    <p>Overview of testing activity across the medical bay.</p>
+                                </div>
+
+                                <div class="stat-grid">
+                                    <div class="stat-card">
+                                        <div>
+                                            <div class="stat-label">PENDING SAMPLES</div>
+                                            <div class="stat-value" id="s-pending">0</div>
+                                        </div>
+                                        <div class="stat-icon icon-purple"><i class="fa-solid fa-vial"></i></div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div>
+                                            <div class="stat-label">YOUR TESTS TODAY</div>
+                                            <div class="stat-value" id="s-today">0</div>
+                                        </div>
+                                        <div class="stat-icon icon-blue"><i class="fa-solid fa-clipboard-check"></i></div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div>
+                                            <div class="stat-label">YOUR TOTAL TESTS</div>
+                                            <div class="stat-value" id="s-total">0</div>
+                                        </div>
+                                        <div class="stat-icon icon-green"><i class="fa-solid fa-chart-line"></i></div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div>
+                                            <div class="stat-label">PATIENTS NOTIFIED</div>
+                                            <div class="stat-value" id="s-notified">0</div>
+                                        </div>
+                                        <div class="stat-icon icon-orange"><i class="fa-solid fa-bell"></i></div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-head">
+                                        <div class="card-icon"><i class="fa-solid fa-chart-column"></i></div>
+                                        <div>
+                                            <div class="card-title">Disease Prevalence</div>
+                                            <div class="card-sub">Confirmed positive results across all completed tests</div>
+                                        </div>
+                                    </div>
+                                    <div class="disease-chart" id="disease-chart">
+                                        <div class="empty-state">No completed tests yet.</div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- =================== TEST REQUEST =================== -->
+                            <section id="section-request" class="section">
+                                <div class="section-head">
+                                    <h2>New Test Request</h2>
+                                    <p>People near you. Select a patient to send them an STD test request.</p>
+                                </div>
+
+                                <div class="nearby-head">
+                                    <span class="nearby-label">
+                                        <i class="fa-solid fa-location-crosshairs"></i> Nearby Patients
+                                    </span>
+                                    <span class="nearby-meta" id="nearby-meta">Refreshing…</span>
+                                </div>
+                                <div class="leaderboard" id="nearby-list">
+                                    <div class="empty-state">Looking for people nearby…</div>
+                                </div>
+                            </section>
+
+                            <!-- =================== CURRENT APPOINTMENT =================== -->
+                            <section id="section-appointment" class="section">
+                                <div class="section-head">
+                                    <h2>Current Appointment</h2>
+                                    <p>Live tracking for the patient you're currently treating.</p>
+                                </div>
+
+                                <div id="appointment-empty" class="empty-state">
+                                    No active appointment. Send a test request to begin.
+                                </div>
+
+                                <div id="appointment-card" class="appointment-card" style="display:none;">
+                                    <!-- Patient header -->
+                                    <div class="appt-header">
+                                        <div class="appt-avatar" id="appt-avatar">—</div>
+                                        <div class="appt-id">
+                                            <div class="appt-name" id="appt-name">—</div>
+                                            <div class="appt-sub" id="appt-stage">Awaiting acceptance…</div>
+                                        </div>
+                                        <button class="btn btn-danger btn-sm" id="appt-cancel">
+                                            <i class="fa-solid fa-xmark"></i> Cancel
+                                        </button>
+                                    </div>
+
+                                    <!-- Stepper: full flow -->
+                                    <div class="appt-stepper">
+                                        <div class="appt-step" data-step="0">
+                                            <div class="appt-step-dot"><i class="fa-solid fa-paper-plane"></i></div>
+                                            <div class="appt-step-label">Request Sent</div>
+                                        </div>
+                                        <div class="appt-step-line"></div>
+                                        <div class="appt-step" data-step="1">
+                                            <div class="appt-step-dot"><i class="fa-solid fa-circle-check"></i></div>
+                                            <div class="appt-step-label">Accepted</div>
+                                        </div>
+                                        <div class="appt-step-line"></div>
+                                        <div class="appt-step" data-step="2">
+                                            <div class="appt-step-dot"><i class="fa-solid fa-bed-pulse"></i></div>
+                                            <div class="appt-step-label">On Bed</div>
+                                        </div>
+                                        <div class="appt-step-line"></div>
+                                        <div class="appt-step" data-step="3">
+                                            <div class="appt-step-dot"><i class="fa-solid fa-syringe"></i></div>
+                                            <div class="appt-step-label">Samples <span id="appt-samples">0/3</span></div>
+                                        </div>
+                                        <div class="appt-step-line"></div>
+                                        <div class="appt-step" data-step="4">
+                                            <div class="appt-step-dot"><i class="fa-solid fa-microscope"></i></div>
+                                            <div class="appt-step-label">Lab Testing</div>
+                                        </div>
+                                        <div class="appt-step-line"></div>
+                                        <div class="appt-step" data-step="5">
+                                            <div class="appt-step-dot"><i class="fa-solid fa-file-medical"></i></div>
+                                            <div class="appt-step-label">Paperwork</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sample draw progress -->
+                                    <div class="appt-block" id="appt-samples-block">
+                                        <div class="appt-block-title">
+                                            <i class="fa-solid fa-droplet"></i> Blood Samples
+                                        </div>
+                                        <div class="appt-samples-row" id="appt-samples-dots"></div>
+                                    </div>
+
+                                    <!-- Panel progress -->
+                                    <div class="appt-block" id="appt-panels-block" style="display:none;">
+                                        <div class="appt-block-title">
+                                            <i class="fa-solid fa-vials"></i> Test Panels
+                                        </div>
+                                        <div class="appt-panels" id="appt-panels"></div>
+                                    </div>
+
+                                    <!-- Quick action -->
+                                    <div class="appt-action" id="appt-action"></div>
+                                </div>
+                            </section>
+
+                            <!-- =================== LAB QUEUE =================== -->
+                            <section id="section-labqueue" class="section">
+                                <div class="section-head">
+                                    <h2>Lab Queue</h2>
+                                    <p>Sample sets you've collected. Each set has 3 separate test panels — run them, wait for incubation, then file the paperwork.</p>
+                                </div>
+                                <div class="leaderboard" id="labqueue-list">
+                                    <div class="empty-state">No sample sets waiting. Draw blood from a patient first.</div>
+                                </div>
+                            </section>
+
+                            <!-- =================== TO SEND =================== -->
+                            <section id="section-tosend" class="section">
+                                <div class="section-head">
+                                    <h2>Pending Release</h2>
+                                    <p>Filed paperwork waiting to be released to patients. Review during the appointment, then click <strong>Send</strong> to release to their MyChart.</p>
+                                </div>
+                                <div class="leaderboard" id="tosend-list">
+                                    <div class="empty-state">Nothing waiting to send.</div>
+                                </div>
+                            </section>
+
+                            <!-- =================== MY HISTORY =================== -->
+                            <section id="section-mytests" class="section">
+                                <div class="section-head">
+                                    <h2>My Completed Tests</h2>
+                                    <p>Tests you have personally handled from sample to result.</p>
+                                </div>
+                                <div class="leaderboard" id="mytests-list">
+                                    <div class="empty-state">You haven't completed any tests yet.</div>
+                                </div>
+                            </section>
+
+                            <!-- =================== PATIENT LOOKUP =================== -->
+                            <section id="section-lookup" class="section">
+                                <div class="section-head">
+                                    <h2>Patient Records Lookup</h2>
+                                    <p>Search across all test results by patient name or citizen ID.</p>
+                                </div>
+                                <div class="search-box light">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input id="lookup-input" type="text" placeholder="Name or citizen ID..." />
+                                </div>
+                                <div class="leaderboard" id="lookup-results" style="margin-top:16px;">
+                                    <div class="empty-state">Start typing to search.</div>
+                                </div>
+                            </section>
+
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =================== MINIGAME MODAL =================== -->
+        <div id="minigame-modal" class="modal hidden">
+            <div class="modal-backdrop"></div>
+            <div class="modal-window mg-window">
+                <div class="modal-head">
+                    <div>
+                        <div class="modal-title">
+                            <i class="fa-solid fa-microscope"></i>
+                            Laboratory Test
+                        </div>
+                        <div class="modal-sub" id="mg-subtitle">Follow proper procedure for each step.</div>
+                    </div>
+                    <button class="icon-btn close" id="mg-close" title="Abort">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Step indicator -->
+                    <div class="mg-steps" id="mg-steps"></div>
+
+                    <!-- Stage area: filled by JS per step -->
+                    <div class="mg-stage" id="mg-stage"></div>
+
+                    <!-- Timer + actions -->
+                    <div class="mg-footer">
+                        <div class="mg-timer">
+                            <i class="fa-solid fa-clock"></i>
+                            <span id="mg-timer-text">--</span>
+                        </div>
+                        <div class="mg-actions">
+                            <button class="btn" id="mg-retry" disabled><i class="fa-solid fa-rotate-left"></i> Retry Step</button>
+                            <button class="btn btn-primary" id="mg-next" disabled><i class="fa-solid fa-forward"></i> Next Step</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =================== RESULTS ENTRY MODAL =================== -->
+        <div id="results-modal" class="modal hidden">
+            <div class="modal-backdrop"></div>
+            <div class="modal-window">
+                <div class="modal-head">
+                    <div>
+                        <div class="modal-title">
+                            <i class="fa-solid fa-file-medical"></i>
+                            Patient Paperwork
+                        </div>
+                        <div class="modal-sub" id="results-sub">Patient: —</div>
+                    </div>
+                    <button class="icon-btn close" id="results-close" title="Close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="paperwork-section">
+                        <div class="paperwork-label">
+                            <i class="fa-solid fa-vial"></i> Diagnosis (per disease)
+                        </div>
+                        <div class="results-grid" id="results-grid"></div>
+                    </div>
+
+                    <div class="paperwork-section">
+                        <label class="paperwork-label" for="results-notes-input">
+                            <i class="fa-solid fa-clipboard"></i> Doctor's notes
+                        </label>
+                        <textarea id="results-notes-input" rows="3" placeholder="Clinical observations, sample quality, anything noteworthy..."></textarea>
+                    </div>
+
+                    <div class="paperwork-section">
+                        <label class="paperwork-label" for="results-treatment-input">
+                            <i class="fa-solid fa-prescription-bottle-medical"></i> Treatment plan
+                        </label>
+                        <textarea id="results-treatment-input" rows="3" placeholder="Prescribed medication, dosage, duration..."></textarea>
+                    </div>
+
+                    <div class="paperwork-section">
+                        <label class="paperwork-label" for="results-followup-input">
+                            <i class="fa-solid fa-calendar-check"></i> Follow-up
+                        </label>
+                        <textarea id="results-followup-input" rows="2" placeholder="Next appointment, re-test schedule, referrals..."></textarea>
+                    </div>
+
+                    <div class="results-actions">
+                        <button class="btn" id="results-cancel">Cancel</button>
+                        <button class="btn btn-primary" id="results-submit">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            Submit & Notify Patient
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =================== PATIENT VIEW =================== -->
+        <div id="patient-view" class="modal hidden">
+            <div class="modal-backdrop"></div>
+            <div class="modal-window">
+                <div class="modal-head">
+                    <div>
+                        <div class="modal-title">
+                            <i class="fa-solid fa-file-medical"></i>
+                            Your Test Results
+                        </div>
+                        <div class="modal-sub">Confidential medical information</div>
+                    </div>
+                    <button class="icon-btn close" id="patient-close" title="Close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="patient-results-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast stack -->
+        <div class="toast-stack" id="toast-stack"></div>
+    </div>
+
+    <!-- =================== PATIENT CONSENT POPUP =================== -->
+    <!-- Lives OUTSIDE #app so it can show when the tablet isn't open. -->
+    <div id="consent-popup" class="consent-popup hidden">
+        <div class="consent-backdrop"></div>
+        <div class="consent-card">
+            <div class="consent-icon">
+                <i class="fa-solid fa-stethoscope"></i>
+            </div>
+            <div class="consent-eyebrow">Medical Request</div>
+            <div class="consent-title">STD Test Requested</div>
+            <div class="consent-body">
+                <strong id="consent-doctor">Dr. —</strong>
+                wants to run an STD test on you. Three blood samples will be drawn after you lay down on a bed.
+            </div>
+            <div class="consent-actions">
+                <button class="consent-btn consent-decline" id="consent-decline">
+                    <i class="fa-solid fa-xmark"></i> Decline
+                </button>
+                <button class="consent-btn consent-accept" id="consent-accept">
+                    <i class="fa-solid fa-check"></i> Accept
+                </button>
+            </div>
+            <div class="consent-timer">
+                <div class="consent-timer-bar" id="consent-timer-bar"></div>
+            </div>
+            <div class="consent-meta">
+                Auto-declines in <span id="consent-countdown">20</span>s
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=2"></script>
+
+
+
+<style id="sbm-embed-fix">
+  html,body{background:#0a0714 !important;}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-thumb{background:rgba(255,45,149,.35);border-radius:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+</style>
+
+<script>(function(){function __sbmBoot(){try{
+
+var SBM_STD_DEMO = {
+  totalTests:128, doctorId:7,
+  diseases:[
+    {id:'chlamydia', name:'Chlamydia'},
+    {id:'gonorrhea', name:'Gonorrhea'},
+    {id:'hiv', name:'HIV'},
+    {id:'syphilis', name:'Syphilis'},
+    {id:'herpes', name:'Herpes (HSV)'}
+  ],
+  diseaseStats:{ chlamydia:42, gonorrhea:31, hiv:9, syphilis:18, herpes:23 },
+  samples:[],
+  myTests:[
+    {patient_name:'Jane Doe', disease:'chlamydia', result:'positive', tested_at:Math.floor(Date.now()/1000)-3600},
+    {patient_name:'Rick Vance', disease:'hiv', result:'negative', tested_at:Math.floor(Date.now()/1000)-7200},
+    {patient_name:'Mia Cortez', disease:'gonorrhea', result:'positive', tested_at:Math.floor(Date.now()/1000)-10800}
+  ],
+  config:{samplesRequired:3}
+};
+window.postMessage({action:'open', mode:'doctor', tab:'dashboard'}, '*');
+window.postMessage({action:'panel:data', data:SBM_STD_DEMO}, '*');
+
+}catch(e){console.error('SBM demo boot',e);}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(__sbmBoot,60);});}else{setTimeout(__sbmBoot,60);}})();</script>
+</body>
+</html>

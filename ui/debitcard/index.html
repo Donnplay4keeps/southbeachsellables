@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Zelli</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+/* ============================================================
+   Zelli — styled on MyChart's design system (mc-*) with a
+   violet accent. Native font stack, soft elevated cards,
+   pill toasts, tab pills, detail screens with back buttons.
+   ============================================================ */
+*{margin:0;padding:0;box-sizing:border-box}
+button{background:none;border:none;font-family:inherit;cursor:pointer;color:inherit}
+input{font-family:inherit;outline:none}
+body{visibility:hidden}
+
+.z-app{
+  /* light (default) — mirrors MyChart's :root */
+  --background-primary:#f5f7fa; --background-elevated:#ffffff; --background-highlight:#eef1f6;
+  --text-primary:#0c111c; --text-secondary:#5d6877; --text-tertiary:#97a1ad;
+  --border:rgba(15,25,45,.08);
+  --shadow:0 1px 2px rgba(15,25,45,.04),0 6px 16px rgba(15,25,45,.06);
+  --accent:#6d28d9; --accent2:#a855f7; --accent-soft:#ece4fb; --accent-text:#6d28d9;
+  --positive:#16a571; --positive-soft:#e0f5ec;
+  --negative:#c44545; --negative-soft:#fbe4e4;
+  --warn:#c98a16; --warn-soft:#faeece;
+  --neutral:#6e7785; --neutral-soft:#ebedf1;
+  --hero-shadow:rgba(109,40,217,.30);
+}
+.z-app[data-theme=dark]{
+  --background-primary:#0a0d12; --background-elevated:#161b22; --background-highlight:#1f2630;
+  --text-primary:#f1f3f7; --text-secondary:#a4adbc; --text-tertiary:#6b7484;
+  --border:rgba(255,255,255,.06);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.45);
+  --accent:#8b5cf6; --accent2:#c084fc; --accent-soft:rgba(139,92,246,.16); --accent-text:#b9a3ff;
+  --positive:#34c08c; --positive-soft:rgba(52,192,140,.16);
+  --negative:#e26a6a; --negative-soft:rgba(226,106,106,.16);
+  --warn:#e4a93e; --warn-soft:rgba(228,169,62,.16);
+  --neutral:#8b95a4; --neutral-soft:rgba(139,149,164,.16);
+  --hero-shadow:rgba(0,0,0,.5);
+}
+
+.z-app{
+  height:100vh; width:100%; position:relative; overflow:hidden;
+  background:var(--background-primary); color:var(--text-primary);
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',Inter,'Segoe UI',sans-serif;
+  font-size:14px; -webkit-font-smoothing:antialiased;
+}
+.z-screen{
+  height:100%; width:100%; overflow-y:auto; overflow-x:hidden;
+  padding:3.25rem 1rem 2.5rem; display:flex; flex-direction:column; gap:1rem;
+}
+.z-screen::-webkit-scrollbar{display:none}
+
+/* ── brand header (mc-brand) ── */
+.z-header{display:flex; align-items:center; justify-content:space-between; padding:.25rem 0 .1rem}
+.z-brand{display:flex; align-items:center; gap:.7rem}
+.z-brand-icon{
+  width:2.4rem; height:2.4rem; border-radius:.7rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 12px var(--hero-shadow); font-size:1.2rem; font-weight:800; font-style:italic;
+}
+.z-brand-name{font-size:1.25rem; font-weight:700; letter-spacing:-.02em}
+.z-brand-sub{font-size:.72rem; color:var(--text-tertiary); font-weight:500; text-transform:uppercase; letter-spacing:.06em}
+.z-refresh{
+  width:2.1rem; height:2.1rem; border-radius:.65rem; font-size:.85rem;
+  background:var(--background-elevated); border:1px solid var(--border); color:var(--text-secondary);
+  transition:background .15s;
+}
+.z-refresh:active{background:var(--background-highlight)}
+
+/* ── the debit card (mc-detail-hero) ── */
+.z-cardface{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff; border-radius:.95rem; padding:1.1rem 1.1rem 1.15rem;
+  box-shadow:0 8px 22px var(--hero-shadow);
+  display:flex; flex-direction:column; gap:.95rem;
+  transition:filter .2s;
+}
+.z-cardface.locked{filter:saturate(.35) brightness(.82)}
+.z-cf-top{display:flex; align-items:center; justify-content:space-between}
+.z-cf-bank{font-size:.85rem; font-weight:700; letter-spacing:.03em}
+.z-cf-bank span{opacity:.75; font-weight:500}
+.z-cf-chip{display:flex; align-items:center; gap:.6rem}
+.z-cf-chip .chip{
+  width:2rem; height:1.45rem; border-radius:.3rem;
+  background:linear-gradient(135deg,#ffe9a8,#e0b64f);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.2);
+}
+.z-cf-chip i{font-size:.9rem; opacity:.8; transform:rotate(90deg)}
+.z-cf-num{font-size:1.18rem; font-weight:700; letter-spacing:.14em; font-variant-numeric:tabular-nums}
+.z-cf-bottom{display:flex; align-items:flex-end; justify-content:space-between}
+.z-cf-label{font-size:.6rem; text-transform:uppercase; letter-spacing:.09em; opacity:.72; font-weight:700}
+.z-cf-holder{font-size:.85rem; font-weight:700; letter-spacing:.02em; text-transform:uppercase; margin-top:.15rem}
+.z-cf-pinbtn{text-align:right; padding:.2rem 0 0 .6rem}
+.z-cf-pin{font-size:.9rem; font-weight:700; letter-spacing:.22em; font-variant-numeric:tabular-nums; margin-top:.15rem}
+.z-cf-pin i{font-size:.72rem; margin-left:.35rem; opacity:.85; letter-spacing:0}
+
+/* ── pills (mc-pill) ── */
+.z-pill{
+  display:inline-flex; align-items:center; gap:.3rem; padding:.18rem .55rem;
+  border-radius:999px; font-size:.66rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.04em; white-space:nowrap;
+}
+.z-pill i{font-size:.66rem}
+.z-pill.on-card{background:rgba(255,255,255,.2); color:#fff}
+.z-pill.locked{background:#fff; color:#c44545}
+.z-pill.positive{background:var(--positive-soft); color:var(--positive)}
+.z-pill.negative{background:var(--negative-soft); color:var(--negative)}
+
+/* ── balance (mc-hero) ── */
+.z-balance{
+  background:var(--background-elevated); border:1px solid var(--border); border-radius:.85rem;
+  padding:.9rem 1rem; box-shadow:var(--shadow);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.z-balance .lbl{
+  font-size:.72rem; text-transform:uppercase; color:var(--text-tertiary);
+  font-weight:600; letter-spacing:.05em; display:inline-flex; align-items:center; gap:.4rem;
+}
+.z-balance .amt{font-size:1.45rem; font-weight:700; color:var(--accent-text); letter-spacing:-.02em; margin-top:.1rem; font-variant-numeric:tabular-nums}
+
+/* ── section label (mc-section-label) ── */
+.z-section-label{
+  font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; font-weight:700;
+  color:var(--text-tertiary); display:inline-flex; align-items:center; gap:.4rem; margin-bottom:-.3rem;
+}
+
+/* ── tabs (mc-tabs) ── */
+.z-tabs{display:flex; gap:.4rem}
+.z-tab{
+  flex:1; display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:.18rem;
+  padding:.55rem .5rem; border-radius:.7rem; border:1px solid var(--border);
+  background:var(--background-elevated); color:var(--text-tertiary);
+  font-size:.78rem; font-weight:600; transition:background .15s,color .15s,border-color .15s;
+}
+.z-tab i{font-size:.8rem}
+.z-tab small{font-size:.62rem; font-weight:600; opacity:.8}
+.z-tab:active{transform:scale(.98)}
+.z-tab.active{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-color:transparent; color:#fff; box-shadow:0 3px 10px var(--hero-shadow);
+}
+.z-tab.disabled{opacity:.45}
+
+/* ── action list (mc-card rows) ── */
+.z-list{display:flex; flex-direction:column; gap:.6rem}
+.z-card{
+  text-align:left; width:100%; background:var(--background-elevated);
+  border:1px solid var(--border); border-radius:.85rem; padding:.8rem 1rem;
+  display:flex; align-items:center; gap:.8rem; box-shadow:var(--shadow);
+  transition:transform .12s ease,background .15s ease;
+}
+.z-card:active{transform:scale(.985); background:var(--background-highlight)}
+.z-card .ic{
+  width:2.1rem; height:2.1rem; border-radius:.6rem; flex:none; font-size:.85rem;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--accent-soft); color:var(--accent-text);
+}
+.z-card.positive .ic{background:var(--positive-soft); color:var(--positive)}
+.z-card.warn .ic{background:var(--warn-soft); color:var(--warn)}
+.z-card.danger .ic{background:var(--negative-soft); color:var(--negative)}
+.z-card.danger .t{color:var(--negative)}
+.z-card .body{flex:1; min-width:0}
+.z-card .t{font-size:.95rem; font-weight:600}
+.z-card .s{font-size:.74rem; color:var(--text-tertiary); margin-top:.1rem}
+.z-card .meta{font-size:.74rem; color:var(--text-secondary); font-weight:500; white-space:nowrap}
+.z-chev{color:var(--text-tertiary); font-size:.75rem}
+.z-count{
+  min-width:1.15rem; height:1.15rem; padding:0 .32rem; border-radius:.6rem;
+  background:var(--accent); color:#fff; font-size:.66rem; font-weight:700;
+  display:inline-flex; align-items:center; justify-content:center;
+}
+
+/* ── detail header (mc-detail-header / mc-back) ── */
+.z-detail-header{display:flex; align-items:center; justify-content:space-between; padding:.25rem 0 .1rem}
+.z-back{
+  display:inline-flex; align-items:center; gap:.45rem; color:var(--accent-text);
+  font-weight:600; font-size:.92rem; padding:.45rem .6rem; border-radius:.55rem; transition:background .15s;
+}
+.z-back i{font-size:.85rem}
+.z-back:active{background:var(--accent-soft)}
+.z-detail-title{font-size:1.05rem; font-weight:700}
+
+/* ── authorized users ── */
+.z-usr .av{
+  width:2.1rem; height:2.1rem; border-radius:50%; flex:none; font-size:.72rem; font-weight:700;
+  background:var(--accent-soft); color:var(--accent-text);
+  display:flex; align-items:center; justify-content:center;
+}
+.z-usr .rm{
+  width:1.9rem; height:1.9rem; border-radius:.55rem; font-size:.78rem; flex:none;
+  background:var(--negative-soft); color:var(--negative);
+}
+.z-addrow{display:flex; gap:.5rem}
+.z-addrow input{
+  flex:1; background:var(--background-elevated); border:1px solid var(--border); border-radius:.7rem;
+  padding:.7rem .85rem; color:var(--text-primary); font-size:.95rem; font-weight:500;
+}
+.z-addrow input::placeholder{color:var(--text-tertiary)}
+.z-addrow button{
+  padding:0 1.1rem; border-radius:.7rem; font-weight:700; font-size:.85rem; color:#fff;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 3px 10px var(--hero-shadow);
+}
+.z-hint{font-size:.74rem; color:var(--text-tertiary); line-height:1.5; padding:0 .2rem}
+.z-hint b{color:var(--text-secondary)}
+
+/* ── empty / onboarding (mc-empty) ── */
+.z-empty{text-align:center; padding:1.6rem 1rem 0; color:var(--text-tertiary)}
+.z-empty .art{
+  width:9.5rem; height:6rem; border-radius:.95rem; margin:0 auto 1.2rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 8px 22px var(--hero-shadow);
+  display:flex; align-items:flex-end; padding:.8rem;
+}
+.z-empty .art .chip{width:1.6rem; height:1.15rem; border-radius:.25rem; background:linear-gradient(135deg,#ffe9a8,#e0b64f)}
+.z-empty-title{font-size:1.05rem; font-weight:600; color:var(--text-primary)}
+.z-empty-sub{font-size:.8rem; margin-top:.35rem; padding:0 1rem; line-height:1.55}
+.z-bigbtn{
+  width:100%; margin-top:1.2rem; padding:.85rem; border-radius:.8rem;
+  font-size:.95rem; font-weight:700; color:#fff;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 6px 16px var(--hero-shadow); transition:transform .12s;
+}
+.z-bigbtn:active{transform:scale(.98)}
+.z-note{font-size:.72rem; color:var(--text-tertiary); margin-top:.7rem}
+
+/* ── toast (mc-toast) ── */
+.z-toast{
+  position:absolute; bottom:1.4rem; left:50%; transform:translate(-50%) translateY(200%);
+  background:var(--positive); color:#fff; padding:.55rem .95rem; border-radius:999px;
+  font-size:.82rem; font-weight:600; box-shadow:0 6px 18px rgba(0,0,0,.25); z-index:60;
+  display:inline-flex; align-items:center; gap:.5rem; max-width:88%;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  transition:transform .2s ease; pointer-events:none;
+}
+.z-toast.show{transform:translate(-50%) translateY(0)}
+.z-toast.err{background:var(--negative)}
+.z-toast i{font-size:.95rem; flex:none}
+
+/* ── sheet (PIN pad + fallback confirm) ── */
+.z-overlay{
+  position:absolute; inset:0; background:rgba(8,10,16,.5); z-index:40;
+  opacity:0; pointer-events:none; transition:opacity .18s;
+}
+.z-overlay.show{opacity:1; pointer-events:auto}
+.z-sheet{
+  position:absolute; left:0; right:0; bottom:0; z-index:41;
+  background:var(--background-elevated); border-radius:1rem 1rem 0 0; border-top:1px solid var(--border);
+  padding:.8rem 1.1rem 1.6rem; transform:translateY(120%); transition:transform .22s ease;
+  max-height:84%; display:flex; flex-direction:column;
+}
+.z-sheet.show{transform:translateY(0)}
+.z-grab{width:2.4rem; height:.28rem; border-radius:.2rem; background:var(--border); margin:0 auto .9rem}
+.z-sh-title{font-size:1.05rem; font-weight:700; text-align:center}
+.z-sh-sub{font-size:.8rem; color:var(--text-secondary); text-align:center; margin-top:.3rem; line-height:1.5}
+.z-sh-body{overflow-y:auto; margin-top:.8rem}
+.z-sh-body::-webkit-scrollbar{display:none}
+
+/* PIN pad */
+.z-dots{display:flex; justify-content:center; gap:.9rem; margin:1.1rem 0 .35rem}
+.z-dots .d{width:.8rem; height:.8rem; border-radius:50%; border:1.5px solid var(--text-tertiary); transition:all .12s}
+.z-dots .d.f{background:var(--accent); border-color:var(--accent)}
+.z-dots.err .d{border-color:var(--negative); background:transparent}
+.z-pinerr{min-height:1rem; text-align:center; font-size:.74rem; color:var(--negative); font-weight:600}
+.z-pad{display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; margin-top:.5rem}
+.z-key{
+  height:3.1rem; border-radius:.7rem; font-size:1.25rem; font-weight:600;
+  background:var(--background-highlight); transition:background .12s;
+}
+.z-key:active{background:var(--accent-soft)}
+.z-key.ghost{background:transparent; font-size:1rem; color:var(--text-secondary)}
+
+/* confirm sheet buttons */
+.z-cf-text{font-size:.85rem; color:var(--text-secondary); line-height:1.6; text-align:center; margin-top:.6rem}
+.z-cf-text b{color:var(--text-primary)}
+.z-cfbtns{display:flex; gap:.5rem; margin-top:1rem}
+.z-cfbtns button{flex:1; padding:.8rem; border-radius:.7rem; font-weight:700; font-size:.9rem}
+.z-cf-no{background:var(--background-highlight); color:var(--text-secondary)}
+.z-cf-yes{color:#fff; background:linear-gradient(135deg,var(--accent),var(--accent2)); box-shadow:0 3px 10px var(--hero-shadow)}
+.z-cf-yes.danger{background:var(--negative); box-shadow:none}
+
+/* card picker options */
+.z-opt{
+  width:100%; display:flex; align-items:center; gap:.8rem; padding:.8rem .9rem;
+  border-radius:.7rem; text-align:left; margin-bottom:.45rem;
+  background:var(--background-highlight); transition:background .12s;
+}
+.z-opt:active{background:var(--accent-soft)}
+.z-opt .ic{
+  width:2.1rem; height:2.1rem; border-radius:.6rem; flex:none; font-size:.85rem;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--accent-soft); color:var(--accent-text);
+}
+.z-opt .t{flex:1; font-weight:600; font-size:.92rem}
+.z-opt .t small{display:block; font-weight:500; font-size:.7rem; color:var(--text-tertiary); margin-top:.1rem}
+
+/* loading */
+.z-load{height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.9rem; color:var(--text-tertiary); font-size:.85rem}
+.z-spin{
+  width:1.9rem; height:1.9rem; border-radius:50%;
+  border:3px solid var(--background-highlight); border-top-color:var(--accent);
+  animation:zsp .8s linear infinite;
+}
+@keyframes zsp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="z-app" data-theme="dark" id="app">
+  <div class="z-screen" id="screen">
+    <div class="z-load"><div class="z-spin"></div><div>Loading your card…</div></div>
+  </div>
+  <div class="z-overlay" id="overlay"></div>
+  <div class="z-sheet" id="sheet"></div>
+  <div class="z-toast" id="toast"><i class="fa-solid fa-circle-check"></i><span id="toastmsg"></span></div>
+</div>
+<script>
+/* ============================================================
+   Zelli — lb-phone custom app (vanilla JS, no build step)
+   ============================================================ */
+var IN_GAME = !!window.invokeNative;
+var RES = window.resourceName || 'sbm-debitcard';
+
+/* ---------- tiny helpers ---------- */
+function el(id){ return document.getElementById(id); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function money(n){ n=Math.floor(Number(n)||0); return '$'+n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+function cardSpaced(n){ return String(n||'').replace(/-/g,' '); }
+
+/* ---------- demo state (browser preview only) ---------- */
+var DEMO = {
+  hasCard: true,
+  card: {
+    card_number:'2372-2311-4832-7957', pin:'4821', locked:false, balance:45230,
+    holder:'Keyshaun Brown',
+    authorized:[
+      { identifier:'char1:aa11', name:'Keisha Bell' },
+      { identifier:'char1:bb22', name:'Marco Diaz' }
+    ]
+  },
+  myCards:[
+    { slot:3, card_number:'2372-2311-4832-7957', isOwner:true,  label:"Your Card (7957)", locked:false },
+    { slot:7, card_number:'8830-1177-9020-5544', isOwner:false, label:"Keisha Bell's Card (5544)", locked:false }
+  ],
+  registerPrice:500, duplicatePrice:250, maxDuplicates:3,
+  pay:{ method:'money', cardNumber:null, label:'Cash' },
+  ebtCount:1
+};
+
+function demoCall(name, data){
+  if(name==='sbmcard:getState') return JSON.parse(JSON.stringify(DEMO));
+  if(name==='sbmcard:setPayMethod'){
+    DEMO.pay = { method:data.method, cardNumber:null, label:(data.method==='ebt'?'EBT Card':'Cash') };
+    return { ok:true, message:'Payment method set to '+(data.method==='ebt'?'EBT Card.':'Cash.') };
+  }
+  if(name==='sbmcard:setPayCard'){
+    if(data.slot===3 && String(data.pin)!==DEMO.card.pin) return { ok:false, error:'Incorrect PIN for this card.' };
+    var c=null; DEMO.myCards.forEach(function(m){ if(m.slot===data.slot) c=m; });
+    if(!c) return { ok:false, error:'Card not found.' };
+    DEMO.pay = { method:'debit_card', cardNumber:c.card_number, label:'Debit ****'+c.card_number.slice(-4) };
+    return { ok:true, message:'Payment method set to Debit Card (****'+c.card_number.slice(-4)+').' };
+  }
+  if(name==='sbmcard:action'){
+    var a=data.action;
+    if(a==='toggleLock'){ DEMO.card.locked=!DEMO.card.locked; return { ok:true, message:DEMO.card.locked?'Your debit card has been locked.':'Your debit card has been unlocked.' }; }
+    if(a==='changePin'){ if(String(data.current)!==DEMO.card.pin) return { ok:false, error:'Current PIN is incorrect!' }; DEMO.card.pin=String(data.new); return { ok:true, message:'PIN changed successfully.' }; }
+    if(a==='authorize'){ DEMO.card.authorized.push({ identifier:'char1:x'+Date.now(), name:'Player '+data.targetId }); return { ok:true, message:'Player '+data.targetId+' has been authorized to use your debit card.' }; }
+    if(a==='removeAuth'){ DEMO.card.authorized=DEMO.card.authorized.filter(function(u){ return u.identifier!==data.identifier; }); return { ok:true, message:'Authorized user has been removed.' }; }
+    if(a==='duplicate'){ if(String(data.pin)!==DEMO.card.pin) return { ok:false, error:'Incorrect PIN. Duplication denied.' }; return { ok:true, message:'Card duplicated! The copy is in your inventory.' }; }
+    if(a==='cancel'){ if(String(data.pin)!==DEMO.card.pin) return { ok:false, error:'Incorrect PIN. Card cancellation denied.' }; DEMO.hasCard=false; DEMO.card=null; DEMO.myCards=[]; DEMO.pay={method:'money',cardNumber:null,label:'Cash'}; return { ok:true, message:'Your debit card has been cancelled. You may register a new one.' }; }
+    if(a==='register'){ DEMO.hasCard=true; DEMO.card={ card_number:'5511-0921-7643-8890', pin:'1937', locked:false, balance:44730, holder:'Keyshaun Brown', authorized:[] }; DEMO.myCards=[{ slot:3, card_number:'5511-0921-7643-8890', isOwner:true, label:'Your Card (8890)', locked:false }]; return { ok:true, message:'Debit card registered! Your PIN is: 1937', extra:{ pin:'1937' } }; }
+  }
+  return { ok:false, error:'Unknown demo call.' };
+}
+
+function nui(name, data){
+  if(!IN_GAME){
+    return new Promise(function(res){ setTimeout(function(){ res(demoCall(name, data||{})); }, 120); });
+  }
+  return fetch('https://'+RES+'/'+name, {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json; charset=UTF-8' },
+    body: JSON.stringify(data||{})
+  }).then(function(r){ return r.json(); }).catch(function(){ return {}; });
+}
+
+/* ---------- theme ---------- */
+function setTheme(t){
+  el('app').setAttribute('data-theme', t==='light' ? 'light' : 'dark');
+}
+
+/* ---------- toast (mc-toast pill) ---------- */
+var toastTimer=null;
+function toast(msg, isErr){
+  var t=el('toast');
+  t.classList.toggle('err', !!isErr);
+  t.querySelector('i').className = isErr ? 'fa-solid fa-circle-exclamation' : 'fa-solid fa-circle-check';
+  el('toastmsg').textContent = msg;
+  t.classList.add('show');
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){ t.classList.remove('show'); }, 2600);
+}
+function toastResp(r){
+  if(r && r.ok) toast(r.message || 'Done.');
+  else toast((r && r.error) || 'Something went wrong.', true);
+  return r && r.ok;
+}
+
+/* ---------- state ---------- */
+var state=null;
+var showPin=false;
+var view='home';   /* 'home' | 'auth' */
+
+function refresh(){
+  return nui('sbmcard:getState').then(function(s){
+    state = s || { hasCard:false, myCards:[] };
+    render();
+  });
+}
+
+function render(){
+  if(!state){ return; }
+  if(!state.hasCard){ renderOnboard(); return; }
+  if(view==='auth'){ renderAuth(); return; }
+  renderHome();
+}
+
+function headerHTML(withRefresh){
+  return '<div class="z-header">'+
+    '<div class="z-brand">'+
+      '<div class="z-brand-icon">Z</div>'+
+      '<div><div class="z-brand-name">Zelli</div><div class="z-brand-sub">Debit Banking</div></div>'+
+    '</div>'+
+    (withRefresh?'<button class="z-refresh" id="btn-refresh"><i class="fa-solid fa-rotate"></i></button>':'')+
+  '</div>';
+}
+
+/* ---------- native confirm (lb-phone popup, sheet fallback) ---------- */
+function confirmDialog(title, plainDesc, okLabel, danger, onOk, single){
+  var C = window.components;
+  if(IN_GAME && C && C.setPopUp){
+    var buttons = [];
+    if(!single) buttons.push({ title:'Cancel' });
+    buttons.push({ title:okLabel||'Confirm', color: danger?'red':'blue', cb:onOk||function(){} });
+    C.setPopUp({ title:title, description:plainDesc, buttons:buttons });
+    return;
+  }
+  var btns = '<div class="z-cfbtns">'+
+      (single ? '' : '<button class="z-cf-no" id="cf-no">Cancel</button>')+
+      '<button class="z-cf-yes'+(danger?' danger':'')+'" id="cf-yes">'+esc(okLabel||'Confirm')+'</button>'+
+    '</div>';
+  openSheet('<div class="z-sh-title">'+esc(title)+'</div><div class="z-cf-text">'+esc(plainDesc)+'</div>'+btns);
+  if(!single) el('cf-no').onclick = closeSheet;
+  el('cf-yes').onclick = function(){ closeSheet(); if(onOk) onOk(); };
+}
+
+/* ---------- onboarding ---------- */
+function renderOnboard(){
+  view='home';
+  el('screen').innerHTML =
+    headerHTML(false)+
+    '<div class="z-empty">'+
+      '<div class="art"><div class="chip"></div></div>'+
+      '<div class="z-empty-title">Your money, one tap away</div>'+
+      '<div class="z-empty-sub">Zelli links a debit card to your bank account so you can pay at any shop, lock it, share it, and manage your PIN — right from your phone.</div>'+
+      '<button class="z-bigbtn" id="btn-register"><i class="fa-solid fa-credit-card" style="margin-right:.5rem"></i>Get your card — '+money(state.registerPrice)+'</button>'+
+      '<div class="z-note">Charged in cash. You can also visit the SBM Bank desk downtown.</div>'+
+    '</div>';
+  el('btn-register').onclick = function(){
+    nui('sbmcard:action',{ action:'register' }).then(function(r){
+      if(!toastResp(r)) return;
+      var pin = r.extra && r.extra.pin;
+      refresh().then(function(){
+        if(pin) confirmDialog('Card ready!', 'Your PIN is '+pin+'. Memorize it — you\'ll need it to pay and to manage the card. You can change it any time.', 'Got it', false, null, true);
+      });
+    });
+  };
+}
+
+/* ---------- home ---------- */
+function renderHome(){
+  var c = state.card;
+  var pay = state.pay || { method:'money', label:'Cash' };
+  var authN = (c.authorized||[]).length;
+  var ebt = state.ebtCount||0;
+  var cardTail = pay.method==='debit_card' && pay.cardNumber ? '****'+pay.cardNumber.slice(-4) : (state.myCards.length+' available');
+
+  el('screen').innerHTML =
+    headerHTML(true)+
+
+    '<div class="z-cardface'+(c.locked?' locked':'')+'">'+
+      '<div class="z-cf-top">'+
+        '<div class="z-cf-bank">SBM <span>BANK</span></div>'+
+        (c.locked
+          ? '<span class="z-pill locked"><i class="fa-solid fa-lock"></i> Locked</span>'
+          : '<span class="z-pill on-card">Debit</span>')+
+      '</div>'+
+      '<div class="z-cf-chip"><div class="chip"></div><i class="fa-solid fa-wifi"></i></div>'+
+      '<div class="z-cf-num">'+esc(cardSpaced(c.card_number))+'</div>'+
+      '<div class="z-cf-bottom">'+
+        '<div><div class="z-cf-label">Cardholder</div><div class="z-cf-holder">'+esc(c.holder||'You')+'</div></div>'+
+        '<button class="z-cf-pinbtn" id="btn-pin"><div class="z-cf-label">PIN</div><div class="z-cf-pin">'+(showPin?esc(c.pin):'••••')+'<i class="fa-solid '+(showPin?'fa-eye-slash':'fa-eye')+'"></i></div></button>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="z-balance">'+
+      '<div><span class="lbl"><i class="fa-solid fa-building-columns"></i> Linked bank balance</span><div class="amt">'+money(c.balance)+'</div></div>'+
+      (c.locked
+        ? '<span class="z-pill negative"><i class="fa-solid fa-lock"></i> Locked</span>'
+        : '<span class="z-pill positive"><i class="fa-solid fa-circle-check"></i> Active</span>')+
+    '</div>'+
+
+    '<div class="z-section-label"><i class="fa-solid fa-cart-shopping"></i> Pay at shops with</div>'+
+    '<div class="z-tabs">'+
+      '<button class="z-tab'+(pay.method==='money'?' active':'')+'" id="pay-cash"><i class="fa-solid fa-money-bill-wave"></i>Cash</button>'+
+      '<button class="z-tab'+(pay.method==='debit_card'?' active':'')+'" id="pay-card"><i class="fa-solid fa-credit-card"></i>Card<small>'+esc(cardTail)+'</small></button>'+
+      '<button class="z-tab'+(pay.method==='ebt'?' active':'')+(ebt>0?'':' disabled')+'" id="pay-ebt"><i class="fa-solid fa-basket-shopping"></i>EBT'+(ebt>0?'':'<small>none</small>')+'</button>'+
+    '</div>'+
+
+    '<div class="z-section-label"><i class="fa-solid fa-sliders"></i> Manage</div>'+
+    '<div class="z-list">'+
+      '<button class="z-card '+(c.locked?'positive':'warn')+'" id="act-lock"><div class="ic"><i class="fa-solid '+(c.locked?'fa-lock-open':'fa-lock')+'"></i></div><div class="body"><div class="t">'+(c.locked?'Unlock card':'Lock card')+'</div><div class="s">'+(c.locked?'Spending is blocked right now':'Instantly block all spending')+'</div></div><i class="fa-solid fa-chevron-right z-chev"></i></button>'+
+      '<button class="z-card" id="act-pin"><div class="ic"><i class="fa-solid fa-key"></i></div><div class="body"><div class="t">Change PIN</div></div><i class="fa-solid fa-chevron-right z-chev"></i></button>'+
+      '<button class="z-card" id="act-auth"><div class="ic"><i class="fa-solid fa-user-group"></i></div><div class="body"><div class="t">Authorized users</div></div>'+(authN>0?'<span class="z-count">'+authN+'</span>':'<span class="meta">none</span>')+'<i class="fa-solid fa-chevron-right z-chev" style="margin-left:.5rem"></i></button>'+
+      '<button class="z-card positive" id="act-dupe"><div class="ic"><i class="fa-solid fa-clone"></i></div><div class="body"><div class="t">Duplicate card</div></div><span class="meta">'+money(state.duplicatePrice)+' cash</span><i class="fa-solid fa-chevron-right z-chev" style="margin-left:.5rem"></i></button>'+
+      '<button class="z-card danger" id="act-cancel"><div class="ic"><i class="fa-solid fa-ban"></i></div><div class="body"><div class="t">Cancel card</div></div><i class="fa-solid fa-chevron-right z-chev"></i></button>'+
+    '</div>';
+
+  el('btn-refresh').onclick = function(){ refresh().then(function(){ toast('Up to date.'); }); };
+  el('btn-pin').onclick = function(){ showPin=!showPin; render(); };
+
+  el('pay-cash').onclick = function(){
+    nui('sbmcard:setPayMethod',{ method:'money' }).then(function(r){ toastResp(r); refresh(); });
+  };
+  el('pay-ebt').onclick = function(){
+    if((state.ebtCount||0)===0){ toast('You don\'t have an EBT card.', true); return; }
+    nui('sbmcard:setPayMethod',{ method:'ebt' }).then(function(r){ toastResp(r); refresh(); });
+  };
+  el('pay-card').onclick = openCardPicker;
+
+  el('act-lock').onclick = function(){
+    nui('sbmcard:action',{ action:'toggleLock' }).then(function(r){ toastResp(r); refresh(); });
+  };
+  el('act-pin').onclick = startChangePin;
+  el('act-auth').onclick = function(){ view='auth'; render(); };
+  el('act-dupe').onclick = startDuplicate;
+  el('act-cancel').onclick = startCancel;
+}
+
+/* ---------- authorized users (detail screen w/ back) ---------- */
+function renderAuth(){
+  var c = state.card;
+  var users = c.authorized || [];
+  var rows = '';
+  if(users.length===0){
+    rows = '<div class="z-empty" style="padding-top:1.4rem"><div class="z-empty-title" style="font-size:.95rem">No authorized users</div><div class="z-empty-sub">Add a player below by their server ID and they\'ll be able to pay with your card.</div></div>';
+  } else {
+    users.forEach(function(u){
+      var initials = (u.name||'?').split(' ').map(function(p){ return p.charAt(0); }).join('').slice(0,2).toUpperCase();
+      rows += '<div class="z-card z-usr" style="cursor:default"><div class="av">'+esc(initials)+'</div><div class="body"><div class="t">'+esc(u.name||'Unknown')+'</div><div class="s">Can pay with your card</div></div><button class="rm" data-rm="'+esc(u.identifier)+'"><i class="fa-solid fa-user-minus"></i></button></div>';
+    });
+  }
+
+  el('screen').innerHTML =
+    '<div class="z-detail-header">'+
+      '<button class="z-back" id="btn-back"><i class="fa-solid fa-chevron-left"></i> Back</button>'+
+      '<div class="z-detail-title">Authorized users</div>'+
+      '<div style="width:3.6rem"></div>'+
+    '</div>'+
+    '<div class="z-list">'+rows+'</div>'+
+    '<div class="z-addrow"><input id="auth-id" type="number" inputmode="numeric" placeholder="Player server ID"/><button id="btn-add"><i class="fa-solid fa-user-plus" style="margin-right:.4rem"></i>Add</button></div>'+
+    '<div class="z-hint">Authorized players spend from <b>your</b> bank when they pay with your card. They must be online to add, and they\'ll need a copy of your card and your PIN.</div>';
+
+  el('btn-back').onclick = function(){ view='home'; render(); };
+  el('btn-add').onclick = function(){
+    var v = el('auth-id').value;
+    if(!v){ toast('Enter a player server ID.', true); return; }
+    nui('sbmcard:action',{ action:'authorize', targetId:Number(v) }).then(function(r){
+      toastResp(r); refresh();
+    });
+  };
+  Array.prototype.forEach.call(document.querySelectorAll('[data-rm]'), function(btn){
+    btn.onclick = function(){
+      var ident = btn.getAttribute('data-rm');
+      nui('sbmcard:action',{ action:'removeAuth', identifier:ident }).then(function(r){
+        toastResp(r); refresh();
+      });
+    };
+  });
+}
+
+/* ---------- sheets ---------- */
+function openSheet(html){
+  el('sheet').innerHTML = '<div class="z-grab"></div>'+html;
+  el('overlay').classList.add('show');
+  el('sheet').classList.add('show');
+}
+function closeSheet(){
+  el('overlay').classList.remove('show');
+  el('sheet').classList.remove('show');
+}
+el('overlay').onclick = closeSheet;
+
+/* ---------- PIN pad ---------- */
+function openPinPad(title, sub, onDone){
+  var digits='';
+  openSheet(
+    '<div class="z-sh-title">'+esc(title)+'</div>'+
+    (sub?'<div class="z-sh-sub">'+esc(sub)+'</div>':'')+
+    '<div class="z-dots" id="pp-dots"><div class="d"></div><div class="d"></div><div class="d"></div><div class="d"></div></div>'+
+    '<div class="z-pinerr" id="pp-err"></div>'+
+    '<div class="z-pad" id="pp-pad"></div>'
+  );
+  var pad = el('pp-pad');
+  var keys = ['1','2','3','4','5','6','7','8','9','x','0','back'];
+  keys.forEach(function(k){
+    var b=document.createElement('button');
+    if(k==='x'){ b.className='z-key ghost'; b.innerHTML='<i class="fa-solid fa-xmark"></i>'; b.onclick=closeSheet; }
+    else if(k==='back'){ b.className='z-key ghost'; b.innerHTML='<i class="fa-solid fa-delete-left"></i>'; b.onclick=function(){ digits=digits.slice(0,-1); paint(); }; }
+    else { b.className='z-key'; b.textContent=k; b.onclick=function(){ if(digits.length<4){ digits+=k; paint(); if(digits.length===4){ setTimeout(function(){ onDone(digits, showErr); }, 140); } } }; }
+    pad.appendChild(b);
+  });
+  function paint(){
+    var dots = el('pp-dots').children;
+    for(var i=0;i<4;i++){ dots[i].classList.toggle('f', i<digits.length); }
+    el('pp-dots').classList.remove('err');
+    el('pp-err').textContent='';
+  }
+  function showErr(msg){
+    digits='';
+    var dots = el('pp-dots').children;
+    for(var i=0;i<4;i++){ dots[i].classList.remove('f'); }
+    el('pp-dots').classList.add('err');
+    el('pp-err').textContent = msg || 'Try again.';
+  }
+}
+
+/* ---------- flows ---------- */
+function openCardPicker(){
+  var cards = state.myCards || [];
+  if(cards.length===0){
+    toast('No usable debit card in your pocket.', true);
+    return;
+  }
+  var cur = state.pay && state.pay.cardNumber;
+  var body='';
+  cards.forEach(function(cd){
+    var tag = cd.locked ? '<span class="z-pill negative"><i class="fa-solid fa-lock"></i> Locked</span>' : (cur===cd.card_number ? '<span class="z-pill positive"><i class="fa-solid fa-circle-check"></i> In use</span>' : '');
+    body += '<button class="z-opt" data-slot="'+cd.slot+'"><div class="ic"><i class="fa-solid fa-credit-card"></i></div><div class="t">'+esc(cd.label)+'<small>'+(cd.isOwner?'Your account pays':'Their account pays')+'</small></div>'+tag+'</button>';
+  });
+  openSheet('<div class="z-sh-title">Pay with which card?</div><div class="z-sh-sub">You\'ll confirm with the card\'s PIN.</div><div class="z-sh-body">'+body+'</div>');
+  Array.prototype.forEach.call(document.querySelectorAll('[data-slot]'), function(btn){
+    btn.onclick = function(){
+      var slot = Number(btn.getAttribute('data-slot'));
+      var cd = null;
+      cards.forEach(function(x){ if(x.slot===slot) cd=x; });
+      if(cd && cd.locked){ toast('This card is locked.', true); return; }
+      openPinPad('Enter PIN', 'PIN for '+(cd?cd.label:'this card'), function(pin, fail){
+        nui('sbmcard:setPayCard',{ slot:slot, pin:pin }).then(function(r){
+          if(r && r.ok){ closeSheet(); toastResp(r); refresh(); }
+          else fail((r && r.error) || 'Incorrect PIN.');
+        });
+      });
+    };
+  });
+}
+
+function startChangePin(){
+  openPinPad('Current PIN', 'Enter your current PIN first.', function(cur, fail){
+    openPinPad('New PIN', 'Pick your new 4-digit PIN.', function(nw, fail2){
+      nui('sbmcard:action',{ action:'changePin', current:cur, new:nw }).then(function(r){
+        if(r && r.ok){ closeSheet(); toastResp(r); refresh(); }
+        else if(r && /current pin/i.test(r.error||'')){ closeSheet(); toast(r.error, true); }
+        else fail2((r && r.error) || 'Could not change PIN.');
+      });
+    });
+  });
+}
+
+function startDuplicate(){
+  openPinPad('Duplicate card', 'Enter your PIN to confirm it\'s you.', function(pin, fail){
+    closeSheet();
+    confirmDialog(
+      'Duplicate card?',
+      'This creates a copy of your card ('+state.card.card_number+') linked to your account. Cost: '+money(state.duplicatePrice)+' cash, max '+state.maxDuplicates+' copies. Hand the copy to someone you\'ve authorized and they can spend from your bank.',
+      'Duplicate', false,
+      function(){
+        nui('sbmcard:action',{ action:'duplicate', pin:pin }).then(function(r){
+          toastResp(r); refresh();
+        });
+      }
+    );
+  });
+}
+
+function startCancel(){
+  openPinPad('Cancel card', 'Enter your PIN to confirm it\'s you.', function(pin, fail){
+    closeSheet();
+    confirmDialog(
+      'Cancel your card?',
+      'This permanently cancels your debit card and removes every copy from your pocket. Your bank balance is not affected. You can register a new card afterwards for '+money(state.registerPrice)+'.',
+      'Cancel card', true,
+      function(){
+        nui('sbmcard:action',{ action:'cancel', pin:pin }).then(function(r){
+          if(toastResp(r)){ showPin=false; view='home'; }
+          refresh();
+        });
+      }
+    );
+  });
+}
+
+/* ---------- live refresh from the server ---------- */
+window.addEventListener('message', function(e){
+  var d = e.data;
+  if(d && d.type==='refresh'){ refresh(); }
+});
+
+/* ---------- boot ----------
+   CRITICAL: in-game this document exists TWICE — once as the resource's raw
+   ui_page NUI layer (fullscreen over the game) and once inside lb-phone's app
+   iframe. Only the iframe gets lb-phone's injected APIs (getSettings /
+   onSettingsChange / resourceName). So in-game we ONLY reveal the body once
+   those APIs appear; the raw ui_page copy never gets them and stays hidden
+   forever, exactly like MyChart. */
+if(!IN_GAME){
+  document.body.style.visibility='visible';
+  refresh();
+} else {
+  var apiTries=0;
+  (function waitForPhone(){
+    if(window.getSettings){
+      window.getSettings().then(function(s){
+        setTheme((s && s.display && s.display.theme) || 'dark');
+      }).catch(function(){}).then(function(){
+        document.body.style.visibility='visible';
+        refresh();
+      });
+      if(window.onSettingsChange){
+        window.onSettingsChange(function(s){
+          setTheme((s && s.display && s.display.theme) || 'dark');
+        });
+      }
+    } else if(++apiTries < 200){
+      setTimeout(waitForPhone, 100);
+    }
+  })();
+}
+</script>
+
+
+
+<style id="sbm-embed-fix">
+  html,body{background:#0a0714 !important;}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-thumb{background:rgba(255,45,149,.35);border-radius:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+</style>
+</body>
+</html>

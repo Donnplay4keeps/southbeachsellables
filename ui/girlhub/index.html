@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Girl Hub</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app" class="hidden">
+  <div class="panel">
+
+    <aside class="side">
+      <div class="logo">
+        <div class="heart"><i class="fa-solid fa-heart"></i></div>
+        <div class="logo-t">GIRL<span>HUB</span></div>
+        <div class="logo-s">for the girls, by the girls</div>
+      </div>
+
+      <nav id="nav"></nav>
+
+      <div class="side-foot">
+        <div class="boost-chip hidden" id="boostChip">
+          <i class="fa-solid fa-fire"></i>
+          <div><b id="boostLabel"></b><span id="boostDetail"></span></div>
+        </div>
+        <button class="closebtn" id="btnClose"><i class="fa-solid fa-xmark"></i> Close</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="top">
+        <div class="lvl">
+          <div class="lvl-ring" id="lvlNum">1</div>
+          <div class="lvl-info">
+            <div class="lvl-title" id="lvlTitle">New Girl</div>
+            <div class="xpbar"><div class="xpfill" id="xpFill"></div></div>
+            <div class="xp-text" id="xpText">0 XP</div>
+          </div>
+        </div>
+        <div class="top-stats">
+          <div class="stat"><i class="fa-solid fa-money-bill-wave"></i><div><b id="statMult">x1.00</b><span>pay bonus</span></div></div>
+          <div class="stat"><i class="fa-solid fa-bag-shopping"></i><div><b id="statSales">0</b><span>total sales</span></div></div>
+        </div>
+      </header>
+
+      <section class="content" id="content"></section>
+    </main>
+
+  </div>
+  <div id="toasts"></div>
+</div>
+
+<script src="script.js"></script>
+
+
+
+<style id="sbm-embed-fix">
+  html,body{background:#0a0714 !important;}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-thumb{background:rgba(255,45,149,.35);border-radius:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+</style>
+
+<script>(function(){function __sbmBoot(){try{
+
+var SBM_GIRL_DEMO = {
+  level:6, title:'Baddie Boss', multiplier:1.35, totalSales:214,
+  xp:4200, maxLevel:false, currentLevelXP:3800, nextLevelXP:5200,
+  boost:{label:'Family Boost', payout:1.15, xp:1.15},
+  currency:'$', imgPattern:null,
+  categories:[
+    {key:'nails', label:'Nails', unlocked:true, unlockLevel:1, sellStart:'sellnails', sellStop:'stopnails'},
+    {key:'lashes', label:'Lashes', unlocked:true, unlockLevel:1, sellStart:'selllashes', sellStop:'stoplashes'},
+    {key:'wigs', label:'Wigs', unlocked:true, unlockLevel:4, sellStart:'sellwigs', sellStop:'stopwigs'},
+    {key:'bags', label:'Handbags', unlocked:false, unlockLevel:9, sellStart:'sellbags', sellStop:'stopbags'}
+  ],
+  items:[
+    {id:'acrylic_kit', name:'Acrylic Kit', price:120, img:''},
+    {id:'lash_tray', name:'Lash Tray', price:85, img:''},
+    {id:'wig_cap', name:'Wig Cap', price:60, img:''},
+    {id:'gold_clasp', name:'Gold Clasp', price:240, img:''},
+    {id:'polish_set', name:'Polish Set', price:95, img:''},
+    {id:'lace_front', name:'Lace Front', price:310, img:''}
+  ],
+  recipes:[
+    {id:'french_tips', name:'French Tips', cat:'nails', yield:1, requiredItems:[{id:'acrylic_kit',quantity:1},{id:'polish_set',quantity:1}], sell:[180,260], locked:false},
+    {id:'chrome_set', name:'Chrome Nail Set', cat:'nails', yield:1, requiredItems:[{id:'acrylic_kit',quantity:2}], sell:[240,340], locked:false},
+    {id:'volume_lash', name:'Volume Lashes', cat:'lashes', yield:1, requiredItems:[{id:'lash_tray',quantity:2}], sell:[150,220], locked:false},
+    {id:'bodywave', name:'Body Wave Wig', cat:'wigs', yield:1, requiredItems:[{id:'wig_cap',quantity:1},{id:'lace_front',quantity:1}], sell:[600,900], locked:false, unlockLevel:4},
+    {id:'designer_tote', name:'Designer Tote', cat:'bags', yield:1, requiredItems:[{id:'gold_clasp',quantity:2}], sell:[1200,1800], locked:true, unlockLevel:9}
+  ],
+  challenges:[
+    {label:'First Set', desc:'Sell 10 nail sets', progress:10, target:10, done:true, rewardXp:150},
+    {label:'Lash Queen', desc:'Sell 25 lash trays', progress:18, target:25, done:false, rewardXp:300},
+    {label:'Wig Mogul', desc:'Craft 15 wigs', progress:6, target:15, done:false, rewardXp:450}
+  ]
+};
+window.postMessage({action:'data', data:SBM_GIRL_DEMO}, '*');
+window.postMessage({action:'open'}, '*');
+
+}catch(e){console.error('SBM demo boot',e);}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(__sbmBoot,60);});}else{setTimeout(__sbmBoot,60);}})();</script>
+</body>
+</html>

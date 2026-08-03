@@ -1,0 +1,129 @@
+/* ══════════════════════════════════════════════════════════════
+   SOUTH BEACH MIAMI V2 — SHARED UI THEME
+   Drop this file into every SBM script's html folder and link it:
+   <link rel="stylesheet" href="theme.css">
+   Every panel (scammer, money wash, faction/family panel, crew
+   panel, house/store robbery) uses these tokens so the whole
+   server looks like one product.
+   ══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+  /* base surfaces */
+  --bg:#0e1116;            /* page background            */
+  --surface:#151a21;       /* cards / panels             */
+  --surface-2:#1b212b;     /* hovered cards, inputs      */
+  --border:#262e3a;        /* default borders            */
+  --border-light:#323c4b;  /* emphasized borders         */
+
+  /* text */
+  --text:#eef1f5;          /* primary                    */
+  --text-2:#9aa5b4;        /* secondary                  */
+  --text-3:#6b7686;        /* muted / captions           */
+
+  /* SBM accent colors */
+  --pink:#f43f8e;          /* families / primary brand   */
+  --blue:#38bdf8;          /* factions / info            */
+  --violet:#a78bfa;        /* civilian / special         */
+  --green:#34d399;         /* success / money clean      */
+  --yellow:#fbbf24;        /* warnings / dirty money     */
+  --red:#f87171;           /* danger / failed            */
+
+  --radius:14px;
+  --radius-sm:9px;
+  --font:'Inter',sans-serif;
+}
+
+/* ---------- base ---------- */
+.sbm-reset *{margin:0;padding:0;box-sizing:border-box}
+.sbm{font-family:var(--font);color:var(--text);-webkit-font-smoothing:antialiased}
+
+/* ---------- panel shell ---------- */
+.sbm-panel{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.sbm-nav{
+  height:64px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;border-bottom:1px solid var(--border);
+  background:rgba(14,17,22,.9);
+}
+.sbm-logo{height:44px;width:auto;display:block}
+
+/* ---------- cards ---------- */
+.sbm-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px;
+  transition:border-color .2s,transform .2s,background .2s;
+}
+.sbm-card.clickable{cursor:pointer}
+.sbm-card.clickable:hover{border-color:var(--accent,var(--pink));transform:translateY(-3px);background:var(--surface-2)}
+
+/* ---------- buttons ---------- */
+.sbm-btn{
+  padding:11px 18px;font-family:var(--font);font-size:13.5px;font-weight:600;
+  border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;
+  background:var(--surface-2);border:1px solid var(--border-light);color:var(--text);
+}
+.sbm-btn:hover{border-color:var(--text-3)}
+.sbm-btn.primary{background:var(--pink);border-color:var(--pink);color:#0e1116}
+.sbm-btn.primary:hover{filter:brightness(1.12)}
+.sbm-btn.blue{background:var(--blue);border-color:var(--blue);color:#0e1116}
+.sbm-btn.green{background:var(--green);border-color:var(--green);color:#0e1116}
+.sbm-btn.danger{background:var(--red);border-color:var(--red);color:#0e1116}
+.sbm-btn.ghost{background:transparent}
+
+/* ---------- badges / tags ---------- */
+.sbm-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12.5px;font-weight:600;border-radius:var(--radius-sm);
+  padding:8px 12px;color:var(--accent,var(--pink));
+  background:color-mix(in srgb,var(--accent,var(--pink)) 8%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent,var(--pink)) 22%,transparent);
+}
+.sbm-pill{
+  font-size:12.5px;font-weight:600;color:var(--text-2);
+  border:1px solid var(--border);border-radius:99px;padding:6px 14px;
+  background:var(--surface);
+}
+
+/* ---------- warning strip (permanent actions, dirty money etc.) ---------- */
+.sbm-warn{
+  display:flex;gap:10px;align-items:flex-start;
+  font-size:12.5px;line-height:1.5;color:var(--yellow);
+  background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.22);
+  border-radius:var(--radius-sm);padding:10px 12px;
+}
+
+/* ---------- modal ---------- */
+.sbm-overlay{
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(8,10,14,.7);backdrop-filter:blur(4px);z-index:100;
+}
+.sbm-modal{
+  width:440px;background:var(--surface);
+  border:1px solid var(--border-light);border-radius:var(--radius);
+  padding:28px;box-shadow:0 24px 60px rgba(0,0,0,.5);
+  animation:sbm-pop .22s ease;
+}
+@keyframes sbm-pop{from{transform:translateY(10px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+
+/* ---------- inputs ---------- */
+.sbm-input{
+  width:100%;padding:11px 14px;font-family:var(--font);font-size:13.5px;
+  background:var(--surface-2);border:1px solid var(--border-light);
+  border-radius:var(--radius-sm);color:var(--text);outline:none;
+  transition:border-color .2s;
+}
+.sbm-input:focus{border-color:var(--pink)}
+.sbm-input::placeholder{color:var(--text-3)}
+
+/* ---------- archetype accent helpers ---------- */
+.accent-faction{--accent:var(--blue)}
+.accent-family{--accent:var(--pink)}
+.accent-civilian{--accent:var(--violet)}

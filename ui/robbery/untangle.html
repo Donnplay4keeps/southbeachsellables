@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SBM Untangle</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+:root{
+  --bg:#0e1116;--surface:#151a21;--surface-2:#1b212b;--border:#262e3a;--border-light:#323c4b;
+  --text:#eef1f5;--text-2:#9aa5b4;--text-3:#6b7686;
+  --violet:#a78bfa;--green:#34d399;--yellow:#fbbf24;--red:#f87171;--blue:#38bdf8;
+  --font:'Inter',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:transparent;font-family:var(--font);color:var(--text);user-select:none}
+body{display:none}body.show{display:block}
+.wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(6,8,12,.55);backdrop-filter:blur(3px)}
+.mg{width:480px;background:var(--bg);border:1px solid var(--border-light);border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);animation:pop .24s ease}
+@keyframes pop{from{transform:translateY(12px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+.hd{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border);background:rgba(20,26,33,.6)}
+.hd .ic{width:40px;height:40px;flex:none;border-radius:11px;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--blue) 14%,transparent);border:1px solid color-mix(in srgb,var(--blue) 30%,transparent)}
+.hd .ic i{color:var(--blue);font-size:18px}
+.hd .t{font-size:15px;font-weight:800}
+.hd .t span{display:block;font-size:11.5px;font-weight:500;color:var(--text-3);margin-top:1px}
+.hd .timer{margin-left:auto;font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--green)}
+.hd .timer.warn{color:var(--yellow)}.hd .timer.crit{color:var(--red)}
+.body{padding:16px}
+.stage{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:0 4px}
+.stage .cross{font-size:12.5px;font-weight:700;color:var(--text-2)}
+.stage .cross b{color:var(--yellow)}
+.stage .cross b.zero{color:var(--green)}
+.stage .prog{font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px}
+.pad{position:relative;width:448px;height:320px;border-radius:14px;background:
+   radial-gradient(circle at 50% 40%,#161c25,#10141b 80%);border:1px solid var(--border)}
+svg{position:absolute;inset:0;width:100%;height:100%}
+.edge{stroke:var(--text-3);stroke-width:2.5;stroke-linecap:round;transition:stroke .15s}
+.edge.bad{stroke:var(--red);stroke-width:3}
+.node{fill:var(--violet);stroke:#0e1116;stroke-width:3;cursor:grab;transition:fill .12s, r .12s}
+.node:hover{fill:#c4b5fd}
+.node.drag{fill:var(--yellow);cursor:grabbing}
+.node.solved{fill:var(--green)}
+.hint{font-size:11.5px;color:var(--text-3);text-align:center;margin-top:12px;line-height:1.6}
+.keycap{display:inline-block;min-width:20px;padding:2px 6px;border-radius:5px;background:var(--surface-2);border:1px solid var(--border-light);font-weight:700;font-size:11px;color:var(--text)}
+</style></head>
+<body class="sbm">
+<div class="wrap"><div class="mg" id="mg">
+  <div class="hd">
+    <div class="ic"><i class="fa-solid fa-diagram-project"></i></div>
+    <div class="t">Bypass Security<span>Untangle the wiring — no lines may cross</span></div>
+    <div class="timer" id="timer">0:05</div>
+  </div>
+  <div class="body">
+    <div class="stage">
+      <div class="cross">Crossings left: <b id="crossings">0</b></div>
+      <div class="prog" id="prog"></div>
+    </div>
+    <div class="pad">
+      <svg id="svg" viewBox="0 0 448 320" preserveAspectRatio="none">
+        <g id="edges"></g><g id="nodes"></g>
+      </svg>
+    </div>
+    <div class="hint">Drag the <span class="keycap">nodes</span> until every wire turns grey and no two cross. Solve it before the timer runs out.</div>
+  </div>
+</div></div>
+<script>
+var isFiveM=(typeof GetParentResourceName==='function');
+function post(name,data){ if(!isFiveM)return; fetch('https://'+GetParentResourceName()+'/'+name,{method:'POST',headers:{'Content-Type':'application/json; charset=UTF-8'},body:JSON.stringify(data||{})}).catch(()=>{}); }
+var inIframe=(window.parent!==window);
+function report(win){ if(inIframe){ window.parent.postMessage({mg:'result',game:'untangle',success:win},'*'); } else { post('minigameResult',{game:'untangle',success:win}); } }
+
+var W=448,H=320,PAD=34;
+var nodes=[], edges=[], running=false, endAt=0, timer=null, dragging=-1;
+var svg=document.getElementById('svg'), gE=document.getElementById('edges'), gN=document.getElementById('nodes');
+
+function seg(a,b,c,d){return {a:a,b:b,c:c,d:d};}
+function ccw(A,B,C){return (C.y-A.y)*(B.x-A.x) > (B.y-A.y)*(C.x-A.x);}
+function intersect(p1,p2,p3,p4){
+  // share endpoint? not a crossing
+  if(p1===p3||p1===p4||p2===p3||p2===p4)return false;
+  return (ccw(p1,p3,p4)!==ccw(p2,p3,p4)) && (ccw(p1,p2,p3)!==ccw(p1,p2,p4));
+}
+function countCrossings(){
+  var c=0, bad={};
+  for(var i=0;i<edges.length;i++)for(var j=i+1;j<edges.length;j++){
+    var e1=edges[i],e2=edges[j];
+    if(intersect(nodes[e1[0]],nodes[e1[1]],nodes[e2[0]],nodes[e2[1]])){c++;bad[i]=1;bad[j]=1;}
+  }
+  return {c:c,bad:bad};
+}
+function render(){
+  var r=countCrossings();
+  gE.innerHTML='';
+  edges.forEach(function(e,i){
+    var l=document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',nodes[e[0]].x);l.setAttribute('y1',nodes[e[0]].y);
+    l.setAttribute('x2',nodes[e[1]].x);l.setAttribute('y2',nodes[e[1]].y);
+    l.setAttribute('class','edge'+(r.bad[i]?' bad':''));
+    gE.appendChild(l);
+  });
+  gN.innerHTML='';
+  nodes.forEach(function(n,i){
+    var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',n.x);c.setAttribute('cy',n.y);c.setAttribute('r',12);
+    c.setAttribute('class','node'+(i===dragging?' drag':'')+(r.c===0?' solved':''));
+    c.dataset.i=i;
+    gN.appendChild(c);
+  });
+  var cel=document.getElementById('crossings');
+  cel.textContent=r.c; cel.className=r.c===0?'zero':'';
+  document.getElementById('prog').textContent=r.c===0?'SOLVED':(edges.length+' wires');
+  if(r.c===0 && running){ finish(true); }
+}
+// build a guaranteed-solvable tangled graph: place nodes on a circle (planar when
+// convex), connect a cycle + a few chords, then scramble positions.
+function build(n){
+  nodes=[];edges=[];
+  var solved=[];
+  var cx=W/2,cy=H/2,R=Math.min(W,H)/2-PAD;
+  for(var i=0;i<n;i++){
+    var a=(i/n)*Math.PI*2;
+    solved.push({x:cx+Math.cos(a)*R, y:cy+Math.sin(a)*R});
+  }
+  // cycle edges (planar on the circle)
+  for(var i=0;i<n;i++) edges.push([i,(i+1)%n]);
+  // a few short chords that don't cross when convex (skip-1)
+  for(var i=0;i<n;i+=2) if(i+2<n) edges.push([i,(i+2)%n]);
+  // scramble node positions (keep same edges → tangled but solvable)
+  nodes=solved.map(function(){ return { x: PAD+Math.random()*(W-2*PAD), y: PAD+Math.random()*(H-2*PAD) }; });
+}
+function tick(){
+  if(!running)return;
+  var left=Math.max(0,(endAt-Date.now())/1000);
+  var m=Math.floor(left/60), s=Math.floor(left%60);
+  var el=document.getElementById('timer');
+  el.textContent=m+':'+(s<10?'0':'')+s;
+  el.className='timer'+(left<=3?' crit':left<=6?' warn':'');
+  if(left<=0) finish(false);
+}
+function finish(win){
+  running=false; if(timer){clearInterval(timer);timer=null;}
+  var el=document.getElementById('mg');
+  el.style.transition='box-shadow .3s';
+  el.style.boxShadow='0 30px 80px rgba(0,0,0,.6), 0 0 0 2px '+(win?'var(--green)':'var(--red)');
+  render();
+  setTimeout(function(){ document.body.classList.remove('show'); report(win); }, win?650:450);
+}
+function pt(e){
+  var r=svg.getBoundingClientRect();
+  var x=((e.touches?e.touches[0].clientX:e.clientX)-r.left)/r.width*W;
+  var y=((e.touches?e.touches[0].clientY:e.clientY)-r.top)/r.height*H;
+  return {x:Math.max(PAD,Math.min(W-PAD,x)), y:Math.max(PAD,Math.min(H-PAD,y))};
+}
+svg.addEventListener('mousedown',function(e){
+  if(!running)return;
+  var t=e.target; if(t.classList.contains('node')){ dragging=+t.dataset.i; render(); }
+});
+window.addEventListener('mousemove',function(e){
+  if(dragging<0||!running)return;
+  var p=pt(e); nodes[dragging].x=p.x; nodes[dragging].y=p.y; render();
+});
+window.addEventListener('mouseup',function(){ if(dragging>=0){dragging=-1;render();} });
+// touch
+svg.addEventListener('touchstart',function(e){ if(!running)return; var t=e.target; if(t.classList.contains('node')){dragging=+t.dataset.i;render();e.preventDefault();} },{passive:false});
+window.addEventListener('touchmove',function(e){ if(dragging<0||!running)return; var p=pt(e); nodes[dragging].x=p.x;nodes[dragging].y=p.y;render();e.preventDefault(); },{passive:false});
+window.addEventListener('touchend',function(){ if(dragging>=0){dragging=-1;render();} });
+window.addEventListener('keydown',function(e){ if(e.key==='Escape'&&running)finish(false); });
+
+function start(cfg){
+  build(cfg.numberOfNodes||8);
+  running=true; endAt=Date.now()+(cfg.duration||5000);
+  document.body.classList.add('show');
+  render();
+  if(timer)clearInterval(timer); timer=setInterval(tick,120); tick();
+}
+window.addEventListener('message',function(e){
+  var d=e.data||{}; if(d.action==='untangle') start(d.data||{});
+});
+if(!isFiveM){ start({ numberOfNodes:8, duration:20000 }); }
+</script></body></html>

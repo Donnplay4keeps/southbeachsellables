@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Burner</title>
+<style>
+/* ============================================================
+   Burner — lb-phone app, built on the Zelli/MyChart (z-*) design
+   system with a scam-pink accent. Dark, elevated cards, pill
+   toasts, sticky call footer.
+   ============================================================ */
+*{margin:0;padding:0;box-sizing:border-box}
+button{background:none;border:none;font-family:inherit;cursor:pointer;color:inherit}
+body{visibility:hidden}
+
+.z-app{
+  --background-primary:#0a0d12; --background-elevated:#161b22; --background-highlight:#1f2630;
+  --text-primary:#f1f3f7; --text-secondary:#a4adbc; --text-tertiary:#6b7484;
+  --border:rgba(255,255,255,.06);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.45);
+  --accent:#ff2d8f; --accent2:#ff5fae; --accent-soft:rgba(255,45,143,.16); --accent-text:#ff9ac9;
+  --positive:#34c08c; --positive-soft:rgba(52,192,140,.16);
+  --negative:#e26a6a; --negative-soft:rgba(226,106,106,.16);
+  --warn:#e4a93e; --warn-soft:rgba(228,169,62,.16);
+  --hero-shadow:rgba(255,45,143,.30);
+  --green:#2fd07a; --greendk:#17a85c;
+  height:100vh; width:100%; position:relative; overflow:hidden;
+  background:var(--background-primary); color:var(--text-primary);
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',Inter,'Segoe UI',sans-serif;
+  font-size:14px; -webkit-font-smoothing:antialiased;
+}
+.z-screen{
+  height:100%; width:100%; overflow-y:auto; overflow-x:hidden;
+  padding:3.1rem 1rem 1.4rem; display:flex; flex-direction:column; gap:1rem;
+}
+.z-screen::-webkit-scrollbar{display:none}
+
+/* brand header */
+.z-header{display:flex; align-items:center; justify-content:space-between; padding:.1rem 0}
+.z-brand{display:flex; align-items:center; gap:.7rem}
+.z-brand-icon{
+  width:2.4rem; height:2.4rem; border-radius:.7rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 12px var(--hero-shadow); font-size:1.15rem;
+}
+.z-brand-name{font-size:1.25rem; font-weight:700; letter-spacing:-.02em}
+.z-brand-sub{font-size:.7rem; color:var(--text-tertiary); font-weight:500; text-transform:uppercase; letter-spacing:.08em}
+.z-refresh{
+  width:2.1rem; height:2.1rem; border-radius:.65rem; font-size:.85rem;
+  background:var(--background-elevated); border:1px solid var(--border); color:var(--text-secondary);
+}
+.z-refresh:active{background:var(--background-highlight)}
+
+/* level hero */
+.sc-hero{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff; border-radius:.95rem; padding:1rem 1.05rem 1.1rem;
+  box-shadow:0 8px 22px var(--hero-shadow); display:flex; flex-direction:column; gap:.7rem;
+}
+.sc-hero-top{display:flex; align-items:center; justify-content:space-between}
+.sc-lvl{display:flex; align-items:center; gap:.7rem}
+.sc-lvl .num{
+  width:2.5rem; height:2.5rem; border-radius:.7rem; background:rgba(255,255,255,.18);
+  display:flex; align-items:center; justify-content:center; font-size:1.25rem; font-weight:800;
+}
+.sc-lvl .ttl{font-size:1.05rem; font-weight:700}
+.sc-lvl .sub{font-size:.68rem; opacity:.8; text-transform:uppercase; letter-spacing:.06em; font-weight:600}
+.sc-mult{text-align:right}
+.sc-mult .m{font-size:1.2rem; font-weight:800}
+.sc-mult .l{font-size:.6rem; opacity:.8; text-transform:uppercase; letter-spacing:.06em; font-weight:700}
+.sc-xp{height:.42rem; background:rgba(255,255,255,.22); border-radius:.3rem; overflow:hidden}
+.sc-xp>div{height:100%; background:#fff; border-radius:.3rem; transition:width .5s}
+.sc-xptext{font-size:.66rem; opacity:.85; font-weight:600; display:flex; justify-content:space-between}
+
+/* burner + boost rows */
+.sc-row{
+  background:var(--background-elevated); border:1px solid var(--border); border-radius:.85rem;
+  padding:.75rem .9rem; box-shadow:var(--shadow); display:flex; align-items:center; gap:.75rem;
+}
+.sc-row .ic{
+  width:2.1rem; height:2.1rem; border-radius:.6rem; flex:none; font-size:.95rem;
+  display:flex; align-items:center; justify-content:center; background:var(--accent-soft); color:var(--accent-text);
+}
+.sc-row.pos .ic{background:var(--positive-soft); color:var(--positive)}
+.sc-row .body{flex:1; min-width:0}
+.sc-row .t{font-size:.9rem; font-weight:600}
+.sc-row .s{font-size:.72rem; color:var(--text-tertiary); margin-top:.1rem}
+.sc-pips{display:flex; gap:.28rem; margin-top:.3rem}
+.sc-pips i{width:1rem; height:.42rem; border-radius:.2rem; background:var(--background-highlight)}
+.sc-pips i.on{background:linear-gradient(90deg,var(--positive),#7ff0d0)}
+
+/* dial button */
+.sc-dial{
+  width:100%; padding:.95rem; border-radius:.85rem; font-size:1.02rem; font-weight:800;
+  color:#04231a; background:linear-gradient(135deg,var(--green),var(--greendk));
+  box-shadow:0 6px 16px rgba(47,208,122,.28); display:flex; align-items:center; justify-content:center; gap:.55rem;
+  transition:transform .12s;
+}
+.sc-dial:active{transform:scale(.985)}
+.sc-flag{
+  text-align:center; padding:.85rem; border-radius:.8rem; background:var(--negative-soft);
+  border:1px solid rgba(226,106,106,.4); color:#f2a3a3; font-size:.82rem; font-weight:600;
+}
+
+/* section label + challenge/mark lists */
+.z-section-label{
+  font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; font-weight:700;
+  color:var(--text-tertiary); margin-bottom:-.35rem;
+}
+.z-list{display:flex; flex-direction:column; gap:.55rem}
+.z-card{
+  text-align:left; width:100%; background:var(--background-elevated);
+  border:1px solid var(--border); border-radius:.8rem; padding:.7rem .85rem; box-shadow:var(--shadow);
+}
+.z-card.done{border-color:rgba(52,192,140,.45)}
+.ch-top{display:flex; justify-content:space-between; align-items:center}
+.ch-name{font-size:.88rem; font-weight:600}
+.ch-name .chk{color:var(--positive)}
+.ch-xp{font-size:.72rem; font-weight:700; color:var(--accent-text)}
+.ch-desc{font-size:.72rem; color:var(--text-tertiary); margin:.15rem 0 .4rem}
+.ch-bar{height:.35rem; background:var(--background-highlight); border-radius:.25rem; overflow:hidden}
+.ch-bar>div{height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:.25rem}
+.z-card.done .ch-bar>div{background:linear-gradient(90deg,var(--positive),#7ff0d0)}
+.ch-prog{font-size:.66rem; color:var(--text-tertiary); text-align:right; margin-top:.25rem}
+
+.sc-marks{display:flex; flex-wrap:wrap; gap:.4rem}
+.sc-mk{
+  display:flex; align-items:center; gap:.4rem; background:var(--background-elevated);
+  border:1px solid var(--border); border-radius:.6rem; padding:.4rem .55rem; font-size:.76rem; font-weight:600;
+}
+.sc-mk.locked{opacity:.42}
+.sc-mk .em{font-size:.95rem}
+.sc-mk .lk{font-size:.62rem; color:var(--text-tertiary)}
+
+/* ── call screen ── */
+.sc-callhead{text-align:center; display:flex; flex-direction:column; align-items:center; gap:.15rem; padding-top:.2rem}
+.sc-avatar{
+  width:5.2rem; height:5.2rem; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:2.6rem; background:radial-gradient(circle at 50% 38%, #262d38, #161b22);
+  border:2px solid #2c3542; box-shadow:0 8px 20px rgba(0,0,0,.4); margin-bottom:.4rem;
+}
+.sc-callname{font-size:1.3rem; font-weight:800}
+.sc-callsub{font-size:.78rem; color:var(--accent-text); font-weight:600}
+.sc-timer{display:flex; align-items:center; gap:.4rem; color:var(--text-tertiary); font-size:.74rem; font-weight:600; font-variant-numeric:tabular-nums; margin-top:.15rem}
+.sc-timer .rec{width:.42rem; height:.42rem; border-radius:50%; background:var(--negative); animation:blink 1.3s infinite}
+.sc-timer .bl{color:var(--positive); font-weight:700}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+.sc-meters{display:flex; flex-direction:column; gap:.55rem}
+.sc-meter .ml{display:flex; justify-content:space-between; font-size:.66rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--text-tertiary); margin-bottom:.25rem}
+.sc-meter .ml span:last-child{color:var(--text-primary)}
+.sc-track{height:.55rem; background:var(--background-highlight); border-radius:.35rem; overflow:hidden}
+.sc-track>div{height:100%; width:0; border-radius:.35rem; transition:width .45s}
+.sc-track.trust>div{background:linear-gradient(90deg,#1f9e7f,var(--positive))}
+.sc-track.susp>div{background:linear-gradient(90deg,#b8434f,var(--negative))}
+.sc-track.susp>div.hot{animation:pulse .7s infinite}
+@keyframes pulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.5)}}
+
+.sc-pot{background:var(--background-elevated); border:1px solid var(--border); border-radius:.8rem; padding:.7rem .9rem; box-shadow:var(--shadow)}
+.sc-potrow{display:flex; justify-content:space-between; font-size:.8rem; color:var(--text-tertiary); font-weight:600}
+.sc-potrow span:last-child{color:var(--text-primary); font-weight:800}
+.sc-potrow.take{margin-top:.4rem; padding-top:.4rem; border-top:1px dashed var(--border)}
+.sc-potrow.take span:last-child{color:var(--positive); font-size:1.05rem}
+
+.sc-bubble{
+  background:var(--background-highlight); border:1px solid var(--border); border-radius:.85rem;
+  border-top-left-radius:.25rem; padding:.75rem .9rem; font-size:.86rem; line-height:1.5; font-style:italic; color:var(--text-primary);
+}
+.sc-opts{display:flex; flex-direction:column; gap:.5rem}
+.sc-opt{
+  width:100%; text-align:left; background:var(--background-elevated); border:1px solid var(--border);
+  border-radius:.75rem; padding:.7rem .85rem; font-size:.82rem; font-weight:600; line-height:1.35;
+  display:flex; gap:.6rem; align-items:flex-start; box-shadow:var(--shadow); transition:transform .1s,border-color .12s;
+}
+.sc-opt:active{transform:scale(.99)}
+.sc-opt .n{color:var(--accent-text); font-weight:800; flex:none}
+.sc-opt[disabled]{opacity:.5}
+
+/* sticky call footer */
+.sc-foot{
+  position:sticky; bottom:0; margin:.2rem -1rem -1.4rem; padding:.7rem 1rem 1rem;
+  display:flex; gap:.6rem; align-items:center;
+  background:linear-gradient(to top, var(--background-primary) 68%, transparent);
+}
+.sc-end{
+  width:3.1rem; height:3.1rem; flex:none; border-radius:50%; font-size:1.15rem; color:#fff;
+  background:linear-gradient(135deg,#e26a6a,#c23a3a); box-shadow:0 5px 14px rgba(226,106,106,.32);
+}
+.sc-close{
+  flex:1; padding:.9rem; border-radius:1.6rem; font-weight:800; font-size:.92rem; color:#04231a;
+  background:linear-gradient(135deg,var(--green),var(--greendk)); box-shadow:0 6px 16px rgba(47,208,122,.28);
+}
+.sc-close[disabled]{opacity:.35; filter:grayscale(.5)}
+
+/* ── ended / denied ── */
+.sc-center{height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:.3rem; padding:1rem}
+.sc-ricon{font-size:3.4rem}
+.sc-rtitle{font-size:1.5rem; font-weight:800; margin-top:.3rem}
+.sc-rmsg{font-size:.85rem; color:var(--text-secondary); line-height:1.5; margin-top:.35rem; max-width:16rem}
+.sc-rpay{font-size:2.3rem; font-weight:800; color:var(--positive); margin-top:.9rem}
+.sc-rxp{font-size:.86rem; font-weight:700; color:var(--accent-text); margin-top:.1rem}
+.sc-rwanted{margin-top:.9rem; padding:.55rem .9rem; border-radius:.7rem; background:var(--negative-soft); border:1px solid rgba(226,106,106,.5); color:#f2a3a3; font-weight:800; font-size:.8rem; letter-spacing:.04em}
+.sc-rburner{margin-top:.7rem; font-size:.8rem; font-weight:600; color:var(--text-tertiary)}
+.sc-rburner b{color:var(--positive)} .sc-rburner.tossed b{color:var(--negative)}
+.sc-rbtns{display:flex; gap:.6rem; margin-top:1.4rem; width:100%; max-width:17rem}
+.sc-rbtns button{flex:1; padding:.85rem; border-radius:.75rem; font-weight:800; font-size:.9rem}
+.sc-again{color:#04231a; background:linear-gradient(135deg,var(--green),var(--greendk))}
+.sc-done{background:var(--background-highlight); color:var(--text-secondary)}
+
+/* toast */
+.z-toast{
+  position:absolute; bottom:1.2rem; left:50%; transform:translate(-50%) translateY(200%);
+  background:var(--positive); color:#fff; padding:.55rem .95rem; border-radius:999px;
+  font-size:.82rem; font-weight:600; box-shadow:0 6px 18px rgba(0,0,0,.3); z-index:60;
+  display:inline-flex; align-items:center; gap:.5rem; max-width:88%;
+  transition:transform .2s; pointer-events:none;
+}
+.z-toast.show{transform:translate(-50%) translateY(0)}
+.z-toast.err{background:var(--negative)}
+
+/* loading */
+.z-load{height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.9rem; color:var(--text-tertiary); font-size:.85rem}
+.z-spin{width:1.9rem; height:1.9rem; border-radius:50%; border:3px solid var(--background-highlight); border-top-color:var(--accent); animation:zsp .8s linear infinite}
+@keyframes zsp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="z-app" data-theme="dark" id="app">
+  <div class="z-screen" id="screen">
+    <div class="z-load"><div class="z-spin"></div><div>Booting the burner…</div></div>
+  </div>
+  <div class="z-toast" id="toast"><span id="ticon">✓</span><span id="toastmsg"></span></div>
+</div>
+<script>
+var IN_GAME = !!window.invokeNative;
+var RES = window.resourceName || 'sbm-scamcenter';
+
+function el(id){ return document.getElementById(id); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function money(n){ n=Math.floor(Number(n)||0); return '$'+n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+function pad(n){ return n<10?'0'+n:''+n; }
+function mmss(s){ return pad(Math.floor(s/60))+':'+pad(s%60); }
+
+/* ---------- header context for the live take ---------- */
+var HDR = { multiplier:1, boostPayout:1 };
+
+/* ---------- demo (browser preview only) ---------- */
+var DEMO_HOME = {
+  screen:'home', level:5, title:'Silver Tongue', multiplier:1.25, boostPayout:1.10,
+  xp:1650, currentLevelXP:1400, nextLevelXP:2200, maxLevel:false, totalCalls:63,
+  boost:{ label:'Illegal Civilian Boost', payout:1.10, xp:1.15 },
+  burner:{ maxUses:3, usesLeft:2, held:4 }, currency:'$',
+  challenges:[
+    { id:'first_mark', label:'First Mark', desc:'Complete 5 calls', target:5, rewardXp:150, progress:5, done:true },
+    { id:'silver', label:'Silver Tongue', desc:'Close 10 calls with no suspicion bust', target:10, rewardXp:300, progress:7, done:false },
+    { id:'whale', label:'Whale Hunter', desc:'Close 5 Crypto Whale / Business marks', target:5, rewardXp:450, progress:2, done:false }
+  ],
+  marks:[
+    { key:'boomer', label:'Confused Boomer', emoji:'📞', minLevel:1, unlocked:true },
+    { key:'parent', label:'Anxious Parent', emoji:'👪', minLevel:3, unlocked:true },
+    { key:'retiree', label:'Cautious Retiree', emoji:'👵', minLevel:5, unlocked:true },
+    { key:'business', label:'Small Business', emoji:'🏪', minLevel:7, unlocked:false },
+    { key:'crypto', label:'Crypto Whale', emoji:'🐋', minLevel:9, unlocked:false }
+  ]
+};
+var DEMO_CALL = null;
+function demoHeader(v){ v.level=5; v.title='Silver Tongue'; v.multiplier=1.25; v.boostPayout=1.10; v.xp=1650; v.currentLevelXP=1400; v.nextLevelXP=2200; v.maxLevel=false; v.totalCalls=63; v.boost=DEMO_HOME.boost; v.currency='$'; v.burner={maxUses:3,usesLeft:2,held:4}; return v; }
+function demoCall(name,data){
+  if(name==='scam:getState') return DEMO_CALL || DEMO_HOME;
+  if(name==='scam:hangup'){ DEMO_CALL=null; return DEMO_HOME; }
+  if(name==='scam:dial'){
+    DEMO_CALL = demoHeader({ screen:'call', mark:{label:'Cautious Retiree',emoji:'👵'}, script:{label:'Grandkid in Trouble'},
+      round:{ victim:"H-hello? Who is this? You sound just like my grandson...", options:[
+        {text:"Grandma, it's me — please don't tell Mom, I'm in real trouble."},
+        {text:"Yeah it's your grandson, send money, quick."},
+        {text:"It's me... I got in an accident and didn't know who else to call."} ]},
+      roundIndex:1, totalRounds:5, trust:0, susp:0, pot:1980, canClose:false, final:false });
+    return DEMO_CALL;
+  }
+  if(name==='scam:pick'){
+    if(!DEMO_CALL) return DEMO_HOME;
+    DEMO_CALL.trust=Math.min(100,DEMO_CALL.trust+24); DEMO_CALL.susp=Math.min(100,DEMO_CALL.susp+11);
+    DEMO_CALL.roundIndex=Math.min(DEMO_CALL.totalRounds,DEMO_CALL.roundIndex+1); DEMO_CALL.canClose=true;
+    DEMO_CALL.round={ victim:"Oh no, sweetheart, are you hurt? What happened?!", options:[
+      {text:"I'm okay, but they arrested me. I need bail before they book me."},
+      {text:"Doesn't matter. Just wire the money before it's too late."},
+      {text:"It's bad, Grandma... there's a lawyer here who can explain."} ]};
+    return DEMO_CALL;
+  }
+  if(name==='scam:closeDeal'){
+    var t=DEMO_CALL?DEMO_CALL.trust:60, pot=DEMO_CALL?DEMO_CALL.pot:1980;
+    var pay=Math.floor(pot*(t/100)*1.25*1.10); DEMO_CALL=null;
+    return demoHeader({ screen:'ended', result:'closed', payout:pay, gainedXp:24, boostLabel:'Illegal Civilian Boost', mark:'Cautious Retiree', trust:t, burnerResult:{burned:false,usesLeft:1,held:4} });
+  }
+  return DEMO_HOME;
+}
+
+function nui(name,data){
+  if(!IN_GAME){ return new Promise(function(res){ setTimeout(function(){ res(demoCall(name,data||{})); }, 90); }); }
+  return fetch('https://'+RES+'/'+name, { method:'POST', headers:{'Content-Type':'application/json; charset=UTF-8'}, body:JSON.stringify(data||{}) })
+    .then(function(r){ return r.json(); }).catch(function(){ return {}; });
+}
+
+/* ---------- toast ---------- */
+var toastTimer=null;
+function toast(msg,isErr){
+  var t=el('toast');
+  t.classList.toggle('err',!!isErr);
+  el('ticon').textContent = isErr?'⚠':'✓';
+  el('toastmsg').textContent=msg;
+  t.classList.add('show');
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){ t.classList.remove('show'); }, 2600);
+}
+
+/* ---------- call timer ---------- */
+var callSeconds=0, timer=null, prevScreen=null;
+function ensureTimer(on){
+  if(on){ if(!timer){ timer=setInterval(function(){ callSeconds++; var e=el('sc-timer-val'); if(e) e.textContent=mmss(callSeconds); }, 1000); } }
+  else { if(timer){ clearInterval(timer); timer=null; } }
+}
+
+/* ---------- render ---------- */
+function takeEstimate(pot,trust){ return Math.floor((pot||0)*((trust||0)/100)*(HDR.multiplier||1)*(HDR.boostPayout||1)); }
+
+function render(v){
+  if(!v){ return; }
+  if(typeof v.multiplier==='number') HDR.multiplier=v.multiplier;
+  if(typeof v.boostPayout==='number') HDR.boostPayout=v.boostPayout;
+
+  if(v.screen!=='call') ensureTimer(false);
+
+  if(v.screen==='denied') renderDenied(v);
+  else if(v.screen==='call') renderCall(v);
+  else if(v.screen==='ended') renderEnded(v);
+  else renderHome(v);
+
+  if(v.toast) toast(v.toast.msg, v.toast.err);
+  prevScreen = v.screen;
+}
+window.__render = render; /* test hook */
+
+function heroHTML(v){
+  var floor=v.currentLevelXP||0, ceil=v.nextLevelXP||(floor+1);
+  var pct = v.maxLevel?100:Math.max(0,Math.min(100,((v.xp-floor)/(ceil-floor))*100));
+  var xpt = v.maxLevel ? (v.xp+' XP · MAX') : (v.xp+' / '+ceil+' XP');
+  return '<div class="sc-hero">'+
+    '<div class="sc-hero-top">'+
+      '<div class="sc-lvl"><div class="num">'+v.level+'</div><div><div class="ttl">'+esc(v.title||'')+'</div><div class="sub">Smooth-Talker</div></div></div>'+
+      '<div class="sc-mult"><div class="m">'+(v.multiplier||1).toFixed(2)+'×</div><div class="l">Payout</div></div>'+
+    '</div>'+
+    '<div class="sc-xp"><div style="width:'+pct+'%"></div></div>'+
+    '<div class="sc-xptext"><span>'+esc(xpt)+'</span><span>'+(v.totalCalls||0)+' calls run</span></div>'+
+  '</div>';
+}
+
+function burnerRowHTML(b){
+  if(!b) return '';
+  var max=b.maxUses||3, left=Math.max(0,b.usesLeft==null?max:b.usesLeft), pips='';
+  for(var i=0;i<max;i++) pips+='<i class="'+(i<left?'on':'')+'"></i>';
+  return '<div class="sc-row pos"><div class="ic">📶</div>'+
+    '<div class="body"><div class="t">Burner &nbsp;·&nbsp; '+left+' call'+(left===1?'':'s')+' left</div>'+
+    '<div class="sc-pips">'+pips+'</div></div>'+
+    '<div class="meta" style="font-size:.72rem;color:var(--text-tertiary);font-weight:600">'+(b.held||0)+' in pocket</div></div>';
+}
+
+function renderHome(v){
+  var boost = v.boost ? '<div class="sc-row"><div class="ic">⚡</div><div class="body"><div class="t">'+esc(v.boost.label)+'</div><div class="s">+'+Math.round((v.boost.payout-1)*100)+'% cash · +'+Math.round((v.boost.xp-1)*100)+'% XP</div></div></div>' : '';
+  var dial = v.flaggedFor
+    ? '<div class="sc-flag">⚠ Your number is flagged — lay low for '+v.flaggedFor+'s</div>'
+    : '<button class="sc-dial" id="btn-dial">📞 Dial a Mark</button>';
+
+  var chs='';
+  (v.challenges||[]).forEach(function(ch){
+    var pct=Math.max(0,Math.min(100,(ch.progress/ch.target)*100));
+    chs+='<div class="z-card'+(ch.done?' done':'')+'"><div class="ch-top"><span class="ch-name">'+esc(ch.label)+(ch.done?' <span class="chk">✓</span>':'')+'</span><span class="ch-xp">+'+ch.rewardXp+' XP</span></div>'+
+      '<div class="ch-desc">'+esc(ch.desc)+'</div><div class="ch-bar"><div style="width:'+pct+'%"></div></div>'+
+      '<div class="ch-prog">'+ch.progress+' / '+ch.target+'</div></div>';
+  });
+
+  var mks='';
+  (v.marks||[]).forEach(function(m){
+    mks+='<div class="sc-mk'+(m.unlocked?'':' locked')+'"><span class="em">'+(m.emoji||'📞')+'</span>'+esc(m.label)+(m.unlocked?'':' <span class="lk">Lv '+m.minLevel+'</span>')+'</div>';
+  });
+
+  el('screen').innerHTML =
+    '<div class="z-header"><div class="z-brand"><div class="z-brand-icon">☎</div>'+
+      '<div><div class="z-brand-name">Burner</div><div class="z-brand-sub">Unknown Caller</div></div></div>'+
+      '<button class="z-refresh" id="btn-refresh">↻</button></div>'+
+    heroHTML(v)+ burnerRowHTML(v.burner)+ boost+ dial+
+    '<div class="z-section-label">Challenges</div><div class="z-list">'+chs+'</div>'+
+    '<div class="z-section-label">Who Picks Up</div><div class="sc-marks">'+mks+'</div>';
+
+  if(el('btn-dial')) el('btn-dial').onclick=function(){ nui('scam:dial').then(render); };
+  el('btn-refresh').onclick=function(){ nui('scam:getState').then(function(s){ render(s); toast('Up to date.'); }); };
+}
+
+function renderCall(v){
+  if(prevScreen!=='call'){ callSeconds=0; }
+  var t=v.trust||0, s=v.susp||0;
+  var take=takeEstimate(v.pot,t);
+  var opts='';
+  if(v.round && v.round.options && v.round.options.length){
+    v.round.options.forEach(function(o,i){
+      opts+='<button class="sc-opt" data-i="'+(i+1)+'"><span class="n">'+(i+1)+'</span><span>'+esc(o.text)+'</span></button>';
+    });
+  }
+  var bl = v.burner ? ' &nbsp;·&nbsp; <span class="bl">🔋'+Math.max(0,v.burner.usesLeft)+'</span>' : '';
+  var vic = (v.round && v.round.victim) ? v.round.victim : 'So… are we doing this or not?';
+
+  el('screen').innerHTML =
+    '<div class="sc-callhead">'+
+      '<div class="sc-avatar">'+((v.mark&&v.mark.emoji)||'📞')+'</div>'+
+      '<div class="sc-callname">'+esc((v.mark&&v.mark.label)||'Unknown')+'</div>'+
+      '<div class="sc-callsub">'+esc((v.script&&v.script.label)||'')+' · No Caller ID</div>'+
+      '<div class="sc-timer"><span class="rec"></span><span id="sc-timer-val">'+mmss(callSeconds)+'</span> · '+
+        (v.final?'Closing…':('Round '+(v.roundIndex||1)+'/'+(v.totalRounds||1)))+bl+'</div>'+
+    '</div>'+
+    '<div class="sc-meters">'+
+      '<div class="sc-meter"><div class="ml"><span>Trust</span><span>'+t+'%</span></div><div class="sc-track trust"><div style="width:'+t+'%"></div></div></div>'+
+      '<div class="sc-meter"><div class="ml"><span>Suspicion</span><span>'+s+'%</span></div><div class="sc-track susp"><div class="'+(s>=70?'hot':'')+'" style="width:'+s+'%"></div></div></div>'+
+    '</div>'+
+    '<div class="sc-pot"><div class="sc-potrow"><span>On the table</span><span>'+money(v.pot)+'</span></div>'+
+      '<div class="sc-potrow take"><span>Your take now</span><span>'+money(take)+'</span></div></div>'+
+    '<div class="sc-bubble">“'+esc(vic)+'”</div>'+
+    '<div class="sc-opts">'+opts+'</div>'+
+    '<div class="sc-foot"><button class="sc-end" id="btn-end">✕</button>'+
+      '<button class="sc-close" id="btn-close"'+(v.canClose?'':' disabled')+'>💰 Close the Deal</button></div>';
+
+  Array.prototype.forEach.call(document.querySelectorAll('.sc-opt'), function(b){
+    b.onclick=function(){
+      Array.prototype.forEach.call(document.querySelectorAll('.sc-opt'), function(x){ x.disabled=true; });
+      nui('scam:pick',{ index:Number(b.getAttribute('data-i')) }).then(render);
+    };
+  });
+  el('btn-end').onclick=function(){ nui('scam:hangup').then(render); };
+  el('btn-close').onclick=function(){ if(!v.canClose) return; el('btn-close').disabled=true; nui('scam:closeDeal').then(render); };
+
+  ensureTimer(true);
+}
+
+function renderEnded(v){
+  ensureTimer(false);
+  var icon='💰', title='Cashed Out', cls='';
+  if(v.result==='closed'){ icon='💰'; title='Cashed Out'; }
+  else if(v.result==='flop'){ icon='🥶'; title='They Flopped'; }
+  else if(v.result==='reported'){ icon='🚨'; title='Reported'; }
+  else { icon='📵'; title='Hung Up'; }
+
+  var msg = v.message || (v.result==='closed' ? ((v.mark||'The mark')+' paid up at '+(v.trust||0)+'% trust.') : '');
+  var pay = (v.payout!=null) ? '<div class="sc-rpay">+'+money(v.payout)+'</div>' : '';
+  var xp = (v.gainedXp!=null) ? '<div class="sc-rxp">+'+v.gainedXp+' XP'+(v.boostLabel?'  ·  '+esc(v.boostLabel):'')+'</div>' : '';
+  var wanted = v.reported ? '<div class="sc-rwanted">★ WANTED — ditch the burner</div>' : '';
+
+  var burner='';
+  var b=v.burnerResult;
+  if(b){
+    if(b.burned) burner='<div class="sc-rburner tossed">'+(b.held>0?('🔥 Burner tossed — <b>'+b.held+'</b> spare'+(b.held===1?'':'s')+' in your pocket'):'🔥 That was your last burner — grab another')+'</div>';
+    else burner='<div class="sc-rburner">🔋 <b>'+b.usesLeft+'</b> call'+(b.usesLeft===1?'':'s')+' left on this burner</div>';
+  }
+
+  el('screen').innerHTML =
+    '<div class="sc-center"><div class="sc-ricon">'+icon+'</div><div class="sc-rtitle">'+title+'</div>'+
+      '<div class="sc-rmsg">'+esc(msg)+'</div>'+ pay+ xp+ wanted+ burner+
+      '<div class="sc-rbtns"><button class="sc-again" id="btn-again">Dial Again</button><button class="sc-done" id="btn-done">Done</button></div></div>';
+
+  el('btn-again').onclick=function(){ nui('scam:dial').then(render); };
+  el('btn-done').onclick=function(){ nui('scam:getState').then(render); };
+}
+
+function renderDenied(v){
+  el('screen').innerHTML =
+    '<div class="sc-center"><div class="sc-ricon">🔒</div><div class="sc-rtitle">No Service</div>'+
+    '<div class="sc-rmsg">This burner is dead in your hands. Not your line of work.</div></div>';
+}
+
+/* ---------- boot (hide the raw ui_page layer; only show in the phone) ---------- */
+function boot(){ nui('scam:getState').then(render); }
+
+if(!IN_GAME){
+  document.body.style.visibility='visible';
+  boot();
+} else {
+  var tries=0;
+  (function wait(){
+    if(window.getSettings){
+      window.getSettings().then(function(s){
+        el('app').setAttribute('data-theme', (s&&s.display&&s.display.theme)||'dark');
+      }).catch(function(){}).then(function(){
+        document.body.style.visibility='visible'; boot();
+      });
+      if(window.onSettingsChange){ window.onSettingsChange(function(s){ el('app').setAttribute('data-theme',(s&&s.display&&s.display.theme)||'dark'); }); }
+    } else if(++tries<200){ setTimeout(wait,100); }
+  })();
+}
+
+/* live refresh from the server (e.g. after an external change) */
+window.addEventListener('message', function(e){
+  var d=e.data; if(d && d.type==='refresh'){ nui('scam:getState').then(render); }
+});
+</script>
+
+
+
+<style id="sbm-embed-fix">
+  html,body{background:#0a0714 !important;}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-thumb{background:rgba(255,45,149,.35);border-radius:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+</style>
+</body>
+</html>

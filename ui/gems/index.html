@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SBM Donor Hub</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="admin_ui.css">
+</head>
+<body>
+<div id="app" style="display:none;">
+<div class="window">
+    <!-- HEADER -->
+    <div class="hdr">
+        <div class="hdr-left">
+            <img src="https://r2.fivemanage.com/ixntk9q1VdG89vPmDaX5h/watermark2.png" class="logo-img" alt="SBM">
+            <div class="hdr-titles"><h1>Donor Hub</h1><p>Bundles, vehicles &amp; weapons</p></div>
+        </div>
+        <div class="hdr-tabs">
+            <button class="tab active" data-tab="shop"><i class="fas fa-store"></i> Shop</button>
+            <button class="tab" data-tab="itemshop"><i class="fas fa-box-open"></i> Item Shop</button>
+            <button class="tab" data-tab="auction"><i class="fas fa-gavel"></i> Auctions</button>
+            <button class="tab" data-tab="daily"><i class="fas fa-gift"></i> Daily</button>
+            <button class="tab" data-tab="leaderboard"><i class="fas fa-trophy"></i> Leaders</button>
+            <button class="tab" data-tab="casino"><i class="fas fa-coins"></i> Casino</button>
+        </div>
+        <div class="hdr-right">
+            <div class="bal-box"><i class="fas fa-gem bal-ico"></i><div class="bal-info"><span class="bal-lbl">Balance</span><span class="bal-val" id="bal">0</span></div></div>
+            <button class="hdr-btn redeem-cta" id="redeem-toggle" title="Redeem a Tebex purchase"><i class="fas fa-gift"></i><span>REDEEM</span></button>
+            <button class="hdr-btn xbtn" id="close-btn"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+
+    <div class="content">
+        <!-- SHOP -->
+        <div class="panel active" id="tab-shop">
+            <div class="claims-banner" id="claims-banner" style="display:none"></div>
+            <div class="shop-bar">
+                <div class="search-wrap"><i class="fas fa-search search-ico"></i><input type="text" id="shop-search" class="search-inp" placeholder="Search items..."></div>
+                <div class="cat-row" id="shop-cats"></div>
+            </div>
+            <div class="shop-grid" id="shop-grid"></div>
+        </div>
+        <!-- ITEM SHOP -->
+        <div class="panel" id="tab-itemshop">
+            <div class="itemshop-refresh-bar">
+                <div class="isr-left"><i class="fas fa-arrows-rotate isr-ico"></i><span class="isr-lbl">Item Shop Refreshes In</span></div>
+                <div class="isr-timer" id="itemshop-timer">--:--:--</div>
+            </div>
+            <div class="shop-bar">
+                <div class="search-wrap"><i class="fas fa-search search-ico"></i><input type="text" id="itemshop-search" class="search-inp" placeholder="Search items..."></div>
+                <div class="cat-row" id="itemshop-cats"></div>
+            </div>
+            <div class="shop-grid" id="itemshop-grid"></div>
+        </div>
+        <!-- AUCTION HOUSE -->
+        <div class="panel" id="tab-auction">
+            <div class="auction-subnav">
+                <button class="asub active" data-asub="browse"><i class="fas fa-magnifying-glass"></i> Browse</button>
+                <button class="asub" data-asub="mine"><i class="fas fa-user"></i> My Listings</button>
+                <button class="asub" data-asub="create"><i class="fas fa-plus"></i> Create Listing</button>
+                <button class="auc-refresh" id="auc-refresh"><i class="fas fa-rotate-right"></i> Refresh</button>
+            </div>
+            <div class="auction-body">
+                <div class="asub-panel active" id="auc-browse">
+                    <div class="auc-grid" id="auc-grid"><div class="auc-empty">Loading auctions...</div></div>
+                </div>
+                <div class="asub-panel" id="auc-mine">
+                    <div class="auc-grid" id="auc-mine-grid"><div class="auc-empty">No active listings</div></div>
+                </div>
+                <div class="asub-panel" id="auc-create">
+                    <div class="auc-create-wrap">
+                        <h3 class="auc-create-title"><i class="fas fa-gavel"></i> Create New Listing</h3>
+                        <div class="fg">
+                            <label>Pick Item from Your Inventory</label>
+                            <div class="auc-picker" id="auc-picker"></div>
+                            <div class="auc-picker-empty" id="auc-picker-empty" style="display:none">You don't have any listable items in your inventory.</div>
+                        </div>
+                        <div class="fg"><label>Quantity <span class="auc-qty-hint" id="auc-qty-hint"></span></label><input type="number" id="auc-qty" class="inp" value="1" min="1" max="1000"></div>
+                        <div class="fg"><label>Starting Price (gems)</label><input type="number" id="auc-price" class="inp" value="100" min="1"></div>
+                        <div class="fg"><label>Duration</label><div class="auc-dur-row" id="auc-dur-row"></div></div>
+                        <div class="auc-info-box">
+                            <div class="auc-info-row"><span>House cut on sale:</span><span id="auc-info-cut">5%</span></div>
+                            <div class="auc-info-row"><span>Max active listings:</span><span id="auc-info-max">3</span></div>
+                            <div class="auc-info-row"><span>Min bid increment:</span><span id="auc-info-inc">10 gems</span></div>
+                        </div>
+                        <button class="btn" id="auc-submit"><i class="fas fa-gavel"></i> List for Auction</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BID MODAL -->
+        <div class="modal-overlay" id="bid-overlay" style="display:none">
+            <div class="purchase-modal">
+                <div class="pm-hdr"><div class="pm-htitle"><i class="fas fa-gavel"></i><h2>Place Bid</h2></div><button class="pm-x" id="bid-close"><i class="fas fa-times"></i></button></div>
+                <div class="pm-body">
+                    <div class="pm-preview"><div class="pm-img-wrap"><img id="bid-img" src="" alt=""></div><div class="pm-details"><h3 id="bid-name"></h3><div class="pm-cat" id="bid-seller"></div><div class="pm-price-big"><span id="bid-current"></span> <span class="pm-cur">gems</span></div></div></div>
+                    <div class="fg"><label>Your Bid (min: <span id="bid-min">0</span>)</label><input type="number" id="bid-input" class="inp" min="1"></div>
+                    <div class="pm-summary"><div class="pm-row"><span>Your balance:</span><span id="bid-bal"></span></div><div class="pm-row"><span>Bid amount:</span><span class="pm-neg" id="bid-cost">0</span></div><div class="pm-div"></div><div class="pm-row pm-tot"><span>After bid:</span><span id="bid-after"></span></div></div>
+                </div>
+                <div class="pm-acts"><button class="btn btn-cancel" id="bid-cancel">Cancel</button><button class="btn" id="bid-confirm"><i class="fas fa-gavel"></i> Place Bid</button></div>
+            </div>
+        </div>
+        <!-- LEADERBOARD -->
+        <div class="panel" id="tab-leaderboard">
+            <div class="lb-header">
+                <div class="lb-hdr-left">
+                    <i class="fas fa-trophy lb-hdr-ico"></i>
+                    <div>
+                        <div class="lb-hdr-title">Top Gem Spenders</div>
+                        <div class="lb-hdr-sub">All-time leaderboard</div>
+                    </div>
+                </div>
+                <button class="lb-refresh" id="lb-refresh"><i class="fas fa-rotate-right"></i> Refresh</button>
+            </div>
+            <div class="lb-body">
+                <div class="lb-podium-section">
+                    <div class="lb-podium-title"><i class="fas fa-crown" style="color:var(--gold);font-size:10px"></i> Top 3</div>
+                    <div class="lb-podium" id="lb-podium"></div>
+                </div>
+                <div class="lb-list-section">
+                    <div class="lb-list-hdr">
+                        <span>Rank</span><span>Player</span><span style="text-align:right">Total Spent</span>
+                    </div>
+                    <div class="lb-list" id="lb-list"></div>
+                </div>
+            </div>
+        </div>
+        <div class="panel" id="tab-daily">
+            <div class="daily-header">
+                <div class="daily-hdr-left">
+                    <i class="fas fa-gift daily-hdr-ico"></i>
+                    <div>
+                        <div class="daily-hdr-title">Daily Rewards</div>
+                        <div class="daily-hdr-sub">Claim your free gifts every day</div>
+                    </div>
+                </div>
+                <div class="daily-reset">
+                    <span class="daily-reset-lbl"><i class="fas fa-clock"></i> Resets in</span>
+                    <span class="daily-reset-val" id="daily-timer">--:--:--</span>
+                </div>
+            </div>
+            <div class="daily-stats">
+                <div class="daily-stat"><i class="fas fa-fire"></i><div><div class="daily-stat-lbl">Current Streak</div><div class="daily-stat-val" id="daily-streak">Day 0</div></div></div>
+                <div class="daily-stat"><i class="fas fa-gem"></i><div><div class="daily-stat-lbl">Total Earned</div><div class="daily-stat-val" id="daily-total">0 gems</div></div></div>
+                <div class="daily-stat"><i class="fas fa-calendar-check"></i><div><div class="daily-stat-lbl">Today's Reward</div><div class="daily-stat-val" id="daily-today">—</div></div></div>
+            </div>
+            <div class="daily-grid" id="daily-grid"></div>
+        </div>
+        <!-- CASINO (wraps all 4 games) -->
+        <div class="panel" id="tab-casino">
+            <div class="casino-subnav">
+                <button class="csub active" data-sub="dice"><i class="fas fa-dice"></i> Dice</button>
+                <button class="csub" data-sub="coinflip"><i class="fas fa-coins"></i> Coinflip</button>
+                <button class="csub" data-sub="blackjack"><i class="fas fa-clone"></i> Blackjack</button>
+                <button class="csub" data-sub="mines"><i class="fas fa-bomb"></i> Mines</button>
+                <button class="csub" data-sub="plinko"><i class="fas fa-bolt"></i> Plinko</button>
+                <button class="csub" data-sub="crash"><i class="fas fa-rocket"></i> Crash</button>
+            </div>
+            <div class="casino-body">
+        <div class="csub-panel active" id="tab-dice"><div class="gl"><div class="gs">
+            <div class="fg"><label>Bet Amount</label><div class="irow"><input type="number" id="d-bet" class="inp" value="100" min="10"><button class="hb" onclick="hv('d-bet')">½</button><button class="hb" onclick="dv('d-bet')">2x</button></div></div>
+            <div class="fg"><label>Roll Over: <span id="d-ro">50.00</span></label><input type="range" id="d-range" class="sld" min="10" max="98" value="50"></div>
+            <div class="sts"><div class="st"><span>Chance</span><span id="d-ch">50.00%</span></div><div class="st"><span>Multiplier</span><span id="d-mu">1.96x</span></div><div class="st"><span>Profit</span><span id="d-pr">96</span></div></div>
+            <button class="btn" id="d-go"><i class="fas fa-dice"></i> ROLL DICE</button>
+        </div><div class="ga"><div class="dice-area"><div class="dice-trk"><div class="dice-mk" id="d-mk"></div><div class="dice-val" id="d-val">—</div></div><div class="dice-hist" id="d-hist"></div></div></div></div></div>
+        <!-- COINFLIP -->
+        <div class="csub-panel" id="tab-coinflip"><div class="gl"><div class="gs">
+            <div class="fg"><label>Bet Amount</label><div class="irow"><input type="number" id="cf-bet" class="inp" value="100" min="10"><button class="hb" onclick="hv('cf-bet')">½</button><button class="hb" onclick="dv('cf-bet')">2x</button></div></div>
+            <div class="fg"><label>Pick a Side</label><div class="cf-side-row">
+                <button class="cf-side-btn active" data-side="heads"><div class="cf-side-ico cf-heads"><span>H</span></div><span>HEADS</span></button>
+                <button class="cf-side-btn" data-side="tails"><div class="cf-side-ico cf-tails"><span>T</span></div><span>TAILS</span></button>
+            </div></div>
+            <div class="sts"><div class="st"><span>Multiplier</span><span id="cf-mu">2.00x</span></div><div class="st"><span>Win Chance</span><span>50%</span></div><div class="st"><span>Profit</span><span id="cf-pr">100</span></div></div>
+            <button class="btn" id="cf-go"><i class="fas fa-coins"></i> FLIP COIN</button>
+            <div class="cf-hist" id="cf-hist"></div>
+        </div><div class="ga"><div class="cf-stage">
+            <div class="cf-coin" id="cf-coin"><div class="cf-face cf-face-heads"><span>H</span></div><div class="cf-face cf-face-tails"><span>T</span></div></div>
+            <div class="cf-result" id="cf-result">Pick a side and flip</div>
+        </div></div></div></div>
+        <!-- BLACKJACK -->
+        <div class="csub-panel" id="tab-blackjack"><div class="gl"><div class="gs">
+            <div class="fg"><label>Bet Amount</label><div class="irow"><input type="number" id="bj-bet" class="inp" value="100" min="10"><button class="hb" onclick="hv('bj-bet')">½</button><button class="hb" onclick="dv('bj-bet')">2x</button></div></div>
+            <div class="sts"><div class="st"><span>Blackjack</span><span>Pays 1:1</span></div><div class="st"><span>Decks</span><span>6</span></div><div class="st"><span>Dealer</span><span>Hits S17</span></div></div>
+            <button class="btn" id="bj-deal"><i class="fas fa-play"></i> DEAL</button>
+            <div class="bj-actions" id="bj-actions" style="display:none">
+                <button class="btn bj-act-btn" id="bj-hit"><i class="fas fa-plus"></i> HIT</button>
+                <button class="btn bj-act-btn" id="bj-stand"><i class="fas fa-hand"></i> STAND</button>
+                <button class="btn bj-act-btn" id="bj-double"><i class="fas fa-arrows-up-down"></i> DOUBLE</button>
+                <button class="btn bj-act-btn" id="bj-split"><i class="fas fa-code-fork"></i> SPLIT</button>
+            </div>
+            <div class="bj-status" id="bj-status">Place a bet and deal</div>
+        </div><div class="ga"><div class="bj-table">
+            <div class="bj-area bj-dealer">
+                <div class="bj-area-lbl">Dealer <span id="bj-dealer-score" class="bj-score">—</span></div>
+                <div class="bj-cards" id="bj-dealer-cards"></div>
+            </div>
+            <div class="bj-area-divider"></div>
+            <div class="bj-area bj-player">
+                <div class="bj-area-lbl">Player <span id="bj-player-info"></span></div>
+                <div class="bj-hands" id="bj-player-hands"></div>
+            </div>
+        </div></div></div></div>
+        <!-- MINES -->
+        <div class="csub-panel" id="tab-mines"><div class="gl"><div class="gs">
+            <div class="fg"><label>Bet Amount</label><div class="irow"><input type="number" id="m-bet" class="inp" value="100" min="10"><button class="hb" onclick="hv('m-bet')">½</button><button class="hb" onclick="dv('m-bet')">2x</button></div></div>
+            <div class="fg"><label>Mines</label><select id="m-cnt" class="inp"><option value="1">1</option><option value="3" selected>3</option><option value="5">5</option><option value="7">7</option><option value="10">10</option></select></div>
+            <div class="sts"><div class="st"><span>Winnings</span><span id="m-win">0</span></div></div>
+            <button class="btn" id="m-go"><i class="fas fa-bomb"></i> PLAY</button>
+            <button class="btn btn-g" id="m-co" style="display:none"><i class="fas fa-coins"></i> CASHOUT <span id="m-coamt">0</span></button>
+        </div><div class="ga"><div class="mines-grid" id="m-grid"></div></div></div></div>
+        <!-- PLINKO -->
+        <div class="csub-panel" id="tab-plinko"><div class="gl"><div class="gs">
+            <div class="fg"><label>Bet Amount</label><div class="irow"><input type="number" id="p-bet" class="inp" value="100" min="10"><button class="hb" onclick="hv('p-bet')">½</button><button class="hb" onclick="dv('p-bet')">2x</button></div></div>
+            <div class="fg"><label>Rows</label><select id="p-rows" class="inp"><option value="8">8</option><option value="10">10</option><option value="12">12</option><option value="14">14</option><option value="16" selected>16</option></select></div>
+            <div class="fg"><label>Risk</label><select id="p-risk" class="inp"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div>
+            <button class="btn" id="p-go"><i class="fas fa-bolt"></i> DROP BALL</button>
+        </div><div class="ga"><div class="plinko-wrap"><div class="pk-board" id="pk-board"></div><div class="pk-bkts" id="pk-bkts"></div></div></div></div></div>
+        <!-- CRASH -->
+        <div class="csub-panel" id="tab-crash"><div class="gl"><div class="gs">
+            <div class="fg"><label>Bet Amount</label><div class="irow"><input type="number" id="cr-bet" class="inp" value="100" min="10"><button class="hb" onclick="hv('cr-bet')">½</button><button class="hb" onclick="dv('cr-bet')">2x</button></div></div>
+            <div class="cr-st" id="cr-st">Waiting...</div>
+            <button class="btn" id="cr-go"><i class="fas fa-rocket"></i> PLACE BET</button>
+            <button class="btn btn-g" id="cr-co" style="display:none"><i class="fas fa-hand-holding-dollar"></i> CASHOUT</button>
+            <div class="cr-hist" id="cr-hist"></div>
+        </div><div class="ga"><div class="cr-disp"><div class="cr-coeff" id="cr-coeff">1.00x</div><div class="cr-graph"><canvas id="cr-canvas"></canvas></div></div></div></div></div>
+            </div><!-- /casino-body -->
+        </div><!-- /tab-casino -->
+    </div>
+
+    <!-- PURCHASE MODAL -->
+    <div class="modal-overlay" id="buy-overlay" style="display:none">
+        <div class="purchase-modal">
+            <div class="pm-hdr"><div class="pm-htitle"><i class="fas fa-shopping-cart"></i><h2>Confirm Purchase</h2></div><button class="pm-x" id="buy-close"><i class="fas fa-times"></i></button></div>
+            <div class="pm-body">
+                <div class="pm-preview"><div class="pm-img-wrap"><img id="buy-img" src="" alt=""></div><div class="pm-details"><h3 id="buy-name"></h3><div class="pm-cat" id="buy-cat"></div><div class="pm-price-big"><span id="buy-price-val"></span> <span class="pm-cur">gems</span></div></div></div>
+                <div class="pm-contents" id="buy-contents"></div>
+                <div class="pm-summary"><div class="pm-row"><span>Your balance:</span><span id="buy-bbal"></span></div><div class="pm-row"><span>Item cost:</span><span class="pm-neg" id="buy-cost"></span></div><div class="pm-div"></div><div class="pm-row pm-tot"><span>After purchase:</span><span id="buy-abal"></span></div></div>
+            </div>
+            <div class="pm-acts"><button class="btn btn-test" id="buy-testdrive" style="display:none"><i class="fas fa-key"></i> Test Drive</button><button class="btn btn-cancel" id="buy-cancel">Cancel</button><button class="btn" id="buy-confirm"><i class="fas fa-check"></i> Complete Purchase</button></div>
+        </div>
+    </div>
+    <!-- REDEEM MODAL -->
+    <div class="modal-overlay" id="redeem-overlay" style="display:none">
+        <div class="purchase-modal">
+            <div class="pm-hdr"><div class="pm-htitle"><i class="fas fa-gift"></i><h2>Redeem Transaction</h2></div><button class="pm-x" id="redeem-close"><i class="fas fa-times"></i></button></div>
+            <div class="pm-body"><p class="rdesc">Enter your Tebex transaction ID to claim your purchase — gem packs credit gems, <strong>bundles deliver their contents instantly</strong> (items to your inventory, vehicles to your garage).</p><div class="fg"><label>Transaction ID</label><input type="text" id="redeem-input" class="inp" placeholder="Enter transaction ID..."></div></div>
+            <div class="pm-acts"><button class="btn btn-cancel" id="redeem-cancel">Cancel</button><button class="btn" id="redeem-go"><i class="fas fa-gift"></i> Redeem</button></div>
+        </div>
+    </div>
+    <div class="toast" id="toast" style="display:none"></div>
+</div>
+</div>
+<script src="app.js"></script>
+<script src="admin_ui.js"></script>
+
+
+
+<style id="sbm-embed-fix">
+  html,body{background:#0a0714 !important;}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-thumb{background:rgba(255,45,149,.35);border-radius:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+</style>
+
+<script>(function(){function __sbmBoot(){try{
+
+var SBM_GEMS_DEMO = {
+  gems:12500, claims:{car:0,heli:0},
+  categories:['Bundles','Vehicles','Weapons'],
+  items:[
+    {name:'Starter Bundle', price:2500, category:'Bundles', img:'', contents:['$50k Cash','Apartment Key','Starter Car']},
+    {name:'VIP Bundle', price:8000, category:'Bundles', img:'', contents:['$250k Cash','Garage','2 Vehicles']},
+    {name:'Kingpin Bundle', price:15000, category:'Bundles', img:'', contents:['$1M Cash','Penthouse','Supercar']},
+    {name:'Comet S2', price:4200, category:'Vehicles', img:'', contents:['Sports Coupe']},
+    {name:'Kuruma (Armored)', price:6800, category:'Vehicles', img:'', contents:['Armored Sedan']},
+    {name:'Combat PDW', price:1800, category:'Weapons', img:'', contents:['SMG']},
+    {name:'Heavy Pistol', price:900, category:'Weapons', img:'', contents:['Sidearm']}
+  ],
+  itemShopItems:[
+    {name:'Lockpick x5', price:300, category:'Tools', img:''},
+    {name:'Advanced Repair Kit', price:450, category:'Tools', img:''}
+  ],
+  itemShopCategories:['Tools'],
+  itemShopNextEpoch: Math.floor(Date.now()/1000)+5400
+};
+window.postMessage({action:'open', data:SBM_GEMS_DEMO}, '*');
+
+}catch(e){console.error('SBM demo boot',e);}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(__sbmBoot,60);});}else{setTimeout(__sbmBoot,60);}})();</script>
+</body>
+</html>
