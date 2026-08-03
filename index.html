@@ -204,16 +204,21 @@ nav.shrink .nav-logo img{height:92px}
 .lt-base::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60px;height:4px;background:#2a2038;border-radius:0 0 6px 6px}
 
 .ss-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.ss-card{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:.35s}
+.ss-card{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:.35s;align-self:start}
 .ss-card:hover{transform:translateY(-7px);border-color:var(--border2);box-shadow:0 26px 64px rgba(255,45,149,.22)}
-.ss-frame{position:relative;background:#0a0714}
+.ss-frame{position:relative;background:#0a0714;overflow:hidden}
 .ss-bar{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#0d0916;border-bottom:1px solid var(--border)}
 .ss-bar i{width:9px;height:9px;border-radius:50%}
 .ss-bar i:nth-child(1){background:#ff5f57}.ss-bar i:nth-child(2){background:#ffbd2e}.ss-bar i:nth-child(3){background:#28c840}
 .ss-bar span{margin-left:8px;font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ss-shot{display:block;width:100%;height:238px;object-fit:cover;object-position:top center;transition:transform 6s ease}
-.ss-card:hover .ss-shot{transform:translateY(calc(-100% + 238px))}
-.ss-card.phone .ss-shot{object-fit:contain;background:radial-gradient(circle at 50% 0,#170f26,#07040e);transform:none!important}
+.ss-view{position:relative;width:100%;height:262px;overflow:hidden;background:#0a0714}
+.ss-view.phone{height:430px;background:radial-gradient(circle at 50% -10%,#1a1030,#07040e)}
+.ss-view iframe{position:absolute;top:0;left:0;border:0;transform-origin:top left;background:#0a0714;color-scheme:dark}
+.ss-view::after{content:'';position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 -34px 42px -26px rgba(7,4,14,.9);z-index:2}
+.ss-card:hover .ss-view iframe{filter:saturate(1.06)}
+.ss-live{position:absolute;top:10px;right:10px;z-index:3;display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.2px;color:#5affb0;background:rgba(8,6,15,.74);border:1px solid rgba(90,255,176,.32);padding:4px 9px 4px 8px;border-radius:999px;backdrop-filter:blur(6px);text-transform:uppercase;pointer-events:none}
+.ss-live::before{content:'';width:6px;height:6px;border-radius:50%;background:#5affb0;box-shadow:0 0 8px #5affb0;animation:ssblink 1.5s infinite}
+@keyframes ssblink{0%,100%{opacity:1}50%{opacity:.25}}
 .ss-meta{padding:16px 18px 18px}
 .ss-tag{display:inline-block;font-family:'Orbitron';font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);background:rgba(33,230,255,.1);border:1px solid rgba(33,230,255,.25);padding:3px 10px;border-radius:999px}
 .ss-meta h4{font-family:'Orbitron';font-size:14px;font-weight:800;margin:10px 0 6px}
@@ -411,16 +416,15 @@ table{font-size:11px}thead th{padding:10px 8px;font-size:9px}tbody td{padding:8p
 <div class="section" style="padding-top:20px">
 <div class="sec-head reveal"><div class="eyebrow">Custom-Built Systems</div><h2>Scripts You Won't <span class="accent">Find Anywhere Else</span></h2><p>Real, in-game UIs from the custom systems we built for South Beach V2 — no stock scripts.</p><div class="line"></div></div>
 <div class="ss-grid">
-<div class="ss-card reveal phone"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Scam Call Center</span></div><img class="ss-shot" src="images/ui/phone_scamcenter.png" alt="Scam Call Center" loading="lazy"></div><div class="ss-meta"><span class="ss-tag">Burner</span><h4>Scam Call Center</h4><p>Burner-phone dialogue hustle — the Chapter-2 scammer job</p></div></div>
-<div class="ss-card reveal phone"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Zelli Debit Card</span></div><img class="ss-shot" src="images/ui/phone_debitcard.png" alt="Zelli Debit Card" loading="lazy"></div><div class="ss-meta"><span class="ss-tag">Banking</span><h4>Zelli Debit Card</h4><p>Card app — balance, PIN, lock, sharing & pay method</p></div></div>
-<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Sellables Dashboard</span></div><img class="ss-shot" src="images/ui/panel_sellables.png" alt="Sellables Dashboard" loading="lazy"></div><div class="ss-meta"><span class="ss-tag">Drugs</span><h4>Sellables Dashboard</h4><p>60+ drugs, trap ranks, hotzones & live sale analytics</p></div></div>
-<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Fraud Terminal</span></div><img class="ss-shot" src="images/ui/panel_fraudhub.png" alt="Fraud Terminal" loading="lazy"></div><div class="ss-meta"><span class="ss-tag">Fraud</span><h4>Fraud Terminal</h4><p>Laptop hacking, SIM cloning, check & card fraud</p></div></div>
-<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Heist Board</span></div><img class="ss-shot" src="images/ui/panel_robbery.png" alt="Heist Board" loading="lazy"></div><div class="ss-meta"><span class="ss-tag">Robbery</span><h4>Heist Board</h4><p>SBM-NET job board — house robberies & crews</p></div></div>
-<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>The Icebox</span></div><img class="ss-shot" src="images/ui/panel_icebox.png" alt="The Icebox" loading="lazy"></div><div class="ss-meta"><span class="ss-tag">Jewelry</span><h4>The Icebox</h4><p>Craft custom chains, rings & grillz</p></div></div>
-<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Family Panel</span></div><img class="ss-shot" src="images/ui/panel_familypanel.png" alt="Family Panel" loading="lazy"></div><div class="ss-meta"><span class="ss-tag">Families</span><h4>Family Panel</h4><p>Run your family — members, treasury & events</p></div></div>
-<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Medical Tablet</span></div><img class="ss-shot" src="images/ui/panel_stds.png" alt="Medical Tablet" loading="lazy"></div><div class="ss-meta"><span class="ss-tag">EMS</span><h4>Medical Tablet</h4><p>Patient charts, treatments & records</p></div></div>
-<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Donor Hub</span></div><img class="ss-shot" src="images/ui/panel_gems.png" alt="Donor Hub" loading="lazy"></div><div class="ss-meta"><span class="ss-tag">Store</span><h4>Donor Hub</h4><p>In-game store — gems, bundles & auctions</p></div></div>
-<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Girl Hub</span></div><img class="ss-shot" src="images/ui/panel_girlhub.png" alt="Girl Hub" loading="lazy"></div><div class="ss-meta"><span class="ss-tag">Hustle</span><h4>Girl Hub</h4><p>Nails, lashes, wigs & bags — leveled craft hub</p></div></div>
+<div class="ss-card reveal phone"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Scam Call Center</span></div><div class="ss-view phone"><span class="ss-live">Live</span><iframe data-w="400" data-h="850" src="ui/scamcenter/index.html" loading="lazy" title="Scam Call Center"></iframe></div></div><div class="ss-meta"><span class="ss-tag">Burner</span><h4>Scam Call Center</h4><p>Burner-phone dialogue hustle — the Chapter-2 scammer job</p></div></div>
+<div class="ss-card reveal phone"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Zelli Debit Card</span></div><div class="ss-view phone"><span class="ss-live">Live</span><iframe data-w="400" data-h="850" src="ui/debitcard/index.html" loading="lazy" title="Zelli Debit Card"></iframe></div></div><div class="ss-meta"><span class="ss-tag">Banking</span><h4>Zelli Debit Card</h4><p>Card app — balance, PIN, lock, sharing & pay method</p></div></div>
+<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Sellables Dashboard</span></div><div class="ss-view"><span class="ss-live">Live</span><iframe data-w="1200" data-h="770" src="ui/sellables/index.html" loading="lazy" title="Sellables Dashboard"></iframe></div></div><div class="ss-meta"><span class="ss-tag">Drugs</span><h4>Sellables Dashboard</h4><p>60+ drugs, trap ranks, hotzones & live sale analytics</p></div></div>
+<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Fraud Terminal</span></div><div class="ss-view"><span class="ss-live">Live</span><iframe data-w="1000" data-h="680" src="ui/fraudhub/index.html" loading="lazy" title="Fraud Terminal"></iframe></div></div><div class="ss-meta"><span class="ss-tag">Fraud</span><h4>Fraud Terminal</h4><p>Laptop hacking, SIM cloning, check & card fraud</p></div></div>
+<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Heist Board</span></div><div class="ss-view"><span class="ss-live">Live</span><iframe data-w="1220" data-h="760" src="ui/robbery/index.html" loading="lazy" title="Heist Board"></iframe></div></div><div class="ss-meta"><span class="ss-tag">Robbery</span><h4>Heist Board</h4><p>SBM-NET job board — house robberies & crews</p></div></div>
+<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Family Panel</span></div><div class="ss-view"><span class="ss-live">Live</span><iframe data-w="1180" data-h="750" src="ui/familypanel/index.html" loading="lazy" title="Family Panel"></iframe></div></div><div class="ss-meta"><span class="ss-tag">Families</span><h4>Family Panel</h4><p>Run your family — members, treasury & events</p></div></div>
+<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Medical Tablet</span></div><div class="ss-view"><span class="ss-live">Live</span><iframe data-w="1180" data-h="750" src="ui/stds/index.html" loading="lazy" title="Medical Tablet"></iframe></div></div><div class="ss-meta"><span class="ss-tag">EMS</span><h4>Medical Tablet</h4><p>Patient charts, prevalence stats & lab testing</p></div></div>
+<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Donor Hub</span></div><div class="ss-view"><span class="ss-live">Live</span><iframe data-w="1200" data-h="760" src="ui/gems/index.html" loading="lazy" title="Donor Hub"></iframe></div></div><div class="ss-meta"><span class="ss-tag">Store</span><h4>Donor Hub</h4><p>In-game store — gems, bundles & auctions</p></div></div>
+<div class="ss-card reveal"><div class="ss-frame"><div class="ss-bar"><i></i><i></i><i></i><span>Girl Hub</span></div><div class="ss-view"><span class="ss-live">Live</span><iframe data-w="1200" data-h="760" src="ui/girlhub/index.html" loading="lazy" title="Girl Hub"></iframe></div></div><div class="ss-meta"><span class="ss-tag">Hustle</span><h4>Girl Hub</h4><p>Nails, lashes, wigs & bags — leveled craft hub</p></div></div>
 </div>
 <p style="text-align:center;color:var(--muted);font-size:13px;margin-top:26px">Real in-game UIs — every system above is custom-built for South Beach V2. Plus ShadowNet, MyChart, factions, mailbox fishing & more.</p>
 </div>
@@ -884,7 +888,32 @@ function countUp(el){var target=+el.dataset.count,d=1400,s=performance.now();fun
 /* reveal + counters */
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');if(e.target.querySelector){var n=e.target.querySelector('[data-count]');}if(e.target.matches('[data-count]')&&!e.target.dataset.done){e.target.dataset.done=1;countUp(e.target)}io.unobserve(e.target)}})},{threshold:.15});
 function runReveal(){document.querySelectorAll('.reveal').forEach(function(el){if(!el.classList.contains('in'))io.observe(el)});document.querySelectorAll('[data-count]').forEach(function(el){io.observe(el)})}
-addEventListener('hashchange',handleRoute);addEventListener('DOMContentLoaded',function(){handleRoute();runReveal()});
+/* live UI embeds — scale each real UI to fit its card */
+function fitEmbeds(){
+  document.querySelectorAll('.ss-view').forEach(function(v){
+    var f=v.querySelector('iframe'); if(!f) return;
+    var lw=+f.getAttribute('data-w')||1200, lh=+f.getAttribute('data-h')||760;
+    var cw=v.clientWidth||v.parentNode.clientWidth||360;
+    if(!cw) return;
+    f.style.width=lw+'px'; f.style.height=lh+'px';
+    var k;
+    if(v.classList.contains('phone')){
+      k=430/lh;
+      f.style.transform='scale('+k+')';
+      f.style.left=Math.max(0,(cw-lw*k)/2)+'px'; f.style.top='0px';
+    } else {
+      k=cw/lw;
+      f.style.transform='scale('+k+')';
+      f.style.left='0px'; f.style.top='0px';
+      v.style.height=Math.round(lh*k)+'px';
+    }
+  });
+}
+var _fitT; function fitEmbedsSoon(){clearTimeout(_fitT);_fitT=setTimeout(fitEmbeds,60);}
+document.querySelectorAll('.ss-view iframe').forEach(function(f){f.addEventListener('load',fitEmbedsSoon);});
+addEventListener('resize',fitEmbedsSoon);
+addEventListener('load',fitEmbeds);
+addEventListener('hashchange',handleRoute);addEventListener('DOMContentLoaded',function(){handleRoute();runReveal();fitEmbeds();setTimeout(fitEmbeds,300);});
 </script>
 </body>
 </html>
