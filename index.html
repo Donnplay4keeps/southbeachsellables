@@ -282,11 +282,9 @@ tbody td{padding:12px 16px}
 .biz-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;transition:.25s;display:flex;align-items:center;justify-content:space-between}
 .biz-card:hover{border-color:rgba(255,255,255,0.12);transform:translateY(-2px)}
 .biz-card.sold{border-left:3px solid var(--pink)}
-.biz-card.forsale{border-left:3px solid var(--green)}
 .biz-name{font-weight:700;font-size:14px}
 .biz-badge{display:inline-block;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0;margin-left:12px}
 .badge-sold{background:rgba(255,45,149,0.14);color:var(--pink)}
-.badge-forsale{background:rgba(77,255,158,0.14);color:var(--green)}
 .staff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
 .staff-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px;text-align:center;transition:.3s}
 .staff-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:var(--glow-pink)}
@@ -779,22 +777,17 @@ table{font-size:11px}thead th{padding:10px 8px;font-size:9px}tbody td{padding:8p
 
 <div id="page-businesses" class="page">
 <div class="inner-page">
-<div class="page-header"><h2>City <span class="accent">Businesses</span></h2><p>28 active businesses — 8 still available</p><div class="line"></div></div>
+<div class="page-header"><h2>City <span class="accent">Businesses</span></h2><p>20 active businesses — none currently available</p><div class="line"></div></div>
 <div class="biz-stats">
-<div class="biz-stat"><div class="biz-stat-num" style="color:var(--green)">28</div><div class="biz-stat-label">Sold / Active</div></div>
-<div class="biz-stat"><div class="biz-stat-num" style="color:var(--yellow)">8</div><div class="biz-stat-label">For Sale</div></div>
-<div class="biz-stat"><div class="biz-stat-num" style="color:var(--teal)">36</div><div class="biz-stat-label">Total Businesses</div></div>
-</div>
-<div class="price-tabs" style="margin-bottom:24px">
-<button class="price-tab active" onclick="showBizTab('sold',this)">🏪 Sold (28)</button>
-<button class="price-tab" onclick="showBizTab('forsale',this)">💰 For Sale (8)</button>
+<div class="biz-stat"><div class="biz-stat-num" style="color:var(--green)">20</div><div class="biz-stat-label">Sold / Active</div></div>
+<div class="biz-stat"><div class="biz-stat-num" style="color:var(--yellow)">0</div><div class="biz-stat-label">For Sale</div></div>
+<div class="biz-stat"><div class="biz-stat-num" style="color:var(--teal)">20</div><div class="biz-stat-label">Total Businesses</div></div>
 </div>
 <div id="biz-sold" class="biz-content active">
 <div class="biz-grid">
 <div class="biz-card sold"><div class="biz-name">Club 77 Nightclub</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Energy Auto Mechanic Shop</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Horny's Restaurant</div><span class="biz-badge badge-sold">SOLD</span></div>
-<div class="biz-card sold"><div class="biz-name">Crumbly Cookie</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Paradise Gentlemen's Club</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">West View Auto Mechanic</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Pizza This</div><span class="biz-badge badge-sold">SOLD</span></div>
@@ -806,34 +799,15 @@ table{font-size:11px}thead th{padding:10px 8px;font-size:9px}tbody td{padding:8p
 <div class="biz-card sold"><div class="biz-name">Ammu-nation Gun Store 5</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Vangelico Jewelry Store (Icebox)</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Auto Exotic Mechanic Shop</div><span class="biz-badge badge-sold">SOLD</span></div>
-<div class="biz-card sold"><div class="biz-name">Doobie Dab</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Riverside Serenity</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Uwu Cafe</div><span class="biz-badge badge-sold">SOLD</span></div>
-<div class="biz-card sold"><div class="biz-name">Trey Baker</div><span class="biz-badge badge-sold">SOLD</span></div>
-<div class="biz-card sold"><div class="biz-name">Vanilla Sex Shop</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">High Notes Dispensary</div><span class="biz-badge badge-sold">SOLD</span></div>
-<div class="biz-card sold"><div class="biz-name">Burgershot</div><span class="biz-badge badge-sold">SOLD</span></div>
-<div class="biz-card sold"><div class="biz-name">Bubble Cafe</div><span class="biz-badge badge-sold">SOLD</span></div>
-<div class="biz-card sold"><div class="biz-name">The Towns Bar & Grill</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Huggy Bears</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">The Pocket Plug</div><span class="biz-badge badge-sold">SOLD</span></div>
 <div class="biz-card sold"><div class="biz-name">Tuning Bar Mechanic</div><span class="biz-badge badge-sold">SOLD</span></div>
-<div class="biz-card sold"><div class="biz-name">Speed Syndrome Mechanic Shop</div><span class="biz-badge badge-sold">SOLD</span></div>
 </div>
 </div>
-<div id="biz-forsale" class="biz-content">
-<div class="biz-grid">
-<div class="biz-card forsale"><div class="biz-name">Brickbearz</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
-<div class="biz-card forsale"><div class="biz-name">Noodle</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
-<div class="biz-card forsale"><div class="biz-name">South Beach Mall Center Restaurants</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
-<div class="biz-card forsale"><div class="biz-name">Drift Playground Mechanic Shop</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
-<div class="biz-card forsale"><div class="biz-name">Ammu-Nation Gun Store 6</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
-<div class="biz-card forsale"><div class="biz-name">Bennys Motorworks Mechanic Shop</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
-<div class="biz-card forsale"><div class="biz-name">Jerk and Jam</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
-<div class="biz-card forsale"><div class="biz-name">Smokey's Hookah Lounge</div><span class="biz-badge badge-forsale">FOR SALE</span></div>
-</div>
-</div>
-<div class="info-box" style="margin-top:24px"><strong>Interested in a business?</strong> Join the <a href="https://discord.gg/ktUuYEBj2j" target="_blank" style="color:var(--teal)">Business District Discord</a> to apply and purchase.</div>
+<div class="info-box" style="margin-top:24px"><strong>No businesses are for sale right now.</strong> Join the <a href="https://discord.gg/ktUuYEBj2j" target="_blank" style="color:var(--teal)">Business District Discord</a> to get notified when one opens up.</div>
 </div>
 </div>
 
@@ -877,7 +851,6 @@ table{font-size:11px}thead th{padding:10px 8px;font-size:9px}tbody td{padding:8p
 <script>
 function toggleAcc(h){h.parentElement.classList.toggle('open')}
 function showPage(page){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const t=document.getElementById('page-'+page);if(t)t.classList.add('active');document.querySelectorAll('.nav-links a[data-page]').forEach(a=>a.classList.toggle('active',a.dataset.page===page));document.getElementById('navLinks').classList.remove('open');window.scrollTo({top:0,behavior:'smooth'});history.replaceState(null,'',page==='home'?'#':'#'+page);setTimeout(runReveal,60)}
-function showBizTab(tab,btn){document.querySelectorAll('.biz-content').forEach(t=>t.classList.remove('active'));document.getElementById('biz-'+tab).classList.add('active');btn.closest('.price-tabs').querySelectorAll('.price-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
 function handleRoute(){const h=location.hash.replace('#','')||'home';const v=['home','rules','prices','links','businesses','staff','changelog'];showPage(v.includes(h)?h:'home')}
 /* nav shrink */
 addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('shrink',scrollY>40)});
